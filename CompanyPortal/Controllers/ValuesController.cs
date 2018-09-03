@@ -7,8 +7,22 @@ using System.Web.Http;
 
 namespace CompanyPortal.Controllers
 {
+    [RoutePrefix("api/values/")]
     public class ValuesController : ApiController
     {
+        public ValuesController()
+        {
+                
+        }
+
+
+
+        [HttpPost, Route("checkusername")]
+        public IHttpActionResult checkuserdetails(String username)
+        {
+            return Ok();
+        }
+
         // GET api/values
         public IEnumerable<string> Get()
         {

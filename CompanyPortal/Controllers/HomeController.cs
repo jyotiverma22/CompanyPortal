@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CompanyPortal.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,5 +15,20 @@ namespace CompanyPortal.Controllers
 
             return View();
         }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        public ActionResult Register(RegisterViewModel registerViewModel)
+        {
+            if(ModelState.IsValid)
+            {
+
+            }
+            return View(registerViewModel);
+        }
+
     }
 }
