@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RepositoryLayer.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,12 +8,13 @@ using System.Web.Http;
 
 namespace CompanyPortal.Controllers
 {
-    [RoutePrefix("api/values/")]
+    [RoutePrefix("api/values")]
     public class ValuesController : ApiController
     {
-        public ValuesController()
+        ICompanyRepository companyRepository;
+        public ValuesController(ICompanyRepository repository)
         {
-                
+            companyRepository = repository;
         }
 
 

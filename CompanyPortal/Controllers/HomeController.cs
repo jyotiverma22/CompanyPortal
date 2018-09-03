@@ -20,7 +20,7 @@ namespace CompanyPortal.Controllers
         {
             return View();
         }
-
+        [HttpPost]
         public ActionResult Register(RegisterViewModel registerViewModel)
         {
             if(ModelState.IsValid)
