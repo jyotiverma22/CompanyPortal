@@ -10,7 +10,8 @@ namespace Models
   public  class Registration
     {
         [Key]
-        public int UserId{ get; set; }
+        public int Sno{ get; set; }
+        public string UserId { get; set; }
         public string Username{ get; set; }
         public string Email { get; set; }
         public string Phone{ get; set; }
