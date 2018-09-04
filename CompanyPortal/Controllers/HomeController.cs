@@ -16,7 +16,7 @@ namespace CompanyPortal.Controllers
             return View();
         }
 
-        public ActionResult Register()
+        public ActionResult RegisterUser()
         {
             return View();
         }

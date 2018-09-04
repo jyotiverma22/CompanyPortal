@@ -11,8 +11,9 @@ namespace DatabaseLayer.Migrations
                 name: "UserRegistration",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(nullable: false)
+                    Sno = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<string>(nullable: false),
                     Username = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
@@ -25,7 +26,7 @@ namespace DatabaseLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserRegistration", x => x.UserId);
+                    table.PrimaryKey("PK_UserRegistration", x => x.Sno);
                 });
         }
 

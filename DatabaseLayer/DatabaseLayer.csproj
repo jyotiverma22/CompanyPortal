@@ -143,9 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbContexts\CompanyDbContext.cs" />
-    <Compile Include="Migrations\20180903121649_UserMigration.cs" />
-    <Compile Include="Migrations\20180903121649_UserMigration.designer.cs">
-      <DependentUpon>20180903121649_UserMigration.cs</DependentUpon>
+    <Compile Include="Migrations\20180904042245_UserMigration.cs" />
+    <Compile Include="Migrations\20180904042245_UserMigration.designer.cs">
+      <DependentUpon>20180904042245_UserMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\CompanyDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

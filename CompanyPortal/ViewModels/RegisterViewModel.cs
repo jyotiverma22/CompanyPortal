@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using static Models.BloodGroupList;
 
 namespace CompanyPortal.ViewModels
 {
@@ -19,7 +20,7 @@ namespace CompanyPortal.ViewModels
         public string Email { get; set; }
 
         [Required]
-        [DataType(DataType.EmailAddress)]
+        [StringLength(10, MinimumLength = 10)]
         public string Phone { get; set; }
 
         [Required]
@@ -40,13 +41,33 @@ namespace CompanyPortal.ViewModels
 
         [Required]
         public string Gender { get; set; }
+        
 
         [Required]
         public string Bloodgroup { get; set; }
 
-        [Required]
-        public string DOB { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        public DateTime DOB { get; set; }
 
-        
+
+    }
+    public enum BloodGroup
+    {
+        [Display(Name = "O+")]
+        OPositive,
+        [Display(Name = "A+")]
+        APositive,
+        [Display(Name = "B+")]
+        BPositive,
+        [Display(Name = "AB+")]
+        ABPositive,
+        [Display(Name = "AB-")]
+        ABNegative,
+        [Display(Name = "A-")]
+        ANegative,
+        [Display(Name = "B-")]
+        BNegative,
+        [Display(Name = "O-")]
+        ONegative
     }
 }

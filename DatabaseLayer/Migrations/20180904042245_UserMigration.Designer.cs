@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseLayer.Migrations
 {
     [DbContext(typeof(CompanyDbContext))]
-    [Migration("20180903121649_UserMigration")]
+    [Migration("20180904042245_UserMigration")]
     partial class UserMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,7 +22,7 @@ namespace DatabaseLayer.Migrations
 
             modelBuilder.Entity("Models.Registration", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Sno")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -42,9 +42,11 @@ namespace DatabaseLayer.Migrations
 
                     b.Property<string>("Phone");
 
+                    b.Property<string>("UserId");
+
                     b.Property<string>("Username");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Sno");
 
                     b.ToTable("UserRegistration");
                 });

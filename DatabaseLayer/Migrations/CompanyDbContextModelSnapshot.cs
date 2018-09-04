@@ -20,7 +20,7 @@ namespace DatabaseLayer.Migrations
 
             modelBuilder.Entity("Models.Registration", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Sno")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -40,9 +40,11 @@ namespace DatabaseLayer.Migrations
 
                     b.Property<string>("Phone");
 
+                    b.Property<string>("UserId");
+
                     b.Property<string>("Username");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Sno");
 
                     b.ToTable("UserRegistration");
                 });
