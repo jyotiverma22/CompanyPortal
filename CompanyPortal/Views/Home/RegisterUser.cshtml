@@ -127,6 +127,7 @@
 </div>
 
 <script src="~/Scripts/jquery-ui-1.12.1.js" type="text/javascript"></script>
+<script src="~/lib/js/site.js" type="text/javascript"></script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryui")
     @Styles.Render("~/Content/cssjqryUi")
@@ -134,22 +135,294 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $('#DOB').datepicker();
-
+        
             $("#DOB").focusout(function () {
                 var dob = $('#DOB').val();
-                dob = new Date(dob);
-                var today = new Date();
-                var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
-                //
-                if (age > 20) {
-                    $('#age').html(age + ' years old');
+                if (dob = "mm/dd/yyyy") {
+                    document.getElementById("valid-dob").innerHTML = "This is required field";
+                    $("#valid-dob").show();
+
                 }
                 else {
-                    $('#age').html('User must complete his 20 years of age')
-                    alert("please enter valid date");
+                    dob = new Date(dob);
+                    var today = new Date();
+                    var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+                    //
+                    if (age > 20) {
+                        $('#age').html(age + ' years old');
+                    }
+                    else {
+                        document.getElementById("valid-dob").innerHTML = "User must complete his 20 years of age";
+                        $("#valid-dob").show();
+
+                        //   alert("please enter valid date");
+                    }
                 }
             });
+
+
+
+            $("#DOB").focusin(function () {
+                $("#valid-dob").hide();
+                document.getElementById("valid-dob").innerHTML = "";
+
+            });
+
+
+
+            $("#Username").focusout(function () {
+                var user = $(this).val();
+
+                //Checking the length of username
+                if (user.length > 0) {
+                    if (user.length < 5) {
+                        document.getElementById("Valid-user").innerHTML = "Username is too short";
+                        $("#Valid-user").show();
+                    }
+                    else if (user.length > 20) {
+                        document.getElementById("Valid-user").innerHTML = "Username is too long";
+                        $("#Valid-user").show();
+                    }
+                    else {
+                        //post to check is username already take
+
+                        $.ajax({
+                            url: '/api/values/checkusername',
+                            method: 'POST',
+                            content: 'application/json',
+                            data: {
+                                username: user
+                            },
+                            success: function (response) {
+                                console.log(response);
+                            },
+                            error: function (jqXHR) {
+                                console.log(jqXHR);
+                                console.log("error in generating token");
+
+                            }
+                        });
+                    }
+                }
+                else {
+                    document.getElementById("Valid-user").innerHTML = "This field is required";
+                    $("#Valid-user").show();
+                    console.log("not getting values");
+                }
+            });
+
+            $("#Username").focusin(function () {
+                $("#Valid-user").hide();
+                document.getElementById("Valid-user").innerHTML = "";
+
+            });
+
+
+
+            $("#Email").focusout(function () {
+                debugger
+                var email = $(this).val();
+                //Checking the length of Email
+                if (email.length > 0) {
+                    if (isEmail(email)) {
+                        // check already exist email 
+
+                        $.ajax({
+                            url: '/api/values/checkEmailAddress',
+                            method: 'POST',
+                            content: 'application/json',
+                            data: {
+                                Email: email
+                            },
+                            success: function (response) {
+                                console.log(response);
+                            },
+                            error: function (jqXHR) {
+                                console.log(jqXHR);
+                                console.log("error in generating token");
+
+                            }
+                        });
+                    }
+                    else {
+                        document.getElementById("valid-email").innerHTML = "Please enter valid email Address";
+                        $("#valid-email").show();
+                    }
+                }
+                else {
+                    document.getElementById("validemail").innerHTML = "This field is required";
+                    $("#valid-email").show();
+                }
+            });
+
+            $("#Email").focusin(function () {
+                $("#valid-email").hide();
+                document.getElementById("valid-email").innerHTML = "";
+
+            });
+
+
+
+            $("#Phone").focusout(function () {
+                var user = $(this).val();
+
+                //Checking the length of username
+                if (user.length > 0) {
+                    if (isNaN(user)) {
+                        document.getElementById("valid-phone").innerHTML = "Phone number contains only digits";
+                        $("#valid-phone").show();
+
+                    }
+
+                  else  if (user.length != 10 ) {
+                        document.getElementById("valid-phone").innerHTML = "Please enter valid phone number(don't add prefix like 0 or +91)";
+                        $("#valid-phone").show();
+                    }
+                }
+                else {
+                    document.getElementById("valid-phone").innerHTML = "This field is required";
+                    $("#valid-phone").show();
+                    console.log("not getting values");
+                }
+            });
+
+            $("#Phone").focusin(function () {
+                $("#valid-phone").hide();
+                document.getElementById("valid-phone").innerHTML = "";
+
+            });
+
+
+
+
+            $("#Password").focusout(function () {
+                var user = $(this).val();
+
+                //Checking the length of username
+                if (user.length > 0) {
+                    if (user.length < 5) {
+                        document.getElementById("valid-pass").innerHTML = "Password is too short";
+                        $("#valid-pass").show();
+                    }
+                    else if (user.length > 20) {
+                        document.getElementById("valid-pass").innerHTML = "Password is too long";
+                        $("#valid-pass").show();
+                    }
+                }
+                else {
+                    document.getElementById("valid-pass").innerHTML = "This field is required";
+                    $("#valid-pass").show();
+                    console.log("not getting values");
+                }
+            });
+
+            $("#Password").focusin(function () {
+                $("#valid-pass").hide();
+                document.getElementById("valid-pass").innerHTML = "";
+
+            });
+
+
+
+            $("#ConfirmPassword").focusout(function () {
+                var user = $(this).val();
+                var password = $("#Password").val();
+                //Checking the length of username
+                if (user.length > 0) {
+                    if (user === password) {
+
+                    }
+                    else {
+                        document.getElementById("valid-cn").innerHTML = "Confirm Password field does not match with Password field";
+                        $("#valid-cn").show();
+                    }
+                }
+                else {
+                    document.getElementById("valid-cn").innerHTML = "This field is required";
+                    $("#valid-cn").show();
+                    console.log("not getting values");
+                }
+            });
+
+            $("#ConfirmPassword").focusin(function () {
+                $("#valid-cn").hide();
+                document.getElementById("valid-cn").innerHTML = "";
+
+            });
+
+
+            $("#Firstname").focusout(function () {
+                var user = $(this).val();
+
+                //Checking the length of username
+                if (user.length === 0) {
+                    document.getElementById("valid-fn").innerHTML = "This field is required";
+                    $("#valid-fn").show();
+                    console.log("not getting values");
+                }
+                else {
+                    if (!isName(user)) {
+                        document.getElementById("valid-fn").innerHTML = "FirstName does not conatin special characters";
+                        $("#valid-fn").show();
+
+                    }
+                }
+            });
+
+            $("#Firstname").focusin(function () {
+                $("#valid-fn").hide();
+                document.getElementById("valid-fn").innerHTML = "";
+
+            });
+
+
+
+            $("#Lastname").focusout(function () {
+                var user = $(this).val();
+
+                //Checking the length of username
+                if (user.length === 0) {
+                    document.getElementById("valid-ln").innerHTML = "This field is required";
+                    $("#valid-ln").show();
+                    console.log("not getting values");
+                }
+
+                else {
+                    if (!isName(user)) {
+                        document.getElementById("valid-ln").innerHTML = "LastName does not conatin special characters";
+                        $("#valid-ln").show();
+
+                    }
+                }
+
+            });
+
+            $("#Lastname").focusin(function () {
+                $("#valid-ln").hide();
+                document.getElementById("valid-ln").innerHTML = "";
+
+            });
+
+            $("#Bloodgroup").focusout(function () {
+                debugger
+                var user = $(this).val();
+
+                //Checking the length of username
+                if (user === "") {
+                    document.getElementById("valid-blood").innerHTML = "Please Select Blood Group";
+                    $("#valid-blood").show();
+                }
+            });
+
+            $("#Bloodgroup").focusin(function () {
+                $("#valid-blood").hide();
+                document.getElementById("valid-blood").innerHTML = "";
+
+            });
+
+            
+
+
         });
 
     </script>
