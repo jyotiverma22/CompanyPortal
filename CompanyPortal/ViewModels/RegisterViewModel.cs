@@ -46,8 +46,9 @@ namespace CompanyPortal.ViewModels
         [Required]
         public string Bloodgroup { get; set; }
 
+        [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
-        public DateTime DOB { get; set; }
+        public string DOB { get; set; }
 
 
     }

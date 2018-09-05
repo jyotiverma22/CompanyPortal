@@ -1,4 +1,7 @@
-﻿using RepositoryLayer.Repositories;
+﻿using AutoMapper;
+using CompanyPortal.ViewModels;
+using Models;
+using RepositoryLayer.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +22,37 @@ namespace CompanyPortal.Controllers
 
 
 
-        [HttpPost, Route("checkusername")]
-        public IHttpActionResult checkuserdetails(String username)
+        [HttpPost, Route("checkUsernameStatus")]
+        public IHttpActionResult checkUsernameStatus(String username)
         {
-            return Ok();
+            return Ok(companyRepository.CheckUsernameStatus(username));
+        }
+
+
+        [HttpPost, Route("checkEmailStatus")]
+        public IHttpActionResult checkEmailStatus(string email)
+        {
+
+            return Ok(companyRepository.CheckEmailAddressStatus(email));
+        }
+
+        [HttpPost, Route("saveuserDetails")]
+        public IHttpActionResult saveUserDetails([FromBody] RegisterViewModel registerViewModel)
+        {
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<RegisterViewModel, Registration>().ForMember(t=>t.Sno,options=>options.Ignore());
+            });
+
+            IMapper mapper = config.CreateMapper();
+            Registration reg=mapper.Map<RegisterViewModel, Registration>(registerViewModel);
+
+            return Ok(companyRepository.AddUsers(reg));
+        }
+
+        [HttpGet, Route("GetUserId")]
+        public IHttpActionResult GetUserId()
+        {
+            return Ok(companyRepository.GetUserId());
         }
 
         // GET api/values

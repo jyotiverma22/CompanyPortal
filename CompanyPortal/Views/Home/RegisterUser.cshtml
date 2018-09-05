@@ -131,6 +131,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryui")
     @Styles.Render("~/Content/cssjqryUi")
+    @Scripts.Render("~/lib/js/site")
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -138,7 +139,7 @@
         
             $("#DOB").focusout(function () {
                 var dob = $('#DOB').val();
-                if (dob = "mm/dd/yyyy") {
+                if (dob = "") {
                     document.getElementById("valid-dob").innerHTML = "This is required field";
                     $("#valid-dob").show();
 
@@ -187,18 +188,19 @@
                         //post to check is username already take
 
                         $.ajax({
-                            url: '/api/values/checkusername',
+                            url: '/api/values/checkUsernameStatus?username='+user,
                             method: 'POST',
-                            content: 'application/json',
-                            data: {
-                                username: user
-                            },
+                            
                             success: function (response) {
-                                console.log(response);
+                                console.log(response);  
+                                if (response) {
+                                    
+                                    document.getElementById("Valid-user").innerHTML = "*Username already exist";
+                                    $("#Valid-user").show();
+                                }
                             },
                             error: function (jqXHR) {
                                 console.log(jqXHR);
-                                console.log("error in generating token");
 
                             }
                         });
@@ -228,18 +230,19 @@
                         // check already exist email 
 
                         $.ajax({
-                            url: '/api/values/checkEmailAddress',
+                            url: '/api/values/checkEmailStatus?email=' + email,
                             method: 'POST',
-                            content: 'application/json',
-                            data: {
-                                Email: email
-                            },
+                            
                             success: function (response) {
                                 console.log(response);
+                                if (response) {
+
+                                    document.getElementById("valid-email").innerHTML = "Email Address Already registered";
+                                    $("#valid-email").show();
+                                }
                             },
                             error: function (jqXHR) {
                                 console.log(jqXHR);
-                                console.log("error in generating token");
 
                             }
                         });
@@ -250,7 +253,7 @@
                     }
                 }
                 else {
-                    document.getElementById("validemail").innerHTML = "This field is required";
+                    document.getElementById("valid-email").innerHTML = "This field is required";
                     $("#valid-email").show();
                 }
             });
