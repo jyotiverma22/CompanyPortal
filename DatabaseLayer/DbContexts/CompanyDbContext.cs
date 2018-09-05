@@ -39,6 +39,7 @@ namespace DatabaseLayer.DbContexts
                 Console.WriteLine(registration);
 
                 string userid = registration.UserId;
+                userid = userid.Replace('"', ' ').Trim();
                 string[] id = userid.Split('-');
                 id[1] = (Int32.Parse(id[1]) + 1).ToString();
                 userid = id[0] +"-"+id[1];

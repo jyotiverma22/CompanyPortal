@@ -9,3 +9,13 @@ function isName(user) {
     var regex = /^[A-Za-z ]+$/;
     return regex.test(user);
 }
+
+
+function isPassword(pass) {
+    var regex = /(?=.*\d)(?=.* [a - z])(?=.* [A - Z])(?=.*[!@#$%^&*]).{ 8,}/;
+    return regex.test(pass);
+}
+
+function capitalizeFirstLetter(name) {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+}

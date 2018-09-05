@@ -303,14 +303,20 @@
 
                 //Checking the length of username
                 if (user.length > 0) {
-                    if (user.length < 5) {
-                        document.getElementById("valid-pass").innerHTML = "Password is too short";
+                    if (user.length < 8) {
+                        document.getElementById("valid-pass").innerHTML = "Password must have atleast 8 characters";
                         $("#valid-pass").show();
                     }
                     else if (user.length > 20) {
                         document.getElementById("valid-pass").innerHTML = "Password is too long";
                         $("#valid-pass").show();
                     }
+                    else 
+                        if (!isPassword(user)) {
+                            document.getElementById("valid-pass").innerHTML = "Password must have atleast one letter, digit and special character;
+                            $("#valid-pass").show();
+                        }
+                    
                 }
                 else {
                     document.getElementById("valid-pass").innerHTML = "This field is required";
@@ -369,6 +375,10 @@
                         $("#valid-fn").show();
 
                     }
+                    else {
+
+                        document.getElementById("Firstname").innerHTML = capitalizeFirstLetter(user);
+                        }
                 }
             });
 
@@ -395,6 +405,9 @@
                         document.getElementById("valid-ln").innerHTML = "LastName does not conatin special characters";
                         $("#valid-ln").show();
 
+                    }
+                    else {
+                        document.getElementById("Lastname").innerHTML = capitalizeFirstLetter(user);
                     }
                 }
 
