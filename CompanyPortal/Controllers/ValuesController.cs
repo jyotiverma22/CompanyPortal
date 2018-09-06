@@ -40,7 +40,10 @@ namespace CompanyPortal.Controllers
         public IHttpActionResult saveUserDetails([FromBody] RegisterViewModel registerViewModel)
         {
             var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<RegisterViewModel, Registration>().ForMember(t=>t.Sno,options=>options.Ignore());
+                cfg.CreateMap<RegisterViewModel, Registration>().ForMember(t=>t.Sno,options=>options.Ignore())
+                                        .ForMember(t=>t.bloodGroup,options=>options.Ignore())
+                                        .ForMember(t=>t.Id,options=>options.MapFrom(src=>src.Bloodgroup));
+
             });
 
             IMapper mapper = config.CreateMapper();
@@ -54,6 +57,13 @@ namespace CompanyPortal.Controllers
         {
             return Ok(companyRepository.GetUserId());
         }
+
+        [HttpGet, Route("GetBloodGroups")]
+        public IHttpActionResult GetBloodGroups()
+        {
+            return Ok(companyRepository.GetBloodGroups());
+        }
+
 
         // GET api/values
         public IEnumerable<string> Get()

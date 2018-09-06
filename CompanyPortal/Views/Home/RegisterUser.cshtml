@@ -97,7 +97,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Bloodgroup, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Bloodgroup, new SelectList(Enum.GetValues(typeof(BloodGroup))), "Select BloodGroup")
+                @Html.DropDownListFor(model => model.Bloodgroup, new SelectList(""), "Select BloodGroup")
                 @Html.ValidationMessageFor(model => model.Bloodgroup, "", new { @class = "text-danger", @id = "valid-blood" })
             </div>
         </div>
@@ -135,7 +135,30 @@
     @Scripts.Render("~/bundles/site")
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function ()
+        {
+            debugger
+            $.ajax({
+                
+                url: '/api/values/GetBloodGroups',
+                method: 'GET',
+
+                success: function (data) {
+                    console.log(data);
+
+                    $('#BloodGroup').val("");
+                    for (var i = 0; i < data.length; i++) {
+                        debugger
+                         var opt = new Option(data[i].BloodGroupName, data[i].Id);
+                                $('#Bloodgroup').append(opt);               
+                    }
+                },
+                error: function (jqXHR) {
+                    console.log(jqXHR);
+
+                }
+            });
+
             $("#DOB").datepicker({
                 changeMonth: true,
                 changeYear: true,  

@@ -79,6 +79,12 @@ namespace DatabaseLayer.DbContexts
         }
 
 
+        public List<BloodGroup> getBloodGroupList()
+        {
+            return BloodGroups.ToList();
+        }
+
+
 
      
 

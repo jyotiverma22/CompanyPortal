@@ -26,6 +26,11 @@ namespace RepositoryLayer.Repositories
             return DataLayer.CheckUsernameStatus(username);
         }
 
+        public List<BloodGroup> GetBloodGroups()
+        {
+            return DataLayer.GetBloodGroups();
+        }
+
         public string GetUserId()
         {
             return DataLayer.GetUserId();

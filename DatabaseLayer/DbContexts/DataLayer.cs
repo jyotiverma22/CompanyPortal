@@ -54,5 +54,13 @@ namespace DatabaseLayer.DbContexts
             }
         }
 
+        public static List<BloodGroup> GetBloodGroups()
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+                return companyDbContext.getBloodGroupList();
+            }
+        }
+
     }
 }

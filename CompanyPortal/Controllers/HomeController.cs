@@ -28,7 +28,18 @@ namespace CompanyPortal.Controllers
         [HttpPost]
         public async Task<ActionResult> RegisterUser(RegisterViewModel registerViewModel)
         {
-            if(ModelState.IsValid)
+            int age = CalculateAge(Convert.ToDateTime(registerViewModel.DOB));
+
+            if(age<20)
+            {
+                
+                ModelState.AddModelError("DOB","Age must be 20 or more");
+
+            }
+
+
+
+            if (ModelState.IsValid)
             {
                 //get User Id
                 string userId;
@@ -58,6 +69,8 @@ namespace CompanyPortal.Controllers
                                 {
 
                                     Console.WriteLine("User Added");
+
+                                    RedirectToAction("Login");
                                     //Now Generate Token
 
                                  /*   using (HttpClient httpc = new HttpClient())
@@ -102,5 +115,26 @@ namespace CompanyPortal.Controllers
             return View(registerViewModel);
         }
 
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(LoginViewModel loginViewModel)
+        {
+            return View(loginViewModel);
+        }
+
+        private  int CalculateAge(DateTime dateOfBirth)
+        {
+            int age = 0;
+            age = DateTime.Now.Year - dateOfBirth.Year;
+            if (DateTime.Now.DayOfYear < dateOfBirth.DayOfYear)
+                age = age - 1;
+
+            return age;
+        }
     }
 }

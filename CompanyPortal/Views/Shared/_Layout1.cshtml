@@ -21,7 +21,7 @@
             </div>
             <div class="navbar-collapse pull-right">
                 <div class="nav navbar-nav alignicon alignicon">
-                    <div class="txtColor"> Already Registered?</div> <Button id="btnLogin">LogIn</Button>
+                    <div class="txtColor"> Not Registered Yet?</div> <Button id="btnSignUp">Signup</Button>
                 </div>
             </div>
         </div>
@@ -37,12 +37,14 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
     <script type="text/javascript">
 
-        $("#btnLogin").focusin(function () {
-            debugger
-            window.location.href = "/home/Login";
+        $("#btnSignUp").click(function () {
+            window.location.href = "/home/RegisterUser";
         });
-    </script>
+        </script>
 </body>
 </html>
+
+

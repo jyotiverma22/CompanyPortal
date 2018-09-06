@@ -44,31 +44,12 @@ namespace CompanyPortal.ViewModels
         
 
         [Required]
-        public string Bloodgroup { get; set; }
+        public int Bloodgroup { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Age must be 20 or more")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
         public string DOB { get; set; }
 
 
     }
-    public enum BloodGroup
-    {
-        [Display(Name = "O+")]
-        OPositive,
-        [Display(Name = "A+")]
-        APositive,
-        [Display(Name = "B+")]
-        BPositive,
-        [Display(Name = "AB+")]
-        ABPositive,
-        [Display(Name = "AB-")]
-        ABNegative,
-        [Display(Name = "A-")]
-        ANegative,
-        [Display(Name = "B-")]
-        BNegative,
-        [Display(Name = "O-")]
-        ONegative
-    }
-}
+   }
