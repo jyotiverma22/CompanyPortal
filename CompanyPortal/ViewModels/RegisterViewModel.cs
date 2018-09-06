@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using static Models.BloodGroupList;
+using static Models.Password;
 
 namespace CompanyPortal.ViewModels
 {

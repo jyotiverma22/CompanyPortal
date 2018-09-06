@@ -40,7 +40,7 @@ namespace CompanyPortal.Controllers
                     var result = client.GetAsync(builder.Uri+"/GetUserId").Result;
                     if (result.IsSuccessStatusCode)
                     {
-                        userId=  await result.Content.ReadAsStringAsync();
+                        userId = await result.Content.ReadAsStringAsync();
                         userId = userId.Replace('"', ' ').Trim();
                         registerViewModel.userId = userId;
 

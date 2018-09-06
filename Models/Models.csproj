@@ -44,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BloodGroupList.cs" />
+    <Compile Include="BloodGroup.cs" />
+    <Compile Include="Password.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration.cs" />
   </ItemGroup>

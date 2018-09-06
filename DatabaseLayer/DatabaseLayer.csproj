@@ -14,7 +14,6 @@
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
@@ -153,6 +152,10 @@
     <Compile Include="Migrations\20180904042245_UserMigration.cs" />
     <Compile Include="Migrations\20180904042245_UserMigration.designer.cs">
       <DependentUpon>20180904042245_UserMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20180906124730_databaseMigration.cs" />
+    <Compile Include="Migrations\20180906124730_databaseMigration.designer.cs">
+      <DependentUpon>20180906124730_databaseMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\CompanyDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

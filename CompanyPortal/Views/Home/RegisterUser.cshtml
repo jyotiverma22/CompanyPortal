@@ -105,7 +105,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control datepicker", @type = "date" } })
+                @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control datepicker" } })
                 @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger", @id = "valid-dob" })
             </div>
         </div>
@@ -126,25 +126,31 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-<script src="~/Scripts/jquery-ui-1.12.1.js" type="text/javascript"></script>
-<script src="~/lib/js/site.js" type="text/javascript"></script>
+
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryui")
     @Styles.Render("~/Content/cssjqryUi")
-    @Scripts.Render("~/lib/js/site")
+    @Scripts.Render("~/bundles/site")
 
     <script type="text/javascript">
         $(document).ready(function () {
+            $("#DOB").datepicker({
+                changeMonth: true,
+                changeYear: true,  
+                yearRange:"1960:1999"
+            });
 
-        
             $("#DOB").focusout(function () {
-                var dob = $('#DOB').val();
-                if (dob = "") {
+                var dob = $(this).val();
+                if (dob === "") {
                     document.getElementById("valid-dob").innerHTML = "This is required field";
                     $("#valid-dob").show();
 
                 }
                 else {
+                   debugger
                     dob = new Date(dob);
                     var today = new Date();
                     var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
@@ -188,13 +194,13 @@
                         //post to check is username already take
 
                         $.ajax({
-                            url: '/api/values/checkUsernameStatus?username='+user,
+                            url: '/api/values/checkUsernameStatus?username=' + user,
                             method: 'POST',
-                            
+
                             success: function (response) {
-                                console.log(response);  
+                                console.log(response);
                                 if (response) {
-                                    
+
                                     document.getElementById("Valid-user").innerHTML = "*Username already exist";
                                     $("#Valid-user").show();
                                 }
@@ -227,12 +233,12 @@
                 //Checking the length of Email
                 if (email.length > 0) {
                     if (isEmail(email)) {
-                        // check already exist email 
+                        // check already exist email
 
                         $.ajax({
                             url: '/api/values/checkEmailStatus?email=' + email,
                             method: 'POST',
-                            
+
                             success: function (response) {
                                 console.log(response);
                                 if (response) {
@@ -277,7 +283,7 @@
 
                     }
 
-                  else  if (user.length != 10 ) {
+                    else if (user.length != 10) {
                         document.getElementById("valid-phone").innerHTML = "Please enter valid phone number(don't add prefix like 0 or +91)";
                         $("#valid-phone").show();
                     }
@@ -311,12 +317,12 @@
                         document.getElementById("valid-pass").innerHTML = "Password is too long";
                         $("#valid-pass").show();
                     }
-                    else 
-                        if (!isPassword(user)) {
-                            document.getElementById("valid-pass").innerHTML = "Password must have atleast one letter, digit and special character;
-                            $("#valid-pass").show();
-                        }
-                    
+                    else debugger
+                    if (!isPassword(user)) {
+                        document.getElementById("valid-pass").innerHTML = "Password must have atleast one capital letter,small letter, digit and special character";
+                        $("#valid-pass").show();
+                    }
+
                 }
                 else {
                     document.getElementById("valid-pass").innerHTML = "This field is required";
@@ -376,9 +382,9 @@
 
                     }
                     else {
-
-                        document.getElementById("Firstname").innerHTML = capitalizeFirstLetter(user);
-                        }
+                        $("#Firstname").val(capitalizeFirstLetter(user));
+                        //   document.getElementById("Firstname").innerHTML = capitalizeFirstLetter(user);
+                    }
                 }
             });
 
@@ -407,7 +413,8 @@
 
                     }
                     else {
-                        document.getElementById("Lastname").innerHTML = capitalizeFirstLetter(user);
+                        $("#Lastname").val(capitalizeFirstLetter(user));
+                        //  document.getElementById("Lastname").innerHTML = capitalizeFirstLetter(user);
                     }
                 }
 
@@ -436,7 +443,7 @@
 
             });
 
-            
+
 
 
         });

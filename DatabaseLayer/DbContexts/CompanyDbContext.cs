@@ -23,7 +23,7 @@ namespace DatabaseLayer.DbContexts
 
 
         public DbSet<Registration> UserRegistration { get; set; }
-
+        public DbSet<BloodGroup> BloodGroups { get; set; }
 
         public string GetUserId()
         {
@@ -51,6 +51,7 @@ namespace DatabaseLayer.DbContexts
 
         public bool AddUsers(Registration registration)
         {
+           registration.Password= Password.EncodePasswordToBase64(registration.Password);
             UserRegistration.Add(registration);
             SaveChanges();
             return true;
@@ -76,6 +77,8 @@ namespace DatabaseLayer.DbContexts
             }
             return false;
         }
+
+
 
      
 
