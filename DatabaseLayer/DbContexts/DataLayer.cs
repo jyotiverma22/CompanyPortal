@@ -22,7 +22,7 @@ namespace DatabaseLayer.DbContexts
         }
 
         public static bool CheckEmailAddressStatus(string email)
-        {
+                {
             using (CompanyDbContext companyDbContext2 = new CompanyDbContext())
             {
                 if (companyDbContext2.CheckEmailAddressStatus(email))
@@ -61,6 +61,15 @@ namespace DatabaseLayer.DbContexts
                 return companyDbContext.getBloodGroupList();
             }
         }
+
+        public static bool CheckUser(Login login)
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+                return companyDbContext.UserCheck(login);
+            }
+        }
+
 
     }
 }

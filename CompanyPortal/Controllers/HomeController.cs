@@ -1,5 +1,7 @@
 ﻿using CompanyPortal.ViewModels;
+using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -47,7 +49,7 @@ namespace CompanyPortal.Controllers
                 {
                     UriBuilder builder = new UriBuilder(ConfigurationManager.AppSettings["baseUrl"]);
 
-                    client.BaseAddress = new Uri(ConfigurationManager.AppSettings["baseUrl"]);
+                   // client.BaseAddress = new Uri(ConfigurationManager.AppSettings["baseUrl"]);
                     var result = client.GetAsync(builder.Uri+"/GetUserId").Result;
                     if (result.IsSuccessStatusCode)
                     {
@@ -70,14 +72,10 @@ namespace CompanyPortal.Controllers
 
                                     Console.WriteLine("User Added");
 
-                                    RedirectToAction("Login");
-                                    //Now Generate Token
+                                   return RedirectToAction("Login");
+                                  
 
-                                 /*   using (HttpClient httpc = new HttpClient())
-                                    {
-                                     //   httpc.BaseAddress= new Uri("http://localhost:61488/token");
-
-                                    }*/
+                                 
                                 }
                             }
 
@@ -92,24 +90,7 @@ namespace CompanyPortal.Controllers
                     }
 
                 }
-
-
-
-
-
-                // save data into database
-
-
-
-
-                //generate token
-
-
-
-
-
-
-
+                
             }
 
             return View(registerViewModel);
@@ -122,9 +103,59 @@ namespace CompanyPortal.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginViewModel loginViewModel)
+        public async Task<ActionResult> Login(LoginViewModel loginViewModel)
         {
-            return View(loginViewModel);
+            if (ModelState.IsValid)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    UriBuilder builder = new UriBuilder(ConfigurationManager.AppSettings["baseUrl"]);
+                    var json = JsonConvert.SerializeObject(loginViewModel);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var resultpost = await client.PostAsync(builder.Uri + "/CheckUser", content);
+                    if (resultpost.IsSuccessStatusCode)
+                    {
+                        if (Convert.ToBoolean(resultpost.Content.ReadAsStringAsync().Result))
+                        {
+                            //user Exist, generate tthe token 
+
+                            using (HttpClient httpclient = new HttpClient())
+                            {
+                                UriBuilder uri = new UriBuilder("http://localhost:61488/token");
+                                var data = new Dictionary<string, string>
+                                {
+                                     {"grant_type", "password"},
+                                     {"username", loginViewModel.Username},
+                                     {"password", loginViewModel.Password},
+                                };
+
+                                var tokenResponse = client.PostAsync(uri.Uri, new FormUrlEncodedContent(data)).Result;
+
+                                if(tokenResponse.IsSuccessStatusCode)
+                                {
+                                    var response = (JObject)JsonConvert.DeserializeObject(tokenResponse.Content.ReadAsStringAsync().Result);
+                                    Session["token"] = response["access_token"].Value<string>();
+                                    var p= response["access_token"].Value<string>(); 
+                                }
+
+                            }
+
+
+                            return RedirectToAction("Index", "LoggedIn", new { loginViewModel.Username });
+                        }
+
+                        else
+                        {
+                            ModelState.AddModelError("", "Username/Password Incorrect");
+                            return View(loginViewModel);
+                        }
+
+                    }
+
+                }
+            }
+                return View(loginViewModel);
+            
         }
 
         private  int CalculateAge(DateTime dateOfBirth)

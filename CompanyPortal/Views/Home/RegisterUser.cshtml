@@ -135,6 +135,9 @@
     @Scripts.Render("~/bundles/site")
 
     <script type="text/javascript">
+
+        window.onload = window.history.forward(0);
+
         $(document).ready(function ()
         {
             debugger
@@ -170,6 +173,8 @@
                 if (dob === "") {
                     document.getElementById("valid-dob").innerHTML = "This is required field";
                     $("#valid-dob").show();
+                    document.getElementById("DOB").innerHTML = "";
+
 
                 }
                 else {
@@ -184,6 +189,7 @@
                     else {
                         document.getElementById("valid-dob").innerHTML = "User must complete his 20 years of age";
                         $("#valid-dob").show();
+                        document.getElementById("DOB").innerHTML = "";
 
                         //   alert("please enter valid date");
                     }
@@ -208,10 +214,11 @@
                     if (user.length < 5) {
                         document.getElementById("Valid-user").innerHTML = "Username is too short";
                         $("#Valid-user").show();
-                    }
+                        $('#Username').val("");                   }
                     else if (user.length > 20) {
                         document.getElementById("Valid-user").innerHTML = "Username is too long";
                         $("#Valid-user").show();
+                        $('#Username').val("");
                     }
                     else {
                         //post to check is username already take
@@ -226,6 +233,8 @@
 
                                     document.getElementById("Valid-user").innerHTML = "*Username already exist";
                                     $("#Valid-user").show();
+                                    $('#Username').val("");
+
                                 }
                             },
                             error: function (jqXHR) {
@@ -265,6 +274,7 @@
                             success: function (response) {
                                 console.log(response);
                                 if (response) {
+                                    document.getElementById("Email").innerHTML = "";
 
                                     document.getElementById("valid-email").innerHTML = "Email Address Already registered";
                                     $("#valid-email").show();
@@ -278,12 +288,14 @@
                     }
                     else {
                         document.getElementById("valid-email").innerHTML = "Please enter valid email Address";
+                       
                         $("#valid-email").show();
                     }
                 }
                 else {
                     document.getElementById("valid-email").innerHTML = "This field is required";
                     $("#valid-email").show();
+
                 }
             });
 
@@ -303,6 +315,7 @@
                     if (isNaN(user)) {
                         document.getElementById("valid-phone").innerHTML = "Phone number contains only digits";
                         $("#valid-phone").show();
+                        $("#Phone").val("");
 
                     }
 
@@ -344,6 +357,7 @@
                     if (!isPassword(user)) {
                         document.getElementById("valid-pass").innerHTML = "Password must have atleast one capital letter,small letter, digit and special character";
                         $("#valid-pass").show();
+                        $("#Password").val("");
                     }
 
                 }
@@ -402,6 +416,7 @@
                     if (!isName(user)) {
                         document.getElementById("valid-fn").innerHTML = "FirstName does not conatin special characters";
                         $("#valid-fn").show();
+                        $("$Firstname").val("");
 
                     }
                     else {
@@ -433,6 +448,7 @@
                     if (!isName(user)) {
                         document.getElementById("valid-ln").innerHTML = "LastName does not conatin special characters";
                         $("#valid-ln").show();
+                        $("$Lastname").val("");
 
                     }
                     else {

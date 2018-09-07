@@ -51,7 +51,7 @@ namespace DatabaseLayer.DbContexts
 
         public bool AddUsers(Registration registration)
         {
-           registration.Password= Password.EncodePasswordToBase64(registration.Password);
+           registration.Password= Password.EncodePassword(registration.Password,registration.Username);
             UserRegistration.Add(registration);
             SaveChanges();
             return true;
@@ -82,6 +82,25 @@ namespace DatabaseLayer.DbContexts
         public List<BloodGroup> getBloodGroupList()
         {
             return BloodGroups.ToList();
+        }
+
+
+        public bool UserCheck(Login login)
+        {
+         //   login.Password = Password.EncodePassword(login.Password,login.Username);
+
+            Registration user = UserRegistration.Where(x =>   (x.Username==login.Username||x.Email==login.Username)).FirstOrDefault();
+            if(user!=null)
+            {
+                login.Password = Password.EncodePassword(login.Password, user.Username);
+                if(user.Password==login.Password)
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            return false;
         }
 
 

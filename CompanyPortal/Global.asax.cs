@@ -19,5 +19,12 @@ namespace CompanyPortal
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+
+        protected void Session_OnStart()
+        {
+            Session["user"]=null;
+            Session["token"]=null;
+        }
     }
 }

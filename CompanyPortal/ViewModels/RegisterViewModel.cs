@@ -25,7 +25,7 @@ namespace CompanyPortal.ViewModels
 
         [Required]
         [DataType(DataType.Password)]
-        [StringLength(20, MinimumLength = 5, ErrorMessage = "Password must be between 5 and 20 characters")]
+        [StringLength(20, MinimumLength = 8, ErrorMessage = "Password must be between 8 and 20 characters")]
         public string Password { get; set; }
 
         [Required]

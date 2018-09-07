@@ -64,7 +64,20 @@ namespace CompanyPortal.Controllers
             return Ok(companyRepository.GetBloodGroups());
         }
 
+       [HttpPost,Route("CheckUser")]
+       public IHttpActionResult CheckUser([FromBody] LoginViewModel loginviewModel)
+        {
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<LoginViewModel, Login>();
 
+            });
+
+            IMapper mapper = config.CreateMapper();
+            Login login= mapper.Map<LoginViewModel, Login>(loginviewModel);
+
+
+            return Ok(companyRepository.CheckUser(login));
+        }
         // GET api/values
         public IEnumerable<string> Get()
         {

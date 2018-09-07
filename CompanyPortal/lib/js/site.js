@@ -6,7 +6,7 @@ function isEmail(email) {
 }
 
 function isName(user) {
-    debugger
+        debugger
     var regex = /^[A-Za-z ]+$/;
     return regex.test(user);
 }
@@ -19,10 +19,6 @@ function isPassword(pass) {
 
 function capitalizeFirstLetter(name) {
     debugger
-    return name.charAt(0).toUpperCase() + name.slice(1);
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 }
 
-
-function getBloodGroups() {
-
-}

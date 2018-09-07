@@ -21,6 +21,11 @@ namespace RepositoryLayer.Repositories
             return DataLayer.CheckEmailAddressStatus(email);
         }
 
+        public bool CheckUser(Login login)
+        {
+            return DataLayer.CheckUser(login);
+        }
+
         public bool CheckUsernameStatus(string username)
         {
             return DataLayer.CheckUsernameStatus(username);

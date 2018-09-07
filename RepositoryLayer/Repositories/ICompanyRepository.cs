@@ -18,5 +18,7 @@ namespace RepositoryLayer.Repositories
         bool CheckEmailAddressStatus(string email);
 
         List<BloodGroup> GetBloodGroups();
+
+        bool CheckUser(Login login);
     }
 }
