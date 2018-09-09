@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace CompanyPortal.Controllers
 {
+
     public class LoggedInController : Controller
     {
         // GET: LoggedIn

@@ -8,7 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" type="text/css" href="~/lib/site.css">
 </head>
-<body>
+<body >
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -21,24 +21,39 @@
             </div>
             <div class="navbar-collapse pull-right">
                 <div class="nav navbar-nav alignicon alignicon">
-                     <Button id="btnlogout">Logout</Button>
+                    <Button id="btnlogout">Logout</Button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div>
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-        </div>
-        <footer class="navbar-inverse">
+
+
+
+    <div class="side-nav navbar-inverse">
+        <a href="#about">Personal Details</a>
+        <a href="#services">Project Details</a>
+        <a href="#clients">Attendence</a>
+    </div>
+
+    <div class="main">
+    <div class="container body-content bgmiddle">
+        @RenderBody()
+
+    </div>
+
+
+
+
+   
+        <footer class="navbar-inverse setmarginfooter">
             <p class="txtColor padding">&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
     @RenderSection("scripts", required: false)
 
     <script type="text/javascript">
