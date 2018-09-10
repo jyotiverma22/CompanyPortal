@@ -136,7 +136,7 @@
     @Styles.Render("~/Content/css")
 
     <script type="text/javascript">
-
+        //ModelState.clear();     
         var count = 0;
         $('#subbutton').prop('disabled', true);
 
@@ -151,11 +151,11 @@
 
                 success: function (data) {
                     console.log(data);
-
+                    
                     $('#BloodGroup').val("");
                     for (var i = 0; i < data.length; i++) {
 
-                        var opt = new Option(data[i].BloodGroupName, data[i].Id);
+                        var opt = new Option(data[i].BloodGroupName, data[i].BId);
                         $('#Bloodgroup').append(opt);
                     }
                 },
@@ -170,6 +170,7 @@
                 changeYear: true,
                 yearRange: "1960:1999",
                 onSelect: function (datetext, inst) {
+                    $('#subbutton').prop('disabled', true);
                     var dob = $(this).val();
                     dob = new Date(dob);
                     var today = new Date();
@@ -209,8 +210,8 @@
 
                 }
                 else {
-                    
-/*                    dob = new Date(dob);
+                    $('#subbutton').prop('disabled', true);
+                   dob = new Date(dob);
                     var today = new Date();
                     var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
                     //
@@ -224,14 +225,11 @@
                     }
                     else {
                         $('#age').html("");
-                        document.getElementById("valid-dob").innerHTML = "User must complete his 20 years of age";
-                        $("#valid-dob").show();
-                        document.getElementById("DOB").innerHTML = "";
-
+                 
                         $('#subbutton').prop('disabled', true);
                         //   alert("please enter valid date");
                     }
-  */              }
+              }
             });
 
 
@@ -565,7 +563,7 @@
             });
 
             $("#Bloodgroup").focusout(function () {
-
+                
                 var user = $(this).val();
 
                 //Checking the length of username

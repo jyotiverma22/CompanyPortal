@@ -24,7 +24,6 @@ namespace DatabaseLayer.DbContexts
 
         public DbSet<Registration> UserRegistration { get; set; }
         public DbSet<BloodGroup> BloodGroups { get; set; }
-
         public DbSet<Department> Departments{ get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Attendence> Emp_Attendence{ get; set; }
@@ -59,7 +58,9 @@ namespace DatabaseLayer.DbContexts
 
         public bool AddUsers(Registration registration)
         {
-           registration.Password= Password.EncodePassword(registration.Password,registration.Username);
+            registration.DId = 5;
+            registration.RId = 4;
+            registration.Password= Password.EncodePassword(registration.Password,registration.Username);
             UserRegistration.Add(registration);
             SaveChanges();
             return true;
@@ -111,7 +112,16 @@ namespace DatabaseLayer.DbContexts
             return false;
         }
 
+        public EmployeesDetails GetEmployeesDetails(string username)
+        {
+            EmployeesDetails employees = new EmployeesDetails();
+            employees = UserRegistration.Where(x => (x.Username == username || x.Email == username)).Select(c=>new EmployeesDetails { userId=c.UserId,Username=c.Username,FullName=(c.Firstname+" "+c.Lastname),DOB=c.DOB,Email=c.Email,Phone=c.Phone,Gender=c.Gender,Bloodgroup=c.bloodGroup.BloodGroupName,Department_name=c.department.Dname,Role_name=c.role.RoleName,Rep_Manager=(UserRegistration.Where(m=>m.UserId==(Emp_Reportings.Where(u=>u.Emp_ID==c.UserId).Select(u=>u.Rep_Mgr).FirstOrDefault())).Select(m=>m.Username).FirstOrDefault())}).FirstOrDefault();
+            //   Department d = Departments.Where(x => x.DId == reg.DId).FirstOrDefault();
+            //   employees.userId = reg.UserId;
+            return employees;
 
+
+        }
 
      
 

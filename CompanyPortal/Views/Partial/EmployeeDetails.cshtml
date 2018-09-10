@@ -1,27 +1,18 @@
 ﻿@model CompanyPortal.ViewModels.EmployeeDetailsViewModel
 
-@{
-    ViewBag.Title = "CompanyPortal"+Model.Email;
-    Layout = "~/Views/Shared/_Layout2.cshtml";
-}
-
-<h2>Index</h2>
-
 <div>
     <h4>EmployeeDetailsViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Emp_Id:
+            @Html.DisplayNameFor(model => model.userId)
         </dt>
 
         <dd>
-
             @Html.DisplayFor(model => model.userId)
         </dd>
 
         <dt>
-
             @Html.DisplayNameFor(model => model.Username)
         </dt>
 
@@ -70,7 +61,7 @@
         </dd>
 
         <dt>
-            Date of Birth
+            @Html.DisplayNameFor(model => model.DOB)
         </dt>
 
         <dd>
@@ -78,7 +69,7 @@
         </dd>
 
         <dt>
-            Department
+            @Html.DisplayNameFor(model => model.Department_name)
         </dt>
 
         <dd>
@@ -86,7 +77,7 @@
         </dd>
 
         <dt>
-            Role
+            @Html.DisplayNameFor(model => model.Role_name)
         </dt>
 
         <dd>
@@ -94,7 +85,7 @@
         </dd>
 
         <dt>
-            Reporting Manager
+            @Html.DisplayNameFor(model => model.Rep_Manager)
         </dt>
 
         <dd>
@@ -103,4 +94,7 @@
 
     </dl>
 </div>
-
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

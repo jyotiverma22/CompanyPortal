@@ -36,6 +36,11 @@ namespace RepositoryLayer.Repositories
             return DataLayer.GetBloodGroups();
         }
 
+        public EmployeesDetails GetEmployeesDetails(string username)
+        {
+            return DataLayer.GetEmloyeesDetails(username);
+        }
+
         public string GetUserId()
         {
             return DataLayer.GetUserId();

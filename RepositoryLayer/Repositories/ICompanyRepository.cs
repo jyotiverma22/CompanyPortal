@@ -20,5 +20,7 @@ namespace RepositoryLayer.Repositories
         List<BloodGroup> GetBloodGroups();
 
         bool CheckUser(Login login);
+
+        EmployeesDetails GetEmployeesDetails(string username);
     }
 }

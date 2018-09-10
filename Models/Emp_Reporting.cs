@@ -10,8 +10,8 @@ namespace Models
  public class Emp_Reporting
     {
         [Key]
-        public int Id { get; set; }
-        public int Emp_ID { get; set; }
-        public int Rep_Mgr { get; set; }
+        public int Emp_Rep_Id { get; set; }
+        public string Emp_ID { get; set; }
+        public string Rep_Mgr { get; set; }
     }
 }

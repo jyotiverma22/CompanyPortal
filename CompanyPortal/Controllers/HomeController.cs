@@ -24,7 +24,7 @@ namespace CompanyPortal.Controllers
 
         public ActionResult RegisterUser()
         {
-            return View();
+            return View(new RegisterViewModel());
         }
 
         [HttpPost]
@@ -99,7 +99,7 @@ namespace CompanyPortal.Controllers
 
         public ActionResult Login()
         {
-            return View();
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
@@ -135,13 +135,15 @@ namespace CompanyPortal.Controllers
                                 {
                                     var response = (JObject)JsonConvert.DeserializeObject(tokenResponse.Content.ReadAsStringAsync().Result);
                                     Session["token"] = response["access_token"].Value<string>();
-                                    var p= response["access_token"].Value<string>(); 
+                                    var p= response["access_token"].Value<string>();
+                                    Session["username"] = loginViewModel.Username;
+                                    return RedirectToAction("Index", "LoggedIn", new { loginViewModel.Username });
                                 }
 
                             }
 
 
-                            return RedirectToAction("Index", "LoggedIn", new { loginViewModel.Username });
+                            
                         }
 
                         else

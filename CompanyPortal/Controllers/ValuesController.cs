@@ -42,7 +42,11 @@ namespace CompanyPortal.Controllers
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<RegisterViewModel, Registration>().ForMember(t=>t.Sno,options=>options.Ignore())
                                         .ForMember(t=>t.bloodGroup,options=>options.Ignore())
-                                        .ForMember(t=>t.Id,options=>options.MapFrom(src=>src.Bloodgroup));
+                                        .ForMember(t => t.department, options => options.Ignore())
+                                        .ForMember(t => t.DId, options => options.Ignore())
+                                        .ForMember(t => t.role, options => options.Ignore())
+                                        .ForMember(t => t.RId, options => options.Ignore())
+                                        .ForMember(t=>t.BId,options=>options.MapFrom(src=>src.Bloodgroup));
 
             });
 

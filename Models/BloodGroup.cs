@@ -10,7 +10,7 @@ namespace Models
    public class BloodGroup
     {
         [Key]
-        public int Id{ get; set; }
+        public int BId{ get; set; }
         public string BloodGroupName{ get; set; }
         public string Active{ get; set; }
         public List<Registration> Users{ get; set; }

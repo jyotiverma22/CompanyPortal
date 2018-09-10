@@ -157,6 +157,10 @@
     <Compile Include="Migrations\20180906124730_databaseMigration.designer.cs">
       <DependentUpon>20180906124730_databaseMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20180910051928_CompanyMigration.cs" />
+    <Compile Include="Migrations\20180910051928_CompanyMigration.designer.cs">
+      <DependentUpon>20180910051928_CompanyMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\CompanyDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

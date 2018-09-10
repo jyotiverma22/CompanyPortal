@@ -23,7 +23,7 @@ namespace CompanyPortal
 
         protected void Session_OnStart()
         {
-            Session["user"]=null;
+            Session["username"]=null;
             Session["token"]=null;
         }
     }

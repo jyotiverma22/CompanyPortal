@@ -70,6 +70,14 @@ namespace DatabaseLayer.DbContexts
             }
         }
 
+        public static EmployeesDetails GetEmloyeesDetails(string username)
+        {
+            using (CompanyDbContext companyDbContext=new CompanyDbContext())
+            {
+                return companyDbContext.GetEmployeesDetails(username);
+            }
+        }
+
 
     }
 }
