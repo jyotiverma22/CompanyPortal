@@ -452,8 +452,8 @@
     <Content Include="Views\Home\RegisterUser.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\LoggedIn\Index.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
+    <Content Include="Views\LoggedIn\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -50,6 +50,9 @@ namespace CompanyPortal.ViewModels
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
         public string DOB { get; set; }
 
+        public int DId{ get; set; }
+
+        public int RId { get; set; }
 
     }
    }

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace CompanyPortal.Controllers
 {
+    [Authorize]
     public class LoggedInController : Controller
     {
         // GET: LoggedIn

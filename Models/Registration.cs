@@ -20,8 +20,11 @@ namespace Models
         public string Lastname { get; set; }
         public string Gender{ get; set; }
         public string DOB{ get; set; }
-        public int Id { get; set; }
+        public int BId { get; set; }
         public BloodGroup bloodGroup{ get; set; }
-
+        public int DId { get; set; }
+        public Department department { get; set; }
+        public int RId { get; set; }
+        public Role role { get; set; }
     }
 }

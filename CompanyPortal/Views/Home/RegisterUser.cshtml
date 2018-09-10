@@ -9,35 +9,29 @@
 }
 <link rel="stylesheet" href="~/Content/themes/base/datepicker.css">
 
-<h2></h2>
-
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Sign Up</h4>
+        <div class="col-md-12 ">
+            <h4 class="col-md-offset-4 bgR">Register Yourself</h4>
+        </div>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <!--     <div class="form-group">
-                  @Html.LabelFor(model => model.userId, htmlAttributes: new { @class = "control-label col-md-2" })
-                  <div class="col-md-10">
-                      @Html.EditorFor(model => model.userId, new { htmlAttributes = new { @class = "form-control" } })
-                      @Html.ValidationMessageFor(model => model.userId, "", new { @class = "text-danger" })
-                  </div>
-              </div>
-            -->
         <div class="form-group">
-            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <label class="control-label col-md-2" for="Username">Username</label>
+             <div class="col-md-10">
                 @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger", @id = "Valid-user" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Email">Email</label>
+
+
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger", @id = "valid-email" })
@@ -45,7 +39,8 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Phone">Phone Number</label>
+
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger", @id = "valid-phone" })
@@ -53,7 +48,8 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Password">Password</label>
+
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger", @id = "valid-pass" })
@@ -61,7 +57,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="ConfirmPassword">Confirm Password</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger", @id = "valid-cn" })
@@ -69,7 +65,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Firstname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="FirstName">First Name</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger", @id = "valid-fn" })
@@ -77,7 +73,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Lastname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Lastname">Last Name</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "text-danger", @id = "valid-ln" })
@@ -85,7 +81,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Gender">Gender</label>
             <div class="col-md-10">
 
                 Male    @Html.RadioButtonFor(m => m.Gender, "Male", htmlAttributes: new { @id = "male", @checked = true })
@@ -95,7 +91,8 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Bloodgroup, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Bloodgroup">Bloodgroup</label>
+
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Bloodgroup, new SelectList(""), "Select BloodGroup")
                 @Html.ValidationMessageFor(model => model.Bloodgroup, "", new { @class = "text-danger", @id = "valid-blood" })
@@ -103,28 +100,30 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="DOB">Date of Birth</label>
+
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control datepicker" } })
                 @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger", @id = "valid-dob" })
             </div>
         </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" >Age</label>
 
-        <div>
-            Age : <div id="age"></div>
+            <div class="col-md-10" id="age">
+            </div>
         </div>
+
+       
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Submit" class="btn btn-default" />
+                <input type="submit" value="Submit" class="btn btn-default" id="subbutton" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 
 
@@ -134,15 +133,19 @@
     @Styles.Render("~/Content/cssjqryUi")
     @Scripts.Render("~/bundles/site")
 
+    @Styles.Render("~/Content/css")
+
     <script type="text/javascript">
+
+        var count = 0;
+        $('#subbutton').prop('disabled', true);
 
         window.onload = window.history.forward(0);
 
-        $(document).ready(function ()
-        {
-            debugger
+        $(document).ready(function () {
+
             $.ajax({
-                
+
                 url: '/api/values/GetBloodGroups',
                 method: 'GET',
 
@@ -151,9 +154,9 @@
 
                     $('#BloodGroup').val("");
                     for (var i = 0; i < data.length; i++) {
-                        debugger
-                         var opt = new Option(data[i].BloodGroupName, data[i].Id);
-                                $('#Bloodgroup').append(opt);               
+
+                        var opt = new Option(data[i].BloodGroupName, data[i].Id);
+                        $('#Bloodgroup').append(opt);
                     }
                 },
                 error: function (jqXHR) {
@@ -164,36 +167,71 @@
 
             $("#DOB").datepicker({
                 changeMonth: true,
-                changeYear: true,  
-                yearRange:"1960:1999"
-            });
-
-            $("#DOB").focusout(function () {
-                var dob = $(this).val();
-                if (dob === "") {
-                    document.getElementById("valid-dob").innerHTML = "This is required field";
-                    $("#valid-dob").show();
-                    document.getElementById("DOB").innerHTML = "";
-
-
-                }
-                else {
-                   debugger
+                changeYear: true,
+                yearRange: "1960:1999",
+                onSelect: function (datetext, inst) {
+                    var dob = $(this).val();
                     dob = new Date(dob);
                     var today = new Date();
                     var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
                     //
                     if (age > 20) {
                         $('#age').html(age + ' years old');
+                        count = count + 1;
+                        if (count >= 9) {
+                            $('#subbutton').prop('disabled', false);
+                        }
+
                     }
                     else {
+                        $('#age').html("");
                         document.getElementById("valid-dob").innerHTML = "User must complete his 20 years of age";
                         $("#valid-dob").show();
                         document.getElementById("DOB").innerHTML = "";
 
+                        $('#subbutton').prop('disabled', true);
                         //   alert("please enter valid date");
                     }
+
                 }
+            });
+
+            $("#DOB").focusout(function () {
+                var dob = $(this).val();
+                if (dob === "") {
+                    $('#age').html("");
+
+                    document.getElementById("valid-dob").innerHTML = "This is required field";
+                    $("#valid-dob").show();
+                    document.getElementById("DOB").innerHTML = "";
+
+                    $('#subbutton').prop('disabled', true);
+
+                }
+                else {
+                    
+/*                    dob = new Date(dob);
+                    var today = new Date();
+                    var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+                    //
+                    if (age > 20) {
+                        $('#age').html(age + ' years old');
+                        count = count + 1;
+                        if (count >= 9) {
+                            $('#subbutton').prop('disabled', false);
+                        }
+
+                    }
+                    else {
+                        $('#age').html("");
+                        document.getElementById("valid-dob").innerHTML = "User must complete his 20 years of age";
+                        $("#valid-dob").show();
+                        document.getElementById("DOB").innerHTML = "";
+
+                        $('#subbutton').prop('disabled', true);
+                        //   alert("please enter valid date");
+                    }
+  */              }
             });
 
 
@@ -214,11 +252,14 @@
                     if (user.length < 5) {
                         document.getElementById("Valid-user").innerHTML = "Username is too short";
                         $("#Valid-user").show();
-                        $('#Username').val("");                   }
+
+                        $('#subbutton').prop('disabled', true);
+                    }
                     else if (user.length > 20) {
                         document.getElementById("Valid-user").innerHTML = "Username is too long";
                         $("#Valid-user").show();
-                        $('#Username').val("");
+
+                        $('#subbutton').prop('disabled', true);
                     }
                     else {
                         //post to check is username already take
@@ -233,7 +274,16 @@
 
                                     document.getElementById("Valid-user").innerHTML = "*Username already exist";
                                     $("#Valid-user").show();
-                                    $('#Username').val("");
+
+                                    $('#subbutton').prop('disabled', true);
+
+                                }
+                                else {
+
+                                    count = count + 1;
+                                    if (count >= 9) {
+                                        $('#subbutton').prop('disabled', false);
+                                    }
 
                                 }
                             },
@@ -248,6 +298,8 @@
                     document.getElementById("Valid-user").innerHTML = "This field is required";
                     $("#Valid-user").show();
                     console.log("not getting values");
+
+                    $('#subbutton').prop('disabled', true);
                 }
             });
 
@@ -260,7 +312,7 @@
 
 
             $("#Email").focusout(function () {
-                debugger
+
                 var email = $(this).val();
                 //Checking the length of Email
                 if (email.length > 0) {
@@ -274,10 +326,17 @@
                             success: function (response) {
                                 console.log(response);
                                 if (response) {
-                                    document.getElementById("Email").innerHTML = "";
 
+                                    $('#subbutton').prop('disabled', true);
                                     document.getElementById("valid-email").innerHTML = "Email Address Already registered";
                                     $("#valid-email").show();
+                                }
+                                else {
+                                    count = count + 1;
+                                    if (count >= 9) {
+                                        $('#subbutton').prop('disabled', false);
+                                    }
+
                                 }
                             },
                             error: function (jqXHR) {
@@ -288,7 +347,7 @@
                     }
                     else {
                         document.getElementById("valid-email").innerHTML = "Please enter valid email Address";
-                       
+
                         $("#valid-email").show();
                     }
                 }
@@ -296,6 +355,7 @@
                     document.getElementById("valid-email").innerHTML = "This field is required";
                     $("#valid-email").show();
 
+                    $('#subbutton').prop('disabled', true);
                 }
             });
 
@@ -315,18 +375,28 @@
                     if (isNaN(user)) {
                         document.getElementById("valid-phone").innerHTML = "Phone number contains only digits";
                         $("#valid-phone").show();
-                        $("#Phone").val("");
+                        $('#subbutton').prop('disabled', true);
 
                     }
 
                     else if (user.length != 10) {
                         document.getElementById("valid-phone").innerHTML = "Please enter valid phone number(don't add prefix like 0 or +91)";
                         $("#valid-phone").show();
+                        $('#subbutton').prop('disabled', true);
+                    }
+
+                    else {
+                        count = count + 1;
+                        if (count >= 9) {
+                            $('#subbutton').prop('disabled', false);
+                        }
+
                     }
                 }
                 else {
                     document.getElementById("valid-phone").innerHTML = "This field is required";
                     $("#valid-phone").show();
+                    $('#subbutton').prop('disabled', true);
                     console.log("not getting values");
                 }
             });
@@ -348,23 +418,33 @@
                     if (user.length < 8) {
                         document.getElementById("valid-pass").innerHTML = "Password must have atleast 8 characters";
                         $("#valid-pass").show();
+                        $('#subbutton').prop('disabled', true);
                     }
                     else if (user.length > 20) {
                         document.getElementById("valid-pass").innerHTML = "Password is too long";
                         $("#valid-pass").show();
+                        $('#subbutton').prop('disabled', true);
                     }
-                    else debugger
-                    if (!isPassword(user)) {
-                        document.getElementById("valid-pass").innerHTML = "Password must have atleast one capital letter,small letter, digit and special character";
-                        $("#valid-pass").show();
-                        $("#Password").val("");
-                    }
+                    else
+                        if (!isPassword(user)) {
+                            document.getElementById("valid-pass").innerHTML = "Password must have atleast one capital letter,small letter, digit and special character";
+                            $("#valid-pass").show();
+                            $('#subbutton').prop('disabled', true);
+                        }
+                        else {
+                            count = count + 1;
+                            if (count >= 9) {
+                                $('#subbutton').prop('disabled', false);
+                            }
+
+                        }
 
                 }
                 else {
                     document.getElementById("valid-pass").innerHTML = "This field is required";
                     $("#valid-pass").show();
                     console.log("not getting values");
+                    $('#subbutton').prop('disabled', true);
                 }
             });
 
@@ -382,17 +462,23 @@
                 //Checking the length of username
                 if (user.length > 0) {
                     if (user === password) {
+                        count = count + 1;
+                        if (count >= 9) {
+                            $('#subbutton').prop('disabled', false);
+                        }
 
                     }
                     else {
                         document.getElementById("valid-cn").innerHTML = "Confirm Password field does not match with Password field";
                         $("#valid-cn").show();
+                        $('#subbutton').prop('disabled', true);
                     }
                 }
                 else {
                     document.getElementById("valid-cn").innerHTML = "This field is required";
                     $("#valid-cn").show();
                     console.log("not getting values");
+                    $('#subbutton').prop('disabled', true);
                 }
             });
 
@@ -410,19 +496,25 @@
                 if (user.length === 0) {
                     document.getElementById("valid-fn").innerHTML = "This field is required";
                     $("#valid-fn").show();
+                    $('#subbutton').prop('disabled', true);
                     console.log("not getting values");
                 }
                 else {
                     if (!isName(user)) {
                         document.getElementById("valid-fn").innerHTML = "FirstName does not conatin special characters";
                         $("#valid-fn").show();
-                        $("$Firstname").val("");
-
+                        $('#subbutton').prop('disabled', true);
                     }
                     else {
                         $("#Firstname").val(capitalizeFirstLetter(user));
                         //   document.getElementById("Firstname").innerHTML = capitalizeFirstLetter(user);
+                        count = count + 1;
+                        if (count >= 9) {
+                            $('#subbutton').prop('disabled', false);
+                        }
+
                     }
+
                 }
             });
 
@@ -441,6 +533,7 @@
                 if (user.length === 0) {
                     document.getElementById("valid-ln").innerHTML = "This field is required";
                     $("#valid-ln").show();
+                    $('#subbutton').prop('disabled', true);
                     console.log("not getting values");
                 }
 
@@ -448,11 +541,17 @@
                     if (!isName(user)) {
                         document.getElementById("valid-ln").innerHTML = "LastName does not conatin special characters";
                         $("#valid-ln").show();
+                        $('#subbutton').prop('disabled', true);
                         $("$Lastname").val("");
 
                     }
                     else {
                         $("#Lastname").val(capitalizeFirstLetter(user));
+                        count = count + 1;
+                        if (count >= 9) {
+                            $('#subbutton').prop('disabled', false);
+                        }
+
                         //  document.getElementById("Lastname").innerHTML = capitalizeFirstLetter(user);
                     }
                 }
@@ -466,13 +565,20 @@
             });
 
             $("#Bloodgroup").focusout(function () {
-                debugger
+
                 var user = $(this).val();
 
                 //Checking the length of username
                 if (user === "") {
                     document.getElementById("valid-blood").innerHTML = "Please Select Blood Group";
                     $("#valid-blood").show();
+                    $('#subbutton').prop('disabled', true);
+                }
+                else {
+                    count = count + 1;
+                    if (count >= 9) {
+                        $('#subbutton').prop('disabled', false);
+                    }
                 }
             });
 

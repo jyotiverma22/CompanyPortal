@@ -25,9 +25,17 @@ namespace DatabaseLayer.DbContexts
         public DbSet<Registration> UserRegistration { get; set; }
         public DbSet<BloodGroup> BloodGroups { get; set; }
 
+        public DbSet<Department> Departments{ get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Attendence> Emp_Attendence{ get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Project_Team> Project_Teams { get; set; }
+        public DbSet<Emp_Reporting> Emp_Reportings { get; set; }
+
+
         public string GetUserId()
         {
-            var users = UserRegistration.Count(); ;
+             var users = UserRegistration.Count(); ;
             if (users == 0)
             {
                 return "CMP-1001";
