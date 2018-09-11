@@ -22,7 +22,8 @@ namespace CompanyPortal
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/Site.css",
-                      "~/lib/site.css"));
+                      "~/lib/site.css",
+                      "~/lib/responsive.css"));
 
 
             //js  

@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" type="text/css" href="~/lib/site.css">
+
+</head>
+<body>
+
+    <!--Header section of page--->
+    <header >
+        <div class="container">
+
+            <nav class="navbar navbar-nav navbar-light navbar-fixed-top">
+                <a class="navbar-brand" href="#">
+                    <img src="/lib/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                    Bootstrap
+                </a>
+
+                <button class="navbar-toggler ml-md-auto collapsed" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class=" navbar-collapse collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto text-center" >
+                        <li class="nav-item active mr-lg-3">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item mr-lg-3">
+                            <a class="nav-link" href="#">Features</a>
+                        </li>
+                        <li class="nav-item mr-lg-3">
+                            <a class="nav-link" href="#">Pricing</a>
+                        </li>
+                        <li class="nav-item mr-lg-3">
+                            <a class="nav-link disabled" href="#">Disabled</a>
+                        </li>
+                    </ul>
+
+                    <div class="buttons">
+
+                        <button type="button" class="btn btn-info btn-lg w3ls">
+
+                    </div>
+                </div>
+
+                <!--    <a class="navbar-brand clearfix"> <h1><img src="/lib/images/logo.png" class="logo"><b>Company Name</b></h1> </a>
+        <button class="navbar-toggler ml-md-auto collapse  " type="button" data-toggle="collapse" data-target="navId" >
+    -->
+
+
+            </nav>
+
+        </div>
+
+    </header>
+  
+
+    <!--Header section ends here -->
+
+    <!--Body section of the page-->
+
+    <div class="bgmiddle">
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+        </div>
+        <footer class="navbar-inverse">
+            <p class="txtColor padding">&copy; @DateTime.Now.Year - All right reserved</p>
+        </footer>
+    </div>
+
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

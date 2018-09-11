@@ -1,14 +1,49 @@
 ﻿body {
     width:100%;
+    box-sizing:border-box;
+    font-family:'Source Sans Pro',sans-serif;
+    padding:0;
+}
+
+.logo{
+    height:40px;
+    width:40px;
+}
+.container{
+}
+.navbar-brand {
+   float:left;
+}
+.navbar-light {
+    background-color: #fff;
+}
+
+.h1{
+    font-size:1.6em;
+}
+
+.displayspan {
+    display: inline;
 }
 
 
-.navbar{
-    margin-bottom:0px;
+.navbar {
+    border: 0;
+    color: #F9BB5B;
+    height:80px;
+    margin:0px;
+}
+.navbg {
+    background-color: #fff;
+}
+.clearfix{
+    clear:both;
+    display:table;
+    content:"";
 }
 
 .alignicon{
-    margin-top:20px;
+    margin-top:25px;
     
 }
 
@@ -28,8 +63,23 @@
 }
 
 .txtColor {
-    color: #ffffff;
-    display: inline;
+    color: #000;
+}
+
+.txt{
+    padding:15px;
+  
+    font-size:20px;
+    position:relative;
+
+}
+
+
+
+
+.navbar-toggle .icon-bar {
+    background-color: black;
+    margin-top:15px;
 }
 
 .error2{
@@ -38,10 +88,7 @@
         width:200px;
 }
 
-.navbar-inverse {
-    background-color: #F9BB5B;
-    border-color:#222;
-}
+
 
 .padding{
     padding-left:30px;
@@ -85,5 +132,15 @@
 }
 
 .container{
-    width:100%;
+    
+}
+
+
+
+/* Responsive CSS */
+
+@media (min-width:468px) and (max-width:767px) {
+    .txtBlock {
+        display: block;
+    }
 }
