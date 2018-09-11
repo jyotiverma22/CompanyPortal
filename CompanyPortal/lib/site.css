@@ -13,6 +13,8 @@
 }
 .navbar-brand {
    float:left;
+   font-size:1.6em;
+   text-transform:uppercase;
 }
 .navbar-light {
     background-color: #fff;
@@ -25,13 +27,17 @@
 .displayspan {
     display: inline;
 }
+.headerbg{
+    background-color:#fff;
 
+}
 
 .navbar {
     border: 0;
     color: #F9BB5B;
-    height:80px;
-    margin:0px;
+    height: 80px;
+    margin: 0px;
+    background-color: #fff;
 }
 .navbg {
     background-color: #fff;
@@ -60,6 +66,7 @@
 }
 .setpadding{
     padding-top:30px;
+    display:inline;
 }
 
 .txtColor {
@@ -136,9 +143,28 @@
 }
 
 
+/* section 1 CSS starts*/
+.inner-page-banner{
+background: url("images/bgimage.JPG") no-repeat 0px 0px;
+background-size:cover;
+min-height:250px;
+}
+/* section 1 CSS ends*/
+
+
+/* section About CSS starts*/
+
+.about{
+    padding-top:20px;
+    padding-right: 20px;
+    padding-left:20px;
+    min-height:250px;
+}
+
+/* section About CSS ends*/
+
 
 /* Responsive CSS */
-
 @media (min-width:468px) and (max-width:767px) {
     .txtBlock {
         display: block;
