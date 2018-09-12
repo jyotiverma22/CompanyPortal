@@ -7,76 +7,82 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @*@Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")*@
+
     <link rel="stylesheet" type="text/css" href="~/lib/site.css">
 
 </head>
 <body>
 
     <!--Header section of page--->
-    <header class="headerbg" >
+    <header class="headerbg" id="header">
         <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light ">
                 <a class="navbar-brand" href="#">
                     <img src="/lib/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
                     <b>Company Name</b>
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" onclick="navbarHeight(1)">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <ul class="navbar-nav ulMargin">
+                        <li class="nav-item ">
+                            <a class="nav-link " href="#"><b>Home</b> <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Projects</a>
+                            <a class="nav-link" href="#"><b>Projects</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">About Us</a>
+                            <a class="nav-link" href="#"><b>About Us</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="#">Contact</a>
+                            <a class="nav-link " href="#"><b>Contact</b></a>
                         </li>
                     </ul>
 
 
                     <div class="buttons ml-auto">
-                        <Button type="button" class="btn btn-info">Log In</Button>
-                        <button type="button" class="btn btn-info">Register</button>
+                        <Button type="button" class="btn btn-info btnpadding">LOGIN</Button>
+                        <button type="button" class="btn btn-info btnpadding">REGISTER</button>
                     </div>
                 </div>
             </nav>
-                <!--    <a class="navbar-brand clearfix"> <h1><img src="/lib/images/logo.png" class="logo"><b>Company Name</b></h1> </a>
-        <button class="navbar-toggler ml-md-auto collapse  " type="button" data-toggle="collapse" data-target="navId" >
-    -->
+            <!--    <a class="navbar-brand clearfix"> <h1><img src="/lib/images/logo.png" class="logo"><b>Company Name</b></h1> </a>
+                <button class="navbar-toggler ml-md-auto collapse  " type="button" data-toggle="collapse" data-target="navId" >
+            -->
 
 
         </div>
 
     </header>
-  
+
 
     <!--Header section ends here -->
-
     <!--Body section of the page-->
 
     <div class="bgmiddle">
-            @RenderBody()
-            <hr />
-        </div>
-        <footer class="navbar-inverse">
-            <p class="txtColor padding">&copy; @DateTime.Now.Year - All right reserved</p>
-        </footer>
+        @RenderBody()
+        <hr />
     </div>
+    <footer class="navbar-inverse text-center">
+        <p class="txtColor padding">&copy; @DateTime.Now.Year - All right reserved</p>
+    </footer>
 
 
 
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+
+        @Scripts.Render("~/bundles/js")*@
     @Styles.Render("~/Content/css")
     @RenderSection("scripts", required: false)
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </body>
 </html>

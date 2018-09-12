@@ -3,8 +3,9 @@
     box-sizing:border-box;
     font-family:'Source Sans Pro',sans-serif;
     padding:0;
+    background-color:#fff;
 }
-
+/*  Header section css starts*/
 .logo{
     height:40px;
     width:40px;
@@ -16,9 +17,7 @@
    font-size:1.6em;
    text-transform:uppercase;
 }
-.navbar-light {
-    background-color: #fff;
-}
+
 
 .h1{
     font-size:1.6em;
@@ -29,23 +28,22 @@
 }
 .headerbg{
     background-color:#fff;
+    transition:1s;
 
 }
 
 .navbar {
     border: 0;
-    color: #F9BB5B;
-    height: 80px;
+    height: auto;
     margin: 0px;
     background-color: #fff;
 }
-.navbg {
-    background-color: #fff;
+.navbar-light{
 }
-.clearfix{
-    clear:both;
-    display:table;
-    content:"";
+.clearfix {
+    clear: both;
+    display: table;
+    content: "";
 }
 
 .alignicon{
@@ -60,25 +58,49 @@
 .bgmiddle {
     background-color: #D4D4CD;
 }
-
-.setmargin{
-    margin-top:35px;
+.ulMargin{
+    margin-left:40px;
 }
-.setpadding{
-    padding-top:30px;
-    display:inline;
+.setmargin {
+    margin-top: 35px;
+}
+
+
+
+.navbar-light .navbar-nav .nav-link:focus {
+    color: #e2b13c;
+}
+
+
+.btnpadding{
+    padding:7px 20px;
+    margin-right:10px;
+    background-color:#000;
+
+}
+
+.btn-info:not(:disabled):not(.disabled):focus {
+    background-color: #e2b13c;
+    border-color: #e2b13c;
+}
+
+.btn-info:hover {
+    background-color: #e2b13c;
+    border-color:#e2b13c;
 }
 
 .txtColor {
     color: #000;
 }
 
-.txt{
-    padding:15px;
-  
-    font-size:20px;
-    position:relative;
+.navbar-toggler {
+    background-color: #e2b13c;
+}
 
+.txt {
+    padding: 15px;
+    font-size: 20px;
+    position: relative;
 }
 
 
@@ -89,6 +111,7 @@
     margin-top:15px;
 }
 
+/*  Header section css ends*/
 .error2{
         display:none;
         height:50px;
@@ -155,15 +178,36 @@ min-height:250px;
 /* section About CSS starts*/
 
 .about{
-    padding-top:20px;
-    padding-right: 20px;
-    padding-left:20px;
+    padding:20px;
     min-height:250px;
+    background-color:#fff;
+}
+.aboutfirst{
+    margin:20px;
 }
 
+pre {
+    font-family: 'Source Sans Pro',sans-serif;
+}
+
+.img {
+    top: 0;
+    right: 0;
+    margin: 20px;
+    margin-left: 120px;
+    vertical-align: baseline;
+    min-height:230px;
+}
+
+img {
+    vertical-align: super;
+}
 /* section About CSS ends*/
 
 
+/*banner slide start*/
+
+/* banner slde ends*/
 /* Responsive CSS */
 @media (min-width:468px) and (max-width:767px) {
     .txtBlock {

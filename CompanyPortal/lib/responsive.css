@@ -6,3 +6,28 @@
     }
 
 }
+
+@media(max-width:989px){
+
+    #navbarNav{
+        text-align :center;
+
+    }
+
+    .inner-page-banner {
+        min-height: 200px;
+    }
+    .img{
+        top: 0;
+        right: 0;
+        margin: 20px;
+        margin-left: 100px;
+
+    }
+
+}
+
+@media (min-width:990px) {
+
+   
+}
