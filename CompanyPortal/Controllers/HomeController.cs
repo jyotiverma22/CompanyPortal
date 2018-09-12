@@ -18,7 +18,7 @@ namespace CompanyPortal.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+           
             return View();
         }
 
@@ -96,10 +96,11 @@ namespace CompanyPortal.Controllers
             return View(registerViewModel);
         }
 
-
+        [HttpGet]
         public ActionResult Login()
         {
-            return View(new LoginViewModel());
+            return PartialView(new LoginViewModel());
+//            return View(new LoginViewModel());
         }
 
         [HttpPost]
