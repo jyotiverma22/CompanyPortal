@@ -4,8 +4,10 @@
     font-family:'Source Sans Pro',sans-serif;
     padding:0;
     background-color:#fff;
+    
 }
 /*  Header section css starts*/
+
 .logo{
     height:40px;
     width:40px;
@@ -208,6 +210,57 @@ img {
 /*banner slide start*/
 
 /* banner slde ends*/
+
+
+/* Login modal starts*/
+
+.modal-header{
+    left:0;
+    color:#fff;
+}
+
+.form-control{
+    width:inherit;
+}
+
+.modal {
+    transition: 2s;
+}
+
+
+.modal-header {
+    background-color: #e2b13c;
+}
+
+.form-horizontal{
+    margin-right:20px;
+    margin-left:20px;
+}
+
+
+.loginbtn {
+    align-items: center;
+    max-width: 500px !important;
+}
+
+input {
+    max-width: 500px ;
+}
+
+.btnlogin{
+    width:inherit;
+    background-color:black;
+    color:#fff;
+
+}
+
+    .btnlogin:focus {
+        width: inherit;
+        background-color: #e2b13c;
+        color: #fff;
+    }
+
+/* Login modal ends*/
 /* Responsive CSS */
 @media (min-width:468px) and (max-width:767px) {
     .txtBlock {

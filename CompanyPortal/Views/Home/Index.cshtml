@@ -10,12 +10,34 @@
 <div id='myModal' class='modal'>
     <div class="modal-dialog">
         <div class="modal-content">
-            <div id='myModalContent'></div>
+            <div id='myModalContent'>
+
+                @Html.Partial("Login")
+            </div>
         </div>
     </div>
 
 </div>
 <!--Login Model ends-->
+<!--Register Model starts-->
+<div id='myModalregister' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='regModalContent'>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Register</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+                </div>
+                <div>
+                @Html.Partial("RegisterUser")
+                    </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--Register Model ends-->
 <!--Carousel section starts-->
 <section class="carous">
 
@@ -131,5 +153,514 @@ Pellentesque efficitur dapibus augue.
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/site")
 
+<script type="text/javascript">
+    debugger
+    var count = 0;
+    $('#subbutton').prop('disabled', true);
 
-}
+    window.onload = window.history.forward(0);
+
+    
+            $(document).ready(function () {
+                //$("btnsubmit").click(function () {
+                //    debugger
+                //    $.ajax({
+                //        url: "/home/Login",
+                //        method: "POST",
+                //        data: {
+                //            Username: Model.Username,
+                //            Password: Model.Password
+                //        },
+                //        type: "application/json",
+
+                //        success: function (data) {
+                //            $("myModalContent").load(data);
+                //        },
+
+                //        error: function (error) {
+                //            console.log(error);
+                //        }
+
+                //    });
+                //});
+
+            $('#btnlogin').click(function () {
+                debugger
+
+               var options = { "backdrop": "static", keyboard: true };
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+           //     $("#myModalContent").load("/home/login");
+ 
+                $("#closbtn").click(function () {
+                    $('#myModal').modal('hide');
+                });
+            });
+
+
+            $('#btnreg').click(function () {
+                debugger
+                var options = { "backdrop": "static", keyboard: true };
+                $('#myModalregister').modal(options);
+                $('#myModalregister').modal('show');
+
+                $("#closbtn").click(function () {
+                    $('#myModal').modal('hide');
+                });
+            });
+
+        });
+
+
+
+
+        $.ajax({
+
+            url: '/api/values/GetBloodGroups',
+            method: 'GET',
+
+            success: function (data) {
+                console.log(data);
+
+                $('#BloodGroup').val("");
+                for (var i = 0; i < data.length; i++) {
+
+                    var opt = new Option(data[i].BloodGroupName, data[i].BId);
+                    $('#Bloodgroup').append(opt);
+                }
+            },
+            error: function (jqXHR) {
+                console.log(jqXHR);
+
+            }
+        });
+
+        $("#DOB").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1960:1999",
+            onSelect: function (datetext, inst) {
+                $('#subbutton').prop('disabled', true);
+                var dob = $(this).val();
+                dob = new Date(dob);
+                var today = new Date();
+                var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+                //
+                if (age > 20) {
+                    $('#age').html(age + ' years old');
+                    count = count + 1;
+                    if (count >= 9) {
+                        $('#subbutton').prop('disabled', false);
+                    }
+
+                }
+                else {
+                    $('#age').html("");
+                    document.getElementById("valid-dob").innerHTML = "User must complete his 20 years of age";
+                    $("#valid-dob").show();
+                    document.getElementById("DOB").innerHTML = "";
+
+                    $('#subbutton').prop('disabled', true);
+                    //   alert("please enter valid date");
+                }
+
+            }
+        });
+
+        $("#DOB").focusout(function () {
+            var dob = $(this).val();
+            if (dob === "") {
+                $('#age').html("");
+
+                document.getElementById("valid-dob").innerHTML = "This is required field";
+                $("#valid-dob").show();
+                document.getElementById("DOB").innerHTML = "";
+
+                $('#subbutton').prop('disabled', true);
+
+            }
+            else {
+                $('#subbutton').prop('disabled', true);
+                dob = new Date(dob);
+                var today = new Date();
+                var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+                //
+                if (age > 20) {
+                    $('#age').html(age + ' years old');
+                    count = count + 1;
+                    if (count >= 9) {
+                        $('#subbutton').prop('disabled', false);
+                    }
+
+                }
+                else {
+                    $('#age').html("");
+
+                    $('#subbutton').prop('disabled', true);
+                    //   alert("please enter valid date");
+                }
+            }
+        });
+
+
+
+        $("#DOB").focusin(function () {
+            $("#valid-dob").hide();
+            document.getElementById("valid-dob").innerHTML = "";
+
+        });
+
+
+
+        $("#Username").focusout(function () {
+            var user = $(this).val();
+
+            //Checking the length of username
+            if (user.length > 0) {
+                if (user.length < 5) {
+                    document.getElementById("Valid-user").innerHTML = "Username is too short";
+                    $("#Valid-user").show();
+
+                    $('#subbutton').prop('disabled', true);
+                }
+                else if (user.length > 20) {
+                    document.getElementById("Valid-user").innerHTML = "Username is too long";
+                    $("#Valid-user").show();
+
+                    $('#subbutton').prop('disabled', true);
+                }
+                else {
+                    //post to check is username already take
+
+                    $.ajax({
+                        url: '/api/values/checkUsernameStatus?username=' + user,
+                        method: 'POST',
+
+                        success: function (response) {
+                            console.log(response);
+                            if (response) {
+
+                                document.getElementById("Valid-user").innerHTML = "*Username already exist";
+                                $("#Valid-user").show();
+
+                                $('#subbutton').prop('disabled', true);
+
+                            }
+                            else {
+
+                                count = count + 1;
+                                if (count >= 9) {
+                                    $('#subbutton').prop('disabled', false);
+                                }
+
+                            }
+                        },
+                        error: function (jqXHR) {
+                            console.log(jqXHR);
+
+                        }
+                    });
+                }
+            }
+            else {
+                document.getElementById("Valid-user").innerHTML = "This field is required";
+                $("#Valid-user").show();
+                console.log("not getting values");
+
+                $('#subbutton').prop('disabled', true);
+            }
+        });
+
+        $("#Username").focusin(function () {
+            $("#Valid-user").hide();
+            document.getElementById("Valid-user").innerHTML = "";
+
+        });
+
+
+
+        $("#Email").focusout(function () {
+
+            var email = $(this).val();
+            //Checking the length of Email
+            if (email.length > 0) {
+                if (isEmail(email)) {
+                    // check already exist email
+
+                    $.ajax({
+                        url: '/api/values/checkEmailStatus?email=' + email,
+                        method: 'POST',
+
+                        success: function (response) {
+                            console.log(response);
+                            if (response) {
+
+                                $('#subbutton').prop('disabled', true);
+                                document.getElementById("valid-email").innerHTML = "Email Address Already registered";
+                                $("#valid-email").show();
+                            }
+                            else {
+                                count = count + 1;
+                                if (count >= 9) {
+                                    $('#subbutton').prop('disabled', false);
+                                }
+
+                            }
+                        },
+                        error: function (jqXHR) {
+                            console.log(jqXHR);
+
+                        }
+                    });
+                }
+                else {
+                    document.getElementById("valid-email").innerHTML = "Please enter valid email Address";
+
+                    $("#valid-email").show();
+                }
+            }
+            else {
+                document.getElementById("valid-email").innerHTML = "This field is required";
+                $("#valid-email").show();
+
+                $('#subbutton').prop('disabled', true);
+            }
+        });
+
+        $("#Email").focusin(function () {
+            $("#valid-email").hide();
+            document.getElementById("valid-email").innerHTML = "";
+
+        });
+
+
+
+        $("#Phone").focusout(function () {
+            var user = $(this).val();
+
+            //Checking the length of username
+            if (user.length > 0) {
+                if (isNaN(user)) {
+                    document.getElementById("valid-phone").innerHTML = "Phone number contains only digits";
+                    $("#valid-phone").show();
+                    $('#subbutton').prop('disabled', true);
+
+                }
+
+                else if (user.length != 10) {
+                    document.getElementById("valid-phone").innerHTML = "Please enter valid phone number(don't add prefix like 0 or +91)";
+                    $("#valid-phone").show();
+                    $('#subbutton').prop('disabled', true);
+                }
+
+                else {
+                    count = count + 1;
+                    if (count >= 9) {
+                        $('#subbutton').prop('disabled', false);
+                    }
+
+                }
+            }
+            else {
+                document.getElementById("valid-phone").innerHTML = "This field is required";
+                $("#valid-phone").show();
+                $('#subbutton').prop('disabled', true);
+                console.log("not getting values");
+            }
+        });
+
+        $("#Phone").focusin(function () {
+            $("#valid-phone").hide();
+            document.getElementById("valid-phone").innerHTML = "";
+
+        });
+
+
+
+
+        $("#Password").focusout(function () {
+            var user = $(this).val();
+
+            //Checking the length of username
+            if (user.length > 0) {
+                if (user.length < 8) {
+                    document.getElementById("valid-pass").innerHTML = "Password must have atleast 8 characters";
+                    $("#valid-pass").show();
+                    $('#subbutton').prop('disabled', true);
+                }
+                else if (user.length > 20) {
+                    document.getElementById("valid-pass").innerHTML = "Password is too long";
+                    $("#valid-pass").show();
+                    $('#subbutton').prop('disabled', true);
+                }
+                else
+                    if (!isPassword(user)) {
+                        document.getElementById("valid-pass").innerHTML = "Password must have atleast one capital letter,small letter, digit and special character";
+                        $("#valid-pass").show();
+                        $('#subbutton').prop('disabled', true);
+                    }
+                    else {
+                        count = count + 1;
+                        if (count >= 9) {
+                            $('#subbutton').prop('disabled', false);
+                        }
+
+                    }
+
+            }
+            else {
+                document.getElementById("valid-pass").innerHTML = "This field is required";
+                $("#valid-pass").show();
+                console.log("not getting values");
+                $('#subbutton').prop('disabled', true);
+            }
+        });
+
+        $("#Password").focusin(function () {
+            $("#valid-pass").hide();
+            document.getElementById("valid-pass").innerHTML = "";
+
+        });
+
+
+
+        $("#ConfirmPassword").focusout(function () {
+            var user = $(this).val();
+            var password = $("#Password").val();
+            //Checking the length of username
+            if (user.length > 0) {
+                if (user === password) {
+                    count = count + 1;
+                    if (count >= 9) {
+                        $('#subbutton').prop('disabled', false);
+                    }
+
+                }
+                else {
+                    document.getElementById("valid-cn").innerHTML = "Confirm Password field does not match with Password field";
+                    $("#valid-cn").show();
+                    $('#subbutton').prop('disabled', true);
+                }
+            }
+            else {
+                document.getElementById("valid-cn").innerHTML = "This field is required";
+                $("#valid-cn").show();
+                console.log("not getting values");
+                $('#subbutton').prop('disabled', true);
+            }
+        });
+
+        $("#ConfirmPassword").focusin(function () {
+            $("#valid-cn").hide();
+            document.getElementById("valid-cn").innerHTML = "";
+
+        });
+
+
+        $("#Firstname").focusout(function () {
+            var user = $(this).val();
+
+            //Checking the length of username
+            if (user.length === 0) {
+                document.getElementById("valid-fn").innerHTML = "This field is required";
+                $("#valid-fn").show();
+                $('#subbutton').prop('disabled', true);
+                console.log("not getting values");
+            }
+            else {
+                if (!isName(user)) {
+                    document.getElementById("valid-fn").innerHTML = "FirstName does not conatin special characters";
+                    $("#valid-fn").show();
+                    $('#subbutton').prop('disabled', true);
+                }
+                else {
+                    $("#Firstname").val(capitalizeFirstLetter(user));
+                    //   document.getElementById("Firstname").innerHTML = capitalizeFirstLetter(user);
+                    count = count + 1;
+                    if (count >= 9) {
+                        $('#subbutton').prop('disabled', false);
+                    }
+
+                }
+
+            }
+        });
+
+        $("#Firstname").focusin(function () {
+            $("#valid-fn").hide();
+            document.getElementById("valid-fn").innerHTML = "";
+
+        });
+
+
+
+        $("#Lastname").focusout(function () {
+            var user = $(this).val();
+
+            //Checking the length of username
+            if (user.length === 0) {
+                document.getElementById("valid-ln").innerHTML = "This field is required";
+                $("#valid-ln").show();
+                $('#subbutton').prop('disabled', true);
+                console.log("not getting values");
+            }
+
+            else {
+                if (!isName(user)) {
+                    document.getElementById("valid-ln").innerHTML = "LastName does not conatin special characters";
+                    $("#valid-ln").show();
+                    $('#subbutton').prop('disabled', true);
+                    $("$Lastname").val("");
+
+                }
+                else {
+                    $("#Lastname").val(capitalizeFirstLetter(user));
+                    count = count + 1;
+                    if (count >= 9) {
+                        $('#subbutton').prop('disabled', false);
+                    }
+
+                    //  document.getElementById("Lastname").innerHTML = capitalizeFirstLetter(user);
+                }
+            }
+
+        });
+
+        $("#Lastname").focusin(function () {
+            $("#valid-ln").hide();
+            document.getElementById("valid-ln").innerHTML = "";
+
+        });
+
+        $("#Bloodgroup").focusout(function () {
+
+            var user = $(this).val();
+
+            //Checking the length of username
+            if (user === "") {
+                document.getElementById("valid-blood").innerHTML = "Please Select Blood Group";
+                $("#valid-blood").show();
+                $('#subbutton').prop('disabled', true);
+            }
+            else {
+                count = count + 1;
+                if (count >= 9) {
+                    $('#subbutton').prop('disabled', false);
+                }
+            }
+        });
+
+        $("#Bloodgroup").focusin(function () {
+            $("#valid-blood").hide();
+            document.getElementById("valid-blood").innerHTML = "";
+
+        });
+
+
+
+
+  
+
+    </script>
+
+    }

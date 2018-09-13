@@ -31,11 +31,18 @@ namespace CompanyPortal
 
             //js  
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                      "~/Scripts/jquery-ui-{version}.js"));
+                      "~/Scripts/jquery-ui-{version}.js",
+                      "~/Scripts/jquery.validate.js",
+                      "~/Scripts/jquery.validate.min.js",
+                      "~/Scripts/jquery.validate.unobtrusive.js"));
             bundles.Add(new ScriptBundle("~/bundles/site").Include("~/lib/js/site.js"));
             //css  
             bundles.Add(new StyleBundle("~/Content/cssjqryUi").Include(
                    "~/Content/jquery-ui.css"));
+
+
+            
+
         }
     }
 }

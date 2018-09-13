@@ -24,7 +24,7 @@ namespace CompanyPortal.Controllers
 
         public ActionResult RegisterUser()
         {
-            return View(new RegisterViewModel());
+            return PartialView(new RegisterViewModel());
         }
 
         [HttpPost]
@@ -93,13 +93,13 @@ namespace CompanyPortal.Controllers
                 
             }
 
-            return View(registerViewModel);
+            return PartialView(registerViewModel);
         }
 
         [HttpGet]
         public ActionResult Login()
         {
-            return PartialView(new LoginViewModel());
+            return PartialView("Login",new LoginViewModel());
 //            return View(new LoginViewModel());
         }
 
@@ -118,7 +118,7 @@ namespace CompanyPortal.Controllers
                     {
                         if (Convert.ToBoolean(resultpost.Content.ReadAsStringAsync().Result))
                         {
-                            //user Exist, generate tthe token 
+                            //user Exist, generate the token 
 
                             using (HttpClient httpclient = new HttpClient())
                             {
@@ -149,15 +149,16 @@ namespace CompanyPortal.Controllers
 
                         else
                         {
+                            //user does not exist
                             ModelState.AddModelError("", "Username/Password Incorrect");
-                            return View(loginViewModel);
+                   //         return PartialView("Login", loginViewModel);
                         }
 
                     }
 
                 }
             }
-                return View(loginViewModel);
+                return PartialView("Login", loginViewModel);
             
         }
 

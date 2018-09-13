@@ -3,86 +3,85 @@
 @model CompanyPortal.ViewModels.RegisterViewModel
 
 
-@{
-    ViewBag.Title = "RegisterUser";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+
+<link rel="stylesheet" type="text/css" href="~/lib/site.css">
 <link rel="stylesheet" href="~/Content/themes/base/datepicker.css">
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("RegisterUser", "Home"))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <div class="col-md-12 ">
-            <h4 class="col-md-offset-4 bgR">Register Yourself</h4>
-        </div>
-        <hr />
+       
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            <label class="control-label col-md-2" for="Username">Username</label>
-             <div class="col-md-10">
+            <label class="control-label col-md-5" for="Username"><b>Username</b></label>
+            <div class="col-md-12">
                 @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger", @id = "Valid-user" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="Email">Email</label>
+            <label class="control-label col-md-5" for="Email"><b>Email</b></label>
 
 
-            <div class="col-md-10">
+            <div class="col-md-12">
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger", @id = "valid-email" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="Phone">Phone Number</label>
+            <label class="control-label col-md-5" for="Phone"><b>Phone Number</b></label>
 
-            <div class="col-md-10">
+            <div class="col-md-12">
                 @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger", @id = "valid-phone" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="Password">Password</label>
+            <label class="control-label col-md-2" for="Password"><b>Password</b></label>
 
-            <div class="col-md-10">
+            <div class="col-md-12">
                 @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger", @id = "valid-pass" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="ConfirmPassword">Confirm Password</label>
-            <div class="col-md-10">
+            <label class="control-label col-md-5" for="ConfirmPassword"><b>Confirm Password</b></label>
+            <div class="col-md-12">
                 @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger", @id = "valid-cn" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="FirstName">First Name</label>
-            <div class="col-md-10">
+            <label class="control-label col-md-5" for="FirstName"><b>First Name</b></label>
+            <div class="col-md-12">
                 @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger", @id = "valid-fn" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="Lastname">Last Name</label>
-            <div class="col-md-10">
+            <label class="control-label col-md-5" for="Lastname"><b>Last Name</b></label>
+            <div class="col-md-12">
                 @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "text-danger", @id = "valid-ln" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="Gender">Gender</label>
-            <div class="col-md-10">
+            <label class="control-label col-md-5" for="Gender"><b>Gender</b></label>
+            <div class="col-md-12">
 
                 Male    @Html.RadioButtonFor(m => m.Gender, "Male", htmlAttributes: new { @id = "male", @checked = true })
                 Female   @Html.RadioButtonFor(m => m.Gender, "Female", htmlAttributes: new { @id = "female" })
@@ -91,34 +90,34 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="Bloodgroup">Bloodgroup</label>
+            <label class="control-label col-md-5" for="Bloodgroup"><b>Bloodgroup</b></label>
 
-            <div class="col-md-10">
+            <div class="col-md-12">
                 @Html.DropDownListFor(model => model.Bloodgroup, new SelectList(""), "Select BloodGroup")
                 @Html.ValidationMessageFor(model => model.Bloodgroup, "", new { @class = "text-danger", @id = "valid-blood" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="DOB">Date of Birth</label>
+            <label class="control-label col-md-5" for="DOB"><b>Date of Birth</b></label>
 
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control datepicker" } })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control datepicker " , @readonly=true } })
                 @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger", @id = "valid-dob" })
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2" >Age</label>
+            <label class="control-label col-md-5"><b>Age</b></label>
 
             <div class="col-md-10" id="age">
             </div>
         </div>
 
-       
+
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Submit" class="btn btn-default" id="subbutton" />
+            <div class="col-md-offset-2 col-md-10 loginbtn">
+                <input type="submit" value="Submit" class="btn btn-default btnlogin" id="subbutton" />
             </div>
         </div>
     </div>
@@ -129,14 +128,10 @@
 
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryui")
-    @Styles.Render("~/Content/cssjqryUi")
-    @Scripts.Render("~/bundles/site")
-
-    @Styles.Render("~/Content/css")
 
     <script type="text/javascript">
-        //ModelState.clear();     
+        //ModelState.clear();
+        debugger
         var count = 0;
         $('#subbutton').prop('disabled', true);
 
@@ -151,7 +146,7 @@
 
                 success: function (data) {
                     console.log(data);
-                    
+
                     $('#BloodGroup').val("");
                     for (var i = 0; i < data.length; i++) {
 
@@ -211,7 +206,7 @@
                 }
                 else {
                     $('#subbutton').prop('disabled', true);
-                   dob = new Date(dob);
+                    dob = new Date(dob);
                     var today = new Date();
                     var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
                     //
@@ -225,11 +220,11 @@
                     }
                     else {
                         $('#age').html("");
-                 
+
                         $('#subbutton').prop('disabled', true);
                         //   alert("please enter valid date");
                     }
-              }
+                }
             });
 
 
@@ -563,7 +558,7 @@
             });
 
             $("#Bloodgroup").focusout(function () {
-                
+
                 var user = $(this).val();
 
                 //Checking the length of username

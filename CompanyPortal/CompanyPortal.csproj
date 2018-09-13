@@ -243,6 +243,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="Validation, Version=2.4.0.0, Culture=neutral, PublicKeyToken=2fc06f0d701809a7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Validation.2.4.18\lib\net45\Validation.dll</HintPath>
+    </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.0.5\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
@@ -406,6 +409,12 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
+    <Content Include="lib\images\1.jpg" />
+    <Content Include="lib\images\2.png" />
+    <Content Include="lib\images\3.jpg" />
+    <Content Include="lib\images\4.jpg" />
+    <Content Include="lib\images\5.jpg" />
+    <Content Include="lib\images\7.jpg" />
     <Content Include="lib\images\about.jpg" />
     <Content Include="lib\images\bgimage.JPG" />
     <Content Include="lib\images\images.jpg" />
@@ -476,6 +485,8 @@
     <Content Include="Scripts\jquery.carousel.touch.slider.squadwuschel.1.0.2.js" />
     <Content Include="Scripts\jquery.carousel.touch.slider.squadwuschel.1.0.2.min.js" />
     <Content Include="Scripts\jquery.cj-swipe.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -502,7 +513,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\RegisterUser.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
