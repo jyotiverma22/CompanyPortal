@@ -6,6 +6,16 @@
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
+<!--AlertBox-->
+
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <script type="text/javascript">
+        alert("@ViewBag.Message");
+    </script>
+}
+
+<!--AlertBox-->
 <!--Login Model starts-->
 <div id='myModal' class='modal'>
     <div class="modal-dialog">
@@ -30,8 +40,8 @@
 
                 </div>
                 <div>
-                @Html.Partial("RegisterUser")
-                    </div>
+                    @Html.Partial("RegisterUser")
+                </div>
             </div>
         </div>
     </div>
@@ -153,45 +163,30 @@ Pellentesque efficitur dapibus augue.
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/site")
 
-<script type="text/javascript">
-    debugger
-    var count = 0;
-    $('#subbutton').prop('disabled', true);
+    <script type="text/javascript">
+        debugger
+        var count = 0;
+        $('#subbutton').prop('disabled', true);
 
-    window.onload = window.history.forward(0);
+        window.onload = window.history.forward(0);
 
-    
-            $(document).ready(function () {
-                //$("btnsubmit").click(function () {
-                //    debugger
-                //    $.ajax({
-                //        url: "/home/Login",
-                //        method: "POST",
-                //        data: {
-                //            Username: Model.Username,
-                //            Password: Model.Password
-                //        },
-                //        type: "application/json",
 
-                //        success: function (data) {
-                //            $("myModalContent").load(data);
-                //        },
+        $(document).ready(function () {
 
-                //        error: function (error) {
-                //            console.log(error);
-                //        }
-
-                //    });
-                //});
+            $("#btnlogout").click(function () {
+                $("#btnlogin").show();
+                $("#btnreg").show();
+            });
+           
 
             $('#btnlogin').click(function () {
                 debugger
 
-               var options = { "backdrop": "static", keyboard: true };
+                var options = { "backdrop": "static", keyboard: true };
                 $('#myModal').modal(options);
                 $('#myModal').modal('show');
-           //     $("#myModalContent").load("/home/login");
- 
+                //     $("#myModalContent").load("/home/login");
+
                 $("#closbtn").click(function () {
                     $('#myModal').modal('hide');
                 });
@@ -657,10 +652,10 @@ Pellentesque efficitur dapibus augue.
         });
 
 
+        
 
 
-  
 
     </script>
 
-    }
+}

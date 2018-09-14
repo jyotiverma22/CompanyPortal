@@ -2,105 +2,26 @@
 
 @{
     ViewBag.Title = "CompanyPortal"+Model.Email;
-    Layout = "~/Views/Shared/_Layout2.cshtml";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
-<h2>Index</h2>
 
-<div>
-    <h4>EmployeeDetailsViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Emp_Id:
-        </dt>
 
-        <dd>
 
-            @Html.DisplayFor(model => model.userId)
-        </dd>
+<div class="sidenavbar">
 
-        <dt>
 
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Username)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Bloodgroup)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Bloodgroup)
-        </dd>
-
-        <dt>
-            Date of Birth
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DOB)
-        </dd>
-
-        <dt>
-            Department
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Department_name)
-        </dd>
-
-        <dt>
-            Role
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Role_name)
-        </dd>
-
-        <dt>
-            Reporting Manager
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Rep_Manager)
-        </dd>
-
-    </dl>
 </div>
 
+
+<div class="mainContent">
+    @Html.Partial("~/ Views / Partial / EmloyeeDetails",Model)
+
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+    </script>

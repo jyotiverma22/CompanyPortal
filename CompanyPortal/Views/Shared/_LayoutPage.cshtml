@@ -7,10 +7,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
 
-    @*@Scripts.Render("~/bundles/modernizr")
-        @Scripts.Render("~/bundles/bootstrap")*@
-
-    <link rel="stylesheet" type="text/css" href="~/lib/site.css">
+    <link rel="stylesheet" type="text/css" href="/lib/site.css">
 
 </head>
 <body>
@@ -23,7 +20,7 @@
                     <img src="/lib/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
                     <b>Company Name</b>
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" onclick="navbarHeight(1)">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" onclick="">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
@@ -44,8 +41,18 @@
 
 
                     <div class="buttons ml-auto">
-                        <Button type="button" class="btn btn-info btnpadding" id="btnlogin">LOGIN</Button>
-                        <button type="button" class="btn btn-info btnpadding" id="btnreg">REGISTER</button>
+                        @if (string.IsNullOrWhiteSpace(Convert.ToString(Session["token"])))
+                        {
+                            <Button type="button" class="btn btn-info btnpadding" id="btnlogin">LOGIN</Button>
+                            <button type="button" class="btn btn-info btnpadding" id="btnreg">REGISTER</button>
+
+                        }
+
+                        else
+                        {
+                            <button type="button" class=" btn btn-info btnpadding" id="btnlogout" onclick="location.href='@Url.Action("LogOut", "Home")'">LOGOUT</button>
+
+                        }
                     </div>
                 </div>
             </nav>
@@ -80,6 +87,7 @@
     @Scripts.Render("~/bundles/jqueryui")
     @Styles.Render("~/Content/cssjqryUi")
     @Scripts.Render("~/bundles/site")
+
 
     @RenderSection("scripts", required: false)
 

@@ -260,6 +260,10 @@ input {
         color: #fff;
     }
 
+#btnlogout{
+   
+}
+
 /* Login modal ends*/
 /* Responsive CSS */
 @media (min-width:468px) and (max-width:767px) {

@@ -18,8 +18,72 @@ namespace CompanyPortal.Controllers
     {
         public ActionResult Index()
         {
-           
+            ViewBag.Message = null;
             return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Index(LoginViewModel loginViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    UriBuilder builder = new UriBuilder(ConfigurationManager.AppSettings["baseUrl"]);
+                    var json = JsonConvert.SerializeObject(loginViewModel);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var resultpost = await client.PostAsync(builder.Uri + "/CheckUser", content);
+                    if (resultpost.IsSuccessStatusCode)
+                    {
+                        if (Convert.ToBoolean(resultpost.Content.ReadAsStringAsync().Result))
+                        {
+                            //user Exist, generate the token 
+
+                            using (HttpClient httpclient = new HttpClient())
+                            {
+                                UriBuilder uri = new UriBuilder("http://localhost:61488/token");
+                                var data = new Dictionary<string, string>
+                                {
+                                     {"grant_type", "password"},
+                                     {"username", loginViewModel.Username},
+                                     {"password", loginViewModel.Password},
+                                };
+
+                                var tokenResponse = client.PostAsync(uri.Uri, new FormUrlEncodedContent(data)).Result;
+
+                                if (tokenResponse.IsSuccessStatusCode)
+                                {
+                                    
+                                    var response = (JObject)JsonConvert.DeserializeObject(tokenResponse.Content.ReadAsStringAsync().Result);
+                                    Session["token"] = response["access_token"].Value<string>();
+                                    var p = response["access_token"].Value<string>();
+                                    Session["username"] = loginViewModel.Username;
+                                    return RedirectToAction("Index", "LoggedIn", new { loginViewModel.Username });
+                                    
+                                }
+
+                            }
+
+
+
+                        }
+
+                        else
+                        {
+                            //user does not exist
+                            ModelState.AddModelError("", "Username/Password Incorrect");
+                            //         return PartialView("Login", loginViewModel);
+                            ModelState.Clear();
+                        }
+
+                    }
+
+                }
+            }
+
+            ViewBag.Message = "Username/Password Incorrect";
+            return View();
+
         }
 
         public ActionResult RegisterUser()
@@ -72,7 +136,7 @@ namespace CompanyPortal.Controllers
 
                                     Console.WriteLine("User Added");
 
-                                   return RedirectToAction("Login");
+                                   return RedirectToAction("Index");
                                   
 
                                  
@@ -96,71 +160,8 @@ namespace CompanyPortal.Controllers
             return PartialView(registerViewModel);
         }
 
-        [HttpGet]
-        public ActionResult Login()
-        {
-            return PartialView("Login",new LoginViewModel());
-//            return View(new LoginViewModel());
-        }
+      
 
-        [HttpPost]
-        public async Task<ActionResult> Login(LoginViewModel loginViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    UriBuilder builder = new UriBuilder(ConfigurationManager.AppSettings["baseUrl"]);
-                    var json = JsonConvert.SerializeObject(loginViewModel);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-                    var resultpost = await client.PostAsync(builder.Uri + "/CheckUser", content);
-                    if (resultpost.IsSuccessStatusCode)
-                    {
-                        if (Convert.ToBoolean(resultpost.Content.ReadAsStringAsync().Result))
-                        {
-                            //user Exist, generate the token 
-
-                            using (HttpClient httpclient = new HttpClient())
-                            {
-                                UriBuilder uri = new UriBuilder("http://localhost:61488/token");
-                                var data = new Dictionary<string, string>
-                                {
-                                     {"grant_type", "password"},
-                                     {"username", loginViewModel.Username},
-                                     {"password", loginViewModel.Password},
-                                };
-
-                                var tokenResponse = client.PostAsync(uri.Uri, new FormUrlEncodedContent(data)).Result;
-
-                                if(tokenResponse.IsSuccessStatusCode)
-                                {
-                                    var response = (JObject)JsonConvert.DeserializeObject(tokenResponse.Content.ReadAsStringAsync().Result);
-                                    Session["token"] = response["access_token"].Value<string>();
-                                    var p= response["access_token"].Value<string>();
-                                    Session["username"] = loginViewModel.Username;
-                                    return RedirectToAction("Index", "LoggedIn", new { loginViewModel.Username });
-                                }
-
-                            }
-
-
-                            
-                        }
-
-                        else
-                        {
-                            //user does not exist
-                            ModelState.AddModelError("", "Username/Password Incorrect");
-                   //         return PartialView("Login", loginViewModel);
-                        }
-
-                    }
-
-                }
-            }
-                return PartialView("Login", loginViewModel);
-            
-        }
 
         private  int CalculateAge(DateTime dateOfBirth)
         {
@@ -170,6 +171,13 @@ namespace CompanyPortal.Controllers
                 age = age - 1;
 
             return age;
+        }
+
+
+        public ActionResult LogOut()
+        {
+            Session["token"] = null;
+            return RedirectToAction("Index", "Home");
         }
     }
 }

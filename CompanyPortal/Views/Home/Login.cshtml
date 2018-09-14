@@ -8,7 +8,7 @@
 
     </div>
    
-    @using (Html.BeginForm("Login", "Home"))
+    @using (Html.BeginForm("Index", "Home"))
     {
         @Html.AntiForgeryToken()
 
@@ -35,7 +35,7 @@
 
             <div class="form-group setmargin">
                 <div class="col-md-offset-5 col-md-5 loginbtn">
-                    <input type="submit" value="Login" class="btn btn-default btnlogin" />
+                    <input type="submit" value="Login" class="btn btn-default btnlogin" id="loginBtn2" />
                 </div>
             </div>
         </div>
@@ -51,11 +51,11 @@
         $.validator.unobtrusive.parse(document);
         $(document).ready(function () {
            
-
+           
 
             });
 
-        });
+        
 
     </script>
 }

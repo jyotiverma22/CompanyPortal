@@ -23,7 +23,7 @@ namespace CompanyPortal.Controllers
             var username = Session["username"];
             if (token == null)
             {
-                return RedirectToAction("Login", "home");
+                return RedirectToAction("Index", "home");
             }
             using (HttpClient client = new HttpClient())
             {
@@ -40,7 +40,7 @@ namespace CompanyPortal.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "home");
+                    return RedirectToAction("Index", "home");
 
                 }
 
