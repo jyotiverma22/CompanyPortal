@@ -58,8 +58,8 @@ namespace DatabaseLayer.DbContexts
 
         public bool AddUsers(Registration registration)
         {
-            registration.DId = 5;
-            registration.RId = 4;
+            registration.DId = 1;
+            registration.RId = 1;
             registration.Password= Password.EncodePassword(registration.Password,registration.Username);
             UserRegistration.Add(registration);
             SaveChanges();

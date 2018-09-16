@@ -58,7 +58,7 @@
 }
 
 .bgmiddle {
-    background-color: #D4D4CD;
+    background-color: #fff;
 }
 .ulMargin{
     margin-left:40px;
@@ -265,6 +265,41 @@ input {
 }
 
 /* Login modal ends*/
+
+
+/* Side nav starts*/
+
+.sidenavbar {
+    background-color: #000;
+}
+
+
+.side-nav {
+    position: relative;
+    display: block;
+    margin-top: 0
+}
+
+.navitem {
+    padding: 7px 20px;
+    margin-right: 10px;
+    background-color: #000;
+    color:#fff;
+
+}
+
+    .navitem:hover {
+        background-color: #e2b13c;
+        border-color: #e2b13c;
+    }
+
+    .navitem:focus {
+        background-color: #e2b13c;
+        border-color: #e2b13c;
+    }
+
+/* side nav ends*/
+
 /* Responsive CSS */
 @media (min-width:468px) and (max-width:767px) {
     .txtBlock {

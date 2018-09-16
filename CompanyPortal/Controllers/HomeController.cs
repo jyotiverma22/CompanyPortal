@@ -18,8 +18,15 @@ namespace CompanyPortal.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = null;
-            return View();
+            var token = Session["token"];
+            if (token == null)
+            {
+                ViewBag.Message = null;
+                return View();
+            }
+            else
+                return RedirectToAction("Index", "LoggedIn");
+
         }
 
         [HttpPost]

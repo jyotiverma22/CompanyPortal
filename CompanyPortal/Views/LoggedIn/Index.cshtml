@@ -7,21 +7,50 @@
 
 
 
+<div class="container">
 
-<div class="sidenavbar">
+    <div class="row">
 
+        <div class="col-md-3 sidenavbar ">
+            <div class="col-12 side-nav">
+                <div class="nav-item navitem " id="personaldetails"> Personal Details</div>
+                <div class="nav-item navitem" id="projectdetails"> Project Details</div>
+                <div class="nav-item navitem" id="attendenece"> Attendence</div>
+                <!--
+                <div class="nav-item navitem"> Team Details</div>
+                <div class="nav-item navitem"> Team Details</div>
+                <div class="nav-item navitem"> Team Details</div>
+
+                -->
+            </div>
+        </div>
+
+        <div class="col-md-9 mainContent" id="mainContent">
+
+            @{
+                Html.RenderAction("EmployeeDetails");}
+        </div>
+
+    </div>
 
 </div>
 
 
-<div class="mainContent">
-    @Html.Partial("~/ Views / Partial / EmloyeeDetails",Model)
 
-</div>
 
 <script src="~/Scripts/jquery-3.3.1.js" type="text/javascript"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
+        debugger
+        $("#personaldetails").click(function () {
+            debugger
+            $("#mainContent").load("/loggedIn/EmployeeDetails");
 
+        })
+
+        $("#projectdetails").click(function () {
+            $("#mainContent").load("/loggedIn/ProjectDetails");
+        })
     });
     </script>

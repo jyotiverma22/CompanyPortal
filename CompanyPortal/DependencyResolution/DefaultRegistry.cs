@@ -16,6 +16,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace CompanyPortal.DependencyResolution {
+    using CompanyPortal.Controllers;
     using RepositoryLayer.Repositories;
     using StructureMap.Configuration.DSL;
     using StructureMap.Graph;
@@ -31,6 +32,7 @@ namespace CompanyPortal.DependencyResolution {
                 });
 
             For<ICompanyRepository>().Use<CompanyRepositoryService>();
+            For<LoggedInController>().AlwaysUnique();
             //For<IExample>().Use<Example>();
         }
 

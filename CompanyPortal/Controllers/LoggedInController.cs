@@ -49,9 +49,14 @@ namespace CompanyPortal.Controllers
         }
 
 
-        public ActionResult Project()
+        public ActionResult ProjectDetails()
         {
-            return View();
+            return PartialView("_ProjectDetails", new EmployeeDetailsViewModel());
+        }
+
+        public ActionResult EmployeeDetails()
+        {
+            return PartialView("_EmployeeDetails",new EmployeeDetailsViewModel());
         }
 
     }
