@@ -62,7 +62,7 @@ namespace DatabaseLayer.DbContexts
             }
         }
 
-        public static bool CheckUser(Login login)
+        public static SessionModel CheckUser(Login login)
         {
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
@@ -75,6 +75,15 @@ namespace DatabaseLayer.DbContexts
             using (CompanyDbContext companyDbContext=new CompanyDbContext())
             {
                 return companyDbContext.GetEmployeesDetails(username);
+            }
+        }
+
+        // Get project details to set in jq grid
+        public static IEnumerable<Project> GetProjectDetails(string username)
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+                return companyDbContext.GetProjectDetails(username);
             }
         }
 

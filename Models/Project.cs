@@ -12,7 +12,7 @@ namespace Models
         [Key]
         public int PID{ get; set; }
         public string ProjectName{ get; set; }
-        public int Mgr_Id{ get; set; }
+        public string Mgr_Id{ get; set; }
         public string Status { get; set; }
     }
 }

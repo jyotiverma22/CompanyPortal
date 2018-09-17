@@ -1,44 +1,28 @@
 ﻿@model CompanyPortal.ViewModels.ProjectViewModel
 
 <div>
-    <h4>ProjectViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PId)
-        </dt>
+    <h4>Project Details</h4>
 
-        <dd>
-            @Html.DisplayFor(model => model.PId)
-        </dd>
+    <div>
+        <table id="grid"></table>
+        <div id="pager"></div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Project_Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Project_Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Manager_Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Manager_Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+<script src="~/Scripts/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="~/lib/js/mygrid.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        debugger
+        /* if (Convert.ToString(Session["role"]) == "Member")
+         {
+             var durl = "/LoggedIn/GetProjects";
+
+         }
+          */
+     
+
+    });
+</script>

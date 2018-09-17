@@ -12,7 +12,7 @@ namespace Models
         [Key]
         public int Id { get; set; }
         public int PId { get; set; }
-        public int Mgr_Id{ get; set; }
-        public int Team_Id{ get; set; }
+        public string Mgr_Id{ get; set; }
+        public string Team_Id{ get; set; }
     }
 }

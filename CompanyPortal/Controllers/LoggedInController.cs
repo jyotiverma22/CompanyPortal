@@ -18,6 +18,17 @@ namespace CompanyPortal.Controllers
         // GET: LoggedIn
         public ActionResult Index()
         {
+            return View();
+        }
+
+
+        public ActionResult ProjectDetails()
+        {
+            return PartialView("_ProjectDetails", new ProjectViewModel());
+        }
+
+        public ActionResult EmployeeDetails()
+        {
             EmployeeDetailsViewModel employees = new EmployeeDetailsViewModel();
             var token = Session["token"];
             var username = Session["username"];
@@ -28,14 +39,14 @@ namespace CompanyPortal.Controllers
             using (HttpClient client = new HttpClient())
             {
                 UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["detailsUrl"]);
-              //  url.Query = "username=" + username;
+                //  url.Query = "username=" + username;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.ToString());
 
                 var result = client.GetAsync(url.Uri + "/getemployeedetails?username=" + username).Result;
-                if(result.IsSuccessStatusCode)
+                if (result.IsSuccessStatusCode)
                 {
                     employees = JsonConvert.DeserializeObject<EmployeeDetailsViewModel>(result.Content.ReadAsStringAsync().Result);
-                    return View(employees);
+                    return PartialView("_EmployeeDetails",employees);
 
                 }
                 else
@@ -46,18 +57,64 @@ namespace CompanyPortal.Controllers
 
             }
 
-        }
+          }
 
 
-        public ActionResult ProjectDetails()
+        //get the values in jqgrid
+
+        public JsonResult GetProjects(string sidx, string sord,int rows, int page)
         {
-            return PartialView("_ProjectDetails", new EmployeeDetailsViewModel());
+            var token = Session["token"];
+            var username = Session["username"];
+
+            sord = (sord == null) ? "" : sord;
+            int PageIndex = Convert.ToInt32(page) - 1;
+            int pagesize = rows;
+            var list = new List<ProjectViewModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["detailsUrl"]);
+                //  url.Query = "username=" + username;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.ToString());
+
+                var result = client.GetAsync(url.Uri + "/getProjectDetails?username=" + username).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                     list = JsonConvert.DeserializeObject<List<ProjectViewModel>>(result.Content.ReadAsStringAsync().Result);
+                  
+                }
+                else
+                {
+                }
+
+            }
+
+
+            int totalRecords = list.Count();
+            var totalPages = (int)Math.Ceiling((float)totalRecords / (float)rows);
+            if(sord.ToUpper()=="DESC")
+            {
+                list = list.OrderByDescending(t => t.Project_Name).ToList();
+                list = list.Skip(PageIndex * pagesize).Take(pagesize).ToList();
+            }
+            else
+            {
+                list = list.OrderBy(t => t.Project_Name).ToList();
+                list = list.Skip(PageIndex * pagesize).Take(pagesize).ToList();
+
+            }
+
+            var jsondata = new
+            {
+                total = totalPages,
+                page,
+                records = totalRecords,
+                rows = list
+            };
+            return Json(jsondata,JsonRequestBehavior.AllowGet);
+
         }
 
-        public ActionResult EmployeeDetails()
-        {
-            return PartialView("_EmployeeDetails",new EmployeeDetailsViewModel());
-        }
 
     }
 }

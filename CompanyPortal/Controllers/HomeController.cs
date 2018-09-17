@@ -1,5 +1,6 @@
 ﻿using CompanyPortal.ViewModels;
 using Microsoft.Ajax.Utilities;
+using Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -17,16 +18,9 @@ namespace CompanyPortal.Controllers
     public class HomeController : Controller
     {
         public ActionResult Index()
-        {
-            var token = Session["token"];
-            if (token == null)
-            {
+        {            
                 ViewBag.Message = null;
-                return View();
-            }
-            else
-                return RedirectToAction("Index", "LoggedIn");
-
+                return View();            
         }
 
         [HttpPost]
@@ -42,7 +36,8 @@ namespace CompanyPortal.Controllers
                     var resultpost = await client.PostAsync(builder.Uri + "/CheckUser", content);
                     if (resultpost.IsSuccessStatusCode)
                     {
-                        if (Convert.ToBoolean(resultpost.Content.ReadAsStringAsync().Result))
+                        SessionModel user = JsonConvert.DeserializeObject<SessionModel>(resultpost.Content.ReadAsStringAsync().Result);
+                        if (user!=null)
                         {
                             //user Exist, generate the token 
 
@@ -65,6 +60,9 @@ namespace CompanyPortal.Controllers
                                     Session["token"] = response["access_token"].Value<string>();
                                     var p = response["access_token"].Value<string>();
                                     Session["username"] = loginViewModel.Username;
+                                    Session["role"] = user.rolename;
+                                    Session["firstname"] = user.firstname;
+                                    Session["dept"] = user.deptname;
                                     return RedirectToAction("Index", "LoggedIn", new { loginViewModel.Username });
                                     
                                 }
@@ -183,7 +181,11 @@ namespace CompanyPortal.Controllers
 
         public ActionResult LogOut()
         {
+            Session["username"] = null;
             Session["token"] = null;
+            Session["role"] = null;
+            Session["firstname"] = null;
+            Session["dept"] = null;
             return RedirectToAction("Index", "Home");
         }
     }

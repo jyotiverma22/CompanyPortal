@@ -19,8 +19,10 @@ namespace RepositoryLayer.Repositories
 
         List<BloodGroup> GetBloodGroups();
 
-        bool CheckUser(Login login);
+        SessionModel CheckUser(Login login);
 
         EmployeesDetails GetEmployeesDetails(string username);
+
+        IEnumerable<Project> GetProjectDetail(string username);
     }
 }

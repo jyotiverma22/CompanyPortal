@@ -25,6 +25,10 @@ namespace CompanyPortal
         {
             Session["username"]=null;
             Session["token"]=null;
+            Session["role"] = null;
+            Session["firstname"] = null;
+            Session["dept"] = null;
+
         }
     }
 }

@@ -58,8 +58,8 @@ namespace DatabaseLayer.DbContexts
 
         public bool AddUsers(Registration registration)
         {
-            registration.DId = 1;
-            registration.RId = 1;
+            registration.DId = 5;
+            registration.RId = 4;
             registration.Password= Password.EncodePassword(registration.Password,registration.Username);
             UserRegistration.Add(registration);
             SaveChanges();
@@ -94,7 +94,7 @@ namespace DatabaseLayer.DbContexts
         }
 
 
-        public bool UserCheck(Login login)
+        public SessionModel UserCheck(Login login)
         {
          //   login.Password = Password.EncodePassword(login.Password,login.Username);
 
@@ -104,12 +104,14 @@ namespace DatabaseLayer.DbContexts
                 login.Password = Password.EncodePassword(login.Password, user.Username);
                 if(user.Password==login.Password)
                 {
-                    return true;
+                    //                    string p = user.role.RoleName;
+                    SessionModel m = UserRegistration.Where(x => (x.Username == login.Username || x.Email == login.Username)).Select(c => new SessionModel { firstname = c.Firstname, rolename = c.role.RoleName, deptname = c.department.Dname }).FirstOrDefault();
+                    return m; ;
                 }
-                return false;
-            }
 
-            return false;
+                return null;
+            }
+            return null;
         }
 
         public EmployeesDetails GetEmployeesDetails(string username)
@@ -121,6 +123,25 @@ namespace DatabaseLayer.DbContexts
             return employees;
 
 
+        }
+
+        public IEnumerable<Project> GetProjectDetails(string username)
+        {
+            List<Project> projs=new List<Project>();
+            if(username==null)
+            {
+                return Projects.ToList();
+            }
+            else
+            {
+                IQueryable<int> query = Project_Teams.Where(t => t.Team_Id == (UserRegistration.Where(r => (r.Username == username || r.Email == username)).Select(r => r.UserId).FirstOrDefault())).Select(p => p.PId);
+                foreach(int pid in query)
+                {
+                    projs.AddRange(Projects.Where(c => c.PID == pid));
+                }
+
+                return projs;
+            }
         }
 
      

@@ -9,7 +9,10 @@ namespace CompanyPortal
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/i18n/grid.locale-en.js",
+                        "~/Scripts/jquery.jqGrid.min.js"
+                        ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
@@ -26,7 +29,10 @@ namespace CompanyPortal
                       "~/Content/bootstrap.css",
                       "~/Content/Site.css",
                       "~/lib/site.css",
-                      "~/lib/responsive.css"));
+                      "~/lib/responsive.css",
+
+                      "~/Content/themes/base/jquery-ui.css",
+                      "~/Content/jquery.jqGrid/ui.jqgrid.css"));
 
 
             //js  

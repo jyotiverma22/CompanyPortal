@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace CompanyPortal.Controllers
@@ -40,12 +41,28 @@ namespace CompanyPortal.Controllers
         }
 
 
-        [Authorize, Route("getemployeedetails"), HttpGet]
-        IHttpActionResult getProjectDetails(string username)
+        // Get project details to show into the jqgrid
+        [Authorize, HttpGet, Route("getProjectDetails")]
+        public IEnumerable<ProjectViewModel> GetProjectDetails(string username)
         {
-            return Ok();
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<Project, ProjectViewModel>();
+            });
+            IMapper mapper = config.CreateMapper();
+            List<ProjectViewModel> projs = new List<ProjectViewModel>();
+            List<Project> project = new List<Project>();
+            project = ICompany.GetProjectDetail(username).ToList();
+                projs = mapper.Map<List<Project>, List<ProjectViewModel>>(project);
+            return projs;
         }
 
+
+       // [Authorize, Route("getprojectdetails"), HttpGet]
+       //public IHttpActionResult getProjectDetails()
+       // {
+       //     string username = null;
+       //     return null;
+       // }
 
 
     }

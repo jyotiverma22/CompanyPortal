@@ -11,7 +11,7 @@ namespace CompanyPortal.ViewModels
 
         public string Project_Name { get; set; }
 
-        public string Manager_Name { get; set; }
+        public string Mgr_Id { get; set; }
 
         public string Status{ get; set; }
 

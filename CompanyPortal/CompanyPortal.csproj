@@ -422,6 +422,7 @@
     <Content Include="lib\images\bgimage.JPG" />
     <Content Include="lib\images\images.jpg" />
     <Content Include="lib\images\logo.png" />
+    <Content Include="lib\js\mygrid.js" />
     <Content Include="lib\js\responsive.js" />
     <Content Include="lib\js\site.js" />
     <Content Include="lib\responsive.css" />

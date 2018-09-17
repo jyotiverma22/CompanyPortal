@@ -21,7 +21,7 @@ namespace RepositoryLayer.Repositories
             return DataLayer.CheckEmailAddressStatus(email);
         }
 
-        public bool CheckUser(Login login)
+        public SessionModel CheckUser(Login login)
         {
             return DataLayer.CheckUser(login);
         }
@@ -39,6 +39,13 @@ namespace RepositoryLayer.Repositories
         public EmployeesDetails GetEmployeesDetails(string username)
         {
             return DataLayer.GetEmloyeesDetails(username);
+        }
+
+
+        // Get all project details
+        public IEnumerable<Project> GetProjectDetail(string username)
+        {
+            return DataLayer.GetProjectDetails(username);
         }
 
         public string GetUserId()

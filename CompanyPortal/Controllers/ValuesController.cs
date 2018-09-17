@@ -78,10 +78,12 @@ namespace CompanyPortal.Controllers
 
             IMapper mapper = config.CreateMapper();
             Login login= mapper.Map<LoginViewModel, Login>(loginviewModel);
-
-
             return Ok(companyRepository.CheckUser(login));
         }
+
+      
+
+
         // GET api/values
         public IEnumerable<string> Get()
         {
