@@ -18,6 +18,11 @@ namespace CompanyPortal.Controllers
         // GET: LoggedIn
         public ActionResult Index()
         {
+            var token = Session["token"];
+            if (token == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
