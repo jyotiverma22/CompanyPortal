@@ -77,6 +77,10 @@ namespace CompanyPortal.Controllers
 
 
 
+        public JsonResult getTeamDetails(string sidx, string sord, int rows, int page)
+        {
+            return null;
+        }
 
     }
 }

@@ -1,5 +1,5 @@
 ﻿
-    var a=@Sess
+    
 $(document).ready(function () {
 
     
@@ -37,6 +37,11 @@ $(document).ready(function () {
                 Id: "0"
             },
             autowidth: true,
+            subGrid: true,
+            subGridRowExpanded: showChildGrid,
+            subGridOptions: {
+                expandOnLoad:true
+            }
 
 
         }).navGrid('#pager', { edit: true, add: true, del: true, search: true, refresh: true });
@@ -44,4 +49,43 @@ $(document).ready(function () {
 
 });
     
-</script>
+
+// the event handler on expanding parent row receives two parameters
+// the ID of the grid tow  and the primary key of the row
+function showChildGrid(parentRowID, parentRowKey) {
+    // create unique table and pager
+    var childGridID = parentRowID + "_table";
+    var childGridPagerID = parentRowID + "_pager";
+
+    // send the parent row primary key to the server so that we know which grid to show
+    var childGridURL = "/ProjectJQGrid/getTeamDetails";
+    // add a table and pager HTML elements to the parent grid row - we will render the child grid here
+    $('#' + parentRowID).append('<table id=' + childGridID + '></table><div id=' + childGridPagerID + '></div>');
+
+    $("#" + childGridID).jqGrid({
+        url: childGridURL,
+        mtype: "GET",
+        datatype: "json",
+        page: 1,
+        colNames: ['UserId', 'EmployeeName', 'EmailId'],
+        colModel: [
+            { label: 'UserId', name: 'UserId', key: true, width: 75 },
+            { label: 'name', name: 'name', width: 100 },
+            { label: 'emailid', name: 'emailid', width: 100 }
+        ],
+        loadonce: true,
+        width: 500,
+        height: '100%',
+        pager: "#" + childGridPagerID,
+        caption: "Project Details",
+        emptyrecords: "No projects to show",
+        jsonReader: {
+            root: "rows",
+            page: "page",
+            total: "total",
+            records: "records",
+            repeatitems: false,
+            Id: "0"
+        },
+    });
+}
