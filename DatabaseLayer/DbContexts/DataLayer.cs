@@ -7,13 +7,38 @@ using System.Threading.Tasks;
 
 namespace DatabaseLayer.DbContexts
 {
-   public static class DataLayer
+   public class DataLayer
     {
-        public static bool  AddUsers(Registration registration)
+        /// <summary>
+        /// register the users and add the details into the database
+        /// </summary>
+        /// <param name="registration"></param>
+        /// <returns></returns>
+        public bool  AddUsers(Registration registration)
         {
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
-                if (companyDbContext.AddUsers(registration))
+                registration.DId = 5;
+                registration.RId = 4;
+                registration.Password = Password.EncodePassword(registration.Password, registration.Username);
+                companyDbContext.UserRegistration.Add(registration);
+                companyDbContext.SaveChanges();
+                return true;
+               
+            }
+        }
+
+        /// <summary>
+        /// check email Address if already exist
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public bool CheckEmailAddressStatus(string email)
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+                var user = companyDbContext. UserRegistration.Where(x => x.Email == email).FirstOrDefault();
+                if (user != null)
                 {
                     return true;
                 }
@@ -21,69 +46,131 @@ namespace DatabaseLayer.DbContexts
             }
         }
 
-        public static bool CheckEmailAddressStatus(string email)
-                {
-            using (CompanyDbContext companyDbContext2 = new CompanyDbContext())
-            {
-                if (companyDbContext2.CheckEmailAddressStatus(email))
-                {
-                    return true;
-                }
-                return false;
-            }
-        }
-
-        public static bool CheckUsernameStatus(string username)
+        /// <summary>
+        /// check username if already exist
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public bool CheckUsernameStatus(string username)
         {
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
-                if (companyDbContext.CheckUsernameStatus(username))
+                var user = companyDbContext.UserRegistration.Where(x => x.Username == username).FirstOrDefault();
+                if (user != null)
                 {
                     return true;
                 }
-                return false;
+                return false; ;
             }
             
         }
 
-        public static string GetUserId()
+        /// <summary>
+        /// get the unique user id
+        /// </summary>
+        /// <returns></returns>
+        public string GetUserId()
         {
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
-                return companyDbContext.GetUserId();
+                var users = companyDbContext.UserRegistration.Count(); ;
+                if (users == 0)
+                {
+                    return "CMP-1001";
+                }
+                else
+                {
+                    Registration registration = companyDbContext.UserRegistration.OrderByDescending(x => x.Sno).First();
+
+                    Console.WriteLine(registration);
+
+                    string userid = registration.UserId;
+                    userid = userid.Replace('"', ' ').Trim();
+                    string[] id = userid.Split('-');
+                    id[1] = (Int32.Parse(id[1]) + 1).ToString();
+                    userid = id[0] + "-" + id[1];
+                    return userid;
+
+                }
             }
         }
 
-        public static List<BloodGroup> GetBloodGroups()
+        //returns the list of blood group
+        public List<BloodGroup> GetBloodGroups()
         {
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
-                return companyDbContext.getBloodGroupList();
+                return companyDbContext.BloodGroups.ToList();
             }
         }
 
-        public static SessionModel CheckUser(Login login)
+
+        /// <summary>
+        /// to check user exist or not on login
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        public SessionModel CheckUser(Login login)
         {
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
-                return companyDbContext.UserCheck(login);
+                //   login.Password = Password.EncodePassword(login.Password,login.Username);
+
+                Registration user = companyDbContext. UserRegistration.Where(x => (x.Username == login.Username || x.Email == login.Username)).FirstOrDefault();
+                if (user != null)
+                {
+                    login.Password = Password.EncodePassword(login.Password, user.Username);
+                    if (user.Password == login.Password)
+                    {
+                        //                    string p = user.role.RoleName;
+                        SessionModel m = companyDbContext. UserRegistration.Where(x => (x.Username == login.Username || x.Email == login.Username)).Select(c => new SessionModel { firstname = c.Firstname, rolename = c.role.RoleName, deptname = c.department.Dname, userid = c.UserId }).FirstOrDefault();
+                        return m; ;
+                    }
+
+                    return null;
+                }
+                return null;
+
             }
         }
 
-        public static EmployeesDetails GetEmloyeesDetails(string username)
+        /// <summary>
+        /// return the employees details 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public EmployeesDetails GetEmloyeesDetails(string username)
         {
             using (CompanyDbContext companyDbContext=new CompanyDbContext())
             {
-                return companyDbContext.GetEmployeesDetails(username);
+                EmployeesDetails employees = new EmployeesDetails();
+                employees =companyDbContext.UserRegistration.Where(x => (x.Username == username || x.Email == username)).Select(c => new EmployeesDetails { userId = c.UserId, Username = c.Username, FullName = (c.Firstname + " " + c.Lastname), DOB = c.DOB, Email = c.Email, Phone = c.Phone, Gender = c.Gender, Bloodgroup = c.bloodGroup.BloodGroupName, Department_name = c.department.Dname, Role_name = c.role.RoleName, Rep_Manager = (companyDbContext. UserRegistration.Where(m => m.UserId == (companyDbContext.Emp_Reportings.Where(u => u.Emp_ID == c.UserId).Select(u => u.Rep_Mgr).FirstOrDefault())).Select(m => m.Username).FirstOrDefault()) }).FirstOrDefault();
+                //   Department d = Departments.Where(x => x.DId == reg.DId).FirstOrDefault();
+                //   employees.userId = reg.UserId;
+                return employees;
             }
         }
 
         // Get project details to set in jq grid
-        public static IEnumerable<Project> GetProjectDetails(string username)
+        public IEnumerable<Project> GetProjectDetails(string username)
         {
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
-                return companyDbContext.GetProjectDetails(username);
+                List<Project> projs = new List<Project>();
+                if (username == null)
+                {
+                    return companyDbContext.Projects.ToList();
+                }
+                else
+                {
+                    IQueryable<int> query =companyDbContext.Project_Teams.Where(t => t.Team_Id == (companyDbContext. UserRegistration.Where(r => (r.Username == username || r.Email == username)).Select(r => r.UserId).FirstOrDefault())).Select(p => p.PId);
+                    foreach (int pid in query)
+                    {
+                        projs.AddRange(companyDbContext.Projects.Where(c => c.PID == pid));
+                    }
+
+                    return projs;
+                }
             }
         }
 

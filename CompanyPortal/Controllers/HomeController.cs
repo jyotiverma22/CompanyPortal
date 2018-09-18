@@ -63,6 +63,7 @@ namespace CompanyPortal.Controllers
                                     Session["role"] = user.rolename;
                                     Session["firstname"] = user.firstname;
                                     Session["dept"] = user.deptname;
+                                    Session["id"] = user.userid;
                                     return RedirectToAction("Index", "LoggedIn", new { loginViewModel.Username });
                                     
                                 }

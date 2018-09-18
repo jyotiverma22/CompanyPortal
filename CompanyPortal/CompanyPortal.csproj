@@ -326,6 +326,7 @@
     <Compile Include="Controllers\DetailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoggedInController.cs" />
+    <Compile Include="Controllers\ProjectJQGridController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -568,9 +569,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\RegisterUser.cshtml" />
-    <Content Include="Views\Shared\_Layout1.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\LoggedIn\Index.cshtml" />
     <Content Include="Views\Partial\_EmployeeDetails.cshtml" />
     <Content Include="Views\Shared\_LayoutPage.cshtml" />
@@ -585,6 +584,8 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Shared\_EmployeeDetails.cshtml" />
     <Content Include="Views\Shared\_ProjectDetails.cshtml" />
+    <Content Include="Views\Shared\_MemberPartialView.cshtml" />
+    <Content Include="Views\Shared\_ProjManagerPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

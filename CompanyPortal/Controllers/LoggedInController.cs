@@ -16,6 +16,13 @@ namespace CompanyPortal.Controllers
     {
         
         // GET: LoggedIn
+        /// <summary>
+        /// if user logged in then dashboard appears
+        /// otherwiser home page appears
+        /// </summary>
+        /// <returns>
+        /// returns view
+        /// </returns>
         public ActionResult Index()
         {
             var token = Session["token"];
@@ -27,11 +34,56 @@ namespace CompanyPortal.Controllers
         }
 
 
+        /// <summary>
+        /// Return the Member Partial View that shows the sidenav and memeber dashboard
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult MemberPartial()
+        {
+            return PartialView("_MemberPartialView");
+        }
+        /// <summary>
+        /// shows the project manager partial view
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ProjManagerPartial()
+        {
+            return PartialView("_ProjManagerPartialView");
+        }
+
+        /// <summary>
+        /// shows the reporting manager partial view 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult RepManagerPartial()
+        {
+            return PartialView("_RepManagerPartialView");
+        }
+
+
+        /// <summary>
+        /// shows the admin partial view
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AdminPartial()
+        {
+            return PartialView("_AdminPartialView");
+        }
+
+        /// <summary>
+        /// renders the partial view of the project details 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ProjectDetails()
         {
             return PartialView("_ProjectDetails", new ProjectViewModel());
         }
 
+        /// <summary>
+        /// retrives the values from database then 
+        /// pass the model to the partial view
+        /// </summary>
+        /// <returns></returns>
         public ActionResult EmployeeDetails()
         {
             EmployeeDetailsViewModel employees = new EmployeeDetailsViewModel();
@@ -65,61 +117,7 @@ namespace CompanyPortal.Controllers
           }
 
 
-        //get the values in jqgrid
-
-        public JsonResult GetProjects(string sidx, string sord,int rows, int page)
-        {
-            var token = Session["token"];
-            var username = Session["username"];
-
-            sord = (sord == null) ? "" : sord;
-            int PageIndex = Convert.ToInt32(page) - 1;
-            int pagesize = rows;
-            var list = new List<ProjectViewModel>();
-            using (HttpClient client = new HttpClient())
-            {
-                UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["detailsUrl"]);
-                //  url.Query = "username=" + username;
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.ToString());
-
-                var result = client.GetAsync(url.Uri + "/getProjectDetails?username=" + username).Result;
-                if (result.IsSuccessStatusCode)
-                {
-                     list = JsonConvert.DeserializeObject<List<ProjectViewModel>>(result.Content.ReadAsStringAsync().Result);
-                  
-                }
-                else
-                {
-                }
-
-            }
-
-
-            int totalRecords = list.Count();
-            var totalPages = (int)Math.Ceiling((float)totalRecords / (float)rows);
-            if(sord.ToUpper()=="DESC")
-            {
-                list = list.OrderByDescending(t => t.Project_Name).ToList();
-                list = list.Skip(PageIndex * pagesize).Take(pagesize).ToList();
-            }
-            else
-            {
-                list = list.OrderBy(t => t.Project_Name).ToList();
-                list = list.Skip(PageIndex * pagesize).Take(pagesize).ToList();
-
-            }
-
-            var jsondata = new
-            {
-                total = totalPages,
-                page,
-                records = totalRecords,
-                rows = list
-            };
-            return Json(jsondata,JsonRequestBehavior.AllowGet);
-
-        }
-
+    
 
     }
 }

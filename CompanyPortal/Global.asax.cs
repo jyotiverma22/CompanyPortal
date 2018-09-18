@@ -28,6 +28,7 @@ namespace CompanyPortal
             Session["role"] = null;
             Session["firstname"] = null;
             Session["dept"] = null;
+            Session["id"] = null;
 
         }
     }

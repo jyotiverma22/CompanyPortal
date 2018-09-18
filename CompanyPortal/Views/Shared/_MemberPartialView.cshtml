@@ -1,0 +1,71 @@
+﻿<div class="col-md-3 sidenavbar ">
+    <div class="col-12 side-nav">
+        <div class="nav-item navitem " id="personaldetails"> Personal Details</div>
+        <div class="nav-item navitem" id="projectdetails">
+            Project Details
+        </div>
+            <ul id="projsbar" style="display:none">
+                <li class="nav-item">
+                    <a> Working Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a>Completed Projects</a> 
+                </li>
+            </ul>
+        <div class="nav-item navitem" id="attendenece"> Attendence</div>
+        <!--
+    <div class="nav-item navitem"> Team Details</div>
+    <div class="nav-item navitem"> Team Details</div>
+    <div class="nav-item navitem"> Team Details</div>
+
+    -->
+    </div>
+    </div>
+
+
+<div class="col-md-9 mainContent" id="mainContent">
+    <div id="emp">
+        @{
+            Html.RenderAction("EmployeeDetails");
+        }
+    </div>
+
+    <div id="proj" style="display:none">
+        @{
+            Html.RenderAction("ProjectDetails");
+        }
+    </div>
+
+    <div id="attend">
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        debugger
+        var a = 0;
+        $("#personaldetails").click(function () {
+            debugger
+            $("#proj").hide();
+            $("#emp").show();
+        })
+
+        $("#projectdetails").click(function () {
+            debugger    
+            if (a==0) {
+                $("#projsbar").show();
+                a = 1;
+            }
+            else {
+                $("#projsbar").hide();
+                a = 0;
+            }
+           // $("#proj").show();
+           // $("#emp").hide();
+        })
+
+
+        debugger
+        }   );
+</script>
