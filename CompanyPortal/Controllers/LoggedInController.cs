@@ -74,9 +74,9 @@ namespace CompanyPortal.Controllers
         /// renders the partial view of the project details 
         /// </summary>
         /// <returns></returns>
-        public ActionResult ProjectDetails()
+        public ActionResult ProjectDetails(string projectType)
         {
-            return PartialView("_ProjectDetails", new ProjectViewModel());
+            return PartialView("_ProjectDetails",projectType);
         }
 
         /// <summary>

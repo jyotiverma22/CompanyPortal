@@ -43,7 +43,7 @@ namespace CompanyPortal.Controllers
 
         // Get project details to show into the jqgrid
         [Authorize, HttpGet, Route("getProjectDetails")]
-        public IEnumerable<ProjectViewModel> GetProjectDetails(string username)
+        public IEnumerable<ProjectViewModel> GetProjectDetails(string username,string status)
         {
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<Project, ProjectViewModel>();
@@ -51,18 +51,33 @@ namespace CompanyPortal.Controllers
             IMapper mapper = config.CreateMapper();
             List<ProjectViewModel> projs = new List<ProjectViewModel>();
             List<Project> project = new List<Project>();
-            project = ICompany.GetProjectDetail(username).ToList();
+            project = ICompany.GetProjectDetail(username,status).ToList();
                 projs = mapper.Map<List<Project>, List<ProjectViewModel>>(project);
             return projs;
         }
 
 
-       // [Authorize, Route("getprojectdetails"), HttpGet]
-       //public IHttpActionResult getProjectDetails()
-       // {
-       //     string username = null;
-       //     return null;
-       // }
+        [Authorize, HttpGet, Route("getTeamDetails")]
+        public IEnumerable<RegisterViewModel> getTeamDetails(int pid)
+        {
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<Registration, RegisterViewModel>();
+            });
+            IMapper mapper = config.CreateMapper();
+            List<RegisterViewModel> regs = new List<RegisterViewModel>();
+            List<Registration> emp = new List<Registration>();
+            emp = ICompany.getTeamDetails(pid).ToList();
+            regs = mapper.Map<List<Registration>, List<RegisterViewModel>>(emp);
+            return regs;
+        }
+
+
+        // [Authorize, Route("getprojectdetails"), HttpGet]
+        //public IHttpActionResult getProjectDetails()
+        // {
+        //     string username = null;
+        //     return null;
+        // }
 
 
     }

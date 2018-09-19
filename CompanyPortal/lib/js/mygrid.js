@@ -1,14 +1,23 @@
 ﻿
     
 $(document).ready(function () {
+    debugger
 
+  
+
+});
     
+
+
+function jqgridInitialize(status) {
+    debugger
+    $("#grid").setGridParam({ datatype: 'json', url: "/ProjectJQGrid/GetProjects?status=" + status});
+    
+    $("#grid").trigger("reloadGrid")
+
     $("#grid").jqGrid(
-
         {
-
-            url: "/ProjectJQGrid/GetProjects",
-
+            url: "/ProjectJQGrid/GetProjects?status="+status,
             datatype: "json",
             mtype: "Get",
             colNames: ['PId', 'Project_Name', 'Mgr_Id', 'Status'],
@@ -17,9 +26,6 @@ $(document).ready(function () {
                 { key: false, name: 'Project_Name', index: 'Project_Name', editable: true },
                 { key: false, name: 'Mgr_Id', index: 'Mgr_Id', editable: true },
                 { key: false, name: 'Status', index: 'Status', editable: true }
-                
-
-
             ],
             pager: jQuery('#pager'),
             rowNum: 5,
@@ -28,6 +34,8 @@ $(document).ready(function () {
             viewrecords: true,
             caption: "Project Details",
             emptyrecords: "No projects to show",
+            setsearchtoobar: true,
+            loadOnce: true,
             jsonReader: {
                 root: "rows",
                 page: "page",
@@ -40,27 +48,28 @@ $(document).ready(function () {
             subGrid: true,
             subGridRowExpanded: showChildGrid,
             subGridOptions: {
-                expandOnLoad:true
+                expandOnLoad: false
             }
 
 
         }).navGrid('#pager', { edit: true, add: true, del: true, search: true, refresh: true });
 
 
-});
-    
-
+}
 // the event handler on expanding parent row receives two parameters
 // the ID of the grid tow  and the primary key of the row
 function showChildGrid(parentRowID, parentRowKey) {
+    debugger
+  
     // create unique table and pager
     var childGridID = parentRowID + "_table";
     var childGridPagerID = parentRowID + "_pager";
 
     // send the parent row primary key to the server so that we know which grid to show
-    var childGridURL = "/ProjectJQGrid/getTeamDetails";
+    var childGridURL = "/ProjectJQGrid/getTeamDetails?pid=" + parentRowKey;
     // add a table and pager HTML elements to the parent grid row - we will render the child grid here
     $('#' + parentRowID).append('<table id=' + childGridID + '></table><div id=' + childGridPagerID + '></div>');
+  //  $("#" + childGridID).setGridParam({ datatype: 'json', url: childGridID }).trigger("reloadGrid");
 
     $("#" + childGridID).jqGrid({
         url: childGridURL,
@@ -69,15 +78,15 @@ function showChildGrid(parentRowID, parentRowKey) {
         page: 1,
         colNames: ['UserId', 'EmployeeName', 'EmailId'],
         colModel: [
-            { label: 'UserId', name: 'UserId', key: true, width: 75 },
-            { label: 'name', name: 'name', width: 100 },
-            { label: 'emailid', name: 'emailid', width: 100 }
+            { label: 'userId', name: 'userId', key: true, width: 75 },
+            { label: 'Firstname', name: 'Firstname', width: 100 },
+            { label: 'Email', name: 'Email', width: 100 }
         ],
-        loadonce: true,
+        
         width: 500,
         height: '100%',
         pager: "#" + childGridPagerID,
-        caption: "Project Details",
+        caption: "Team Details",
         emptyrecords: "No projects to show",
         jsonReader: {
             root: "rows",

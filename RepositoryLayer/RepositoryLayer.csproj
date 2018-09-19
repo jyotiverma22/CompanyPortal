@@ -150,7 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\ICompanyRepository.cs" />
+    <Compile Include="Repositories\Interface\ICompanyRepository.cs" />
     <Compile Include="Repositories\CompanyRepositoryService.cs" />
   </ItemGroup>
   <ItemGroup>

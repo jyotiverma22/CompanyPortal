@@ -43,9 +43,14 @@ namespace RepositoryLayer.Repositories
 
 
         // Get all project details
-        public IEnumerable<Project> GetProjectDetail(string username)
+        public IEnumerable<Project> GetProjectDetail(string username,string status)
         {
-            return datalayer.GetProjectDetails(username);
+            return datalayer.GetProjectDetails(username,status);
+        }
+
+        public IEnumerable<Registration> getTeamDetails(int pid)
+        {
+            return datalayer.getTeamDetails(pid);
         }
 
         public string GetUserId()

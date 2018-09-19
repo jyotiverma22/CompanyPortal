@@ -23,6 +23,8 @@ namespace RepositoryLayer.Repositories
 
         EmployeesDetails GetEmployeesDetails(string username);
 
-        IEnumerable<Project> GetProjectDetail(string username);
+        IEnumerable<Project> GetProjectDetail(string username,string status);
+
+        IEnumerable<Registration> getTeamDetails(int pid);
     }
 }

@@ -152,7 +152,7 @@ namespace DatabaseLayer.DbContexts
         }
 
         // Get project details to set in jq grid
-        public IEnumerable<Project> GetProjectDetails(string username)
+        public IEnumerable<Project> GetProjectDetails(string username,string status)
         {
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
@@ -166,11 +166,33 @@ namespace DatabaseLayer.DbContexts
                     IQueryable<int> query =companyDbContext.Project_Teams.Where(t => t.Team_Id == (companyDbContext. UserRegistration.Where(r => (r.Username == username || r.Email == username)).Select(r => r.UserId).FirstOrDefault())).Select(p => p.PId);
                     foreach (int pid in query)
                     {
-                        projs.AddRange(companyDbContext.Projects.Where(c => c.PID == pid));
+                        //&& c.Status=="status"
+                        projs.AddRange(companyDbContext.Projects.Where(c => (c.PID == pid && c.Status==status)));
                     }
 
                     return projs;
                 }
+            }
+        }
+
+        /// <summary>
+        /// get details of employees on particular project
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public IEnumerable<Registration> getTeamDetails(int pid)
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+                List<Registration> reg = new List<Registration>();
+
+                IQueryable<string> emps = companyDbContext.Project_Teams.Where(c => c.PId == pid).Select(c => c.Team_Id);
+
+                foreach(var e in emps)
+                {
+                    reg.AddRange(companyDbContext.UserRegistration.Where(c => c.UserId == e));
+                }
+                return reg;
             }
         }
 
