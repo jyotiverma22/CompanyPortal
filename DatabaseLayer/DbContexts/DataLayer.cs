@@ -144,7 +144,7 @@ namespace DatabaseLayer.DbContexts
             using (CompanyDbContext companyDbContext=new CompanyDbContext())
             {
                 EmployeesDetails employees = new EmployeesDetails();
-                employees =companyDbContext.UserRegistration.Where(x => (x.Username == username || x.Email == username)).Select(c => new EmployeesDetails { userId = c.UserId, Username = c.Username, FullName = (c.Firstname + " " + c.Lastname), DOB = c.DOB, Email = c.Email, Phone = c.Phone, Gender = c.Gender, Bloodgroup = c.bloodGroup.BloodGroupName, Department_name = c.department.Dname, Role_name = c.role.RoleName, Rep_Manager = (companyDbContext. UserRegistration.Where(m => m.UserId == (companyDbContext.Emp_Reportings.Where(u => u.Emp_ID == c.UserId).Select(u => u.Rep_Mgr).FirstOrDefault())).Select(m => m.Username).FirstOrDefault()) }).FirstOrDefault();
+                employees =companyDbContext.UserRegistration.Where(x => (x.Username == username || x.Email == username || x.UserId==username)).Select(c => new EmployeesDetails { userId = c.UserId, Username = c.Username, FullName = (c.Firstname + " " + c.Lastname), DOB = c.DOB, Email = c.Email, Phone = c.Phone, Gender = c.Gender, Bloodgroup = c.bloodGroup.BloodGroupName, Department_name = c.department.Dname, Role_name = c.role.RoleName, Rep_Manager = (companyDbContext. UserRegistration.Where(m => m.UserId == (companyDbContext.Emp_Reportings.Where(u => u.Emp_ID == c.UserId).Select(u => u.Rep_Mgr).FirstOrDefault())).Select(m => m.Username).FirstOrDefault()) }).FirstOrDefault();
                 //   Department d = Departments.Where(x => x.DId == reg.DId).FirstOrDefault();
                 //   employees.userId = reg.UserId;
                 return employees;
@@ -195,6 +195,7 @@ namespace DatabaseLayer.DbContexts
                 return reg;
             }
         }
+
 
 
     }

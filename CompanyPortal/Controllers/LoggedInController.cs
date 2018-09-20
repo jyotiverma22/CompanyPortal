@@ -84,11 +84,12 @@ namespace CompanyPortal.Controllers
         /// pass the model to the partial view
         /// </summary>
         /// <returns></returns>
-        public ActionResult EmployeeDetails()
+        public ActionResult EmployeeDetails(string userid)
         {
+
             EmployeeDetailsViewModel employees = new EmployeeDetailsViewModel();
             var token = Session["token"];
-            var username = Session["username"];
+            var username =(userid!=null)?userid: Session["username"];
             if (token == null)
             {
                 return RedirectToAction("Index", "home");

@@ -1,98 +1,101 @@
 ﻿@model CompanyPortal.ViewModels.EmployeeDetailsViewModel
 
-<div>
-    <h4>EmployeeDetailsViewModel</h4>
+<div class="container">
+    <div class="row " style="height:20px">
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.userId)
-        </dt>
-
-        <dd>
+        </div>
+        <div class="row">
+            <label class="col-4 offset-2 text-left font-weight-bold">
+                User ID:
+            </label>
+            <label class="col-4 offset-1 text-left font-weight-bold">
             @Html.DisplayFor(model => model.userId)
-        </dd>
+                   </label>
+        </div>
+        <div class="row">
+            <label class="col-4 offset-2 text-left font-weight-bold">User Name</label>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
+            <label class="col-4 offset-1 text-left">
+                @Html.DisplayFor(model => model.Username)
+            </label>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Username)
-        </dd>
+        <div class=" row">
+            <label class="col-4 offset-2 text-left font-weight-bold"> Name </label>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+            <label class="col-4 offset-1 text-left">
+                @Html.DisplayFor(model => model.FullName)
+            </label>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
+        <div class="row">
+            <label class="col-4 offset-2 text-left font-weight-bold"> Email ID</label>
+            <label class="col-4 offset-1 text-left">
+                @Html.DisplayFor(model => model.Email)
+            </label>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
+       <div class="row">
+           <label class="col-4 offset-2 text-left font-weight-bold">Phone Number</label>
+           <label class="col-4 offset-1 text-left">
+               @Html.DisplayFor(model => model.Phone)
+           </label>
+       </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
+        <div class="row">
+            <label class="col-4 offset-2 text-left font-weight-bold">Gender</label>
+            <label class="col-4 offset-1 text-left">
+                @Html.DisplayFor(model => model.Gender)
+            </label>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
+        <div class="row">
+            <label class="col-4 offset-2 text-left font-weight-bold">BloodGroup</label>
+            <label class="col-4 offset-1 text-left">
+                @Html.DisplayFor(model => model.Bloodgroup)
+            </label>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
+        <div class="row">
+            <label class="col-4 offset-2 text-left font-weight-bold">Date of Birth</label>
+            <label class="col-4 offset-1 text-left">
+                @Html.DisplayFor(model => model.DOB)
+            </label>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
+        <div class="row">
+            <label class="col-4 offset-2 text-left font-weight-bold">Department Name</label>
+            <label class="col-4 offset-1 text-left">
+                @Html.DisplayFor(model => model.Department_name)
+            </label>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Bloodgroup)
-        </dt>
+        <div class="row">
+            <label class="col-4 offset-2 text-left font-weight-bold">Role</label>
+            <label class="col-4 offset-1 text-left">
+                @Html.DisplayFor(model => model.Role_name)        
+            </label>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Bloodgroup)
-        </dd>
+          <div class="row">
+              <label class="col-4 offset-2 text-left font-weight-bold">Reporting Manager</label>
+              <label class="col-4 offset-1 text-left">
+                  @Html.DisplayFor(model => model.Rep_Manager)
+              </label>
+          </div>
+        
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DOB)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DOB)
-        </dd>
+        
+        
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Department_name)
-        </dt>
+       
+     
 
-        <dd>
-            @Html.DisplayFor(model => model.Department_name)
-        </dd>
+       
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Role_name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Role_name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Rep_Manager)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Rep_Manager)
-        </dd>
-
-    </dl>
+      
 </div>
 @*<p>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |

@@ -88,6 +88,7 @@ function showChildGrid(parentRowID, parentRowKey) {
         pager: "#" + childGridPagerID,
         caption: "Team Details",
         emptyrecords: "No projects to show",
+        onSelectRow: exapandEmployeeDetail,
         jsonReader: {
             root: "rows",
             page: "page",
@@ -98,3 +99,5 @@ function showChildGrid(parentRowID, parentRowKey) {
         },
     });
 }
+
+
