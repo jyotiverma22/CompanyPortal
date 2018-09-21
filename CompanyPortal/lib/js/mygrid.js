@@ -17,24 +17,28 @@ function jqgridInitialize(status) {
 
     $("#grid").jqGrid(
         {
-            url: "/ProjectJQGrid/GetProjects?status="+status,
+            url: "/ProjectJQGrid/GetProjects?status=" + status,
             datatype: "json",
             mtype: "Get",
-            colNames: ['PId', 'Project_Name', 'Mgr_Id', 'Status'],
+            colNames: ['Project_Name', 'Mgr_Id', 'Status'],
             colModel: [
-                { key: true, name: 'PId', index: 'PId', editable: false },
-                { key: false, name: 'Project_Name', index: 'Project_Name', editable: true },
-                { key: false, name: 'Mgr_Id', index: 'Mgr_Id', editable: true },
-                { key: false, name: 'Status', index: 'Status', editable: true }
+                {
+                    key: false, name: 'Project_Name', index: 'Project_Name', editable: true, search: true
+                    , searchoptions: { sopt: ['eq'] }
+                },
+                { key: false, name: 'Mgr_Id', index: 'Mgr_Id', editable: true, search: true, searchtype: 'string', searhField:"ab"},
+                { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype:'string' }
             ],
             pager: jQuery('#pager'),
             rowNum: 5,
+            searchField: "Project_Name",
+            seachString:"abcd",     
             rowList: [5, 10, 15, 20],
             height: "100%",
             viewrecords: true,
             caption: "Project Details",
             emptyrecords: "No projects to show",
-            setsearchtoobar: true,
+            
             loadOnce: true,
             jsonReader: {
                 root: "rows",
@@ -52,7 +56,33 @@ function jqgridInitialize(status) {
             }
 
 
-        }).navGrid('#pager', { edit: true, add: true, del: true, search: true, refresh: true });
+        }).navGrid('#pager', { edit: true, add: true, del: true, search: false, refresh: true });
+
+    $("#grid").jqGrid('filterToolbar', {
+        autosearch: true,
+        stringResult: false,
+        searchOnEnter: true,
+        searchOperators: true
+
+    });
+
+    var maxNameLength = 10;
+    $("input[id=gs_Project_Name]").blur(function () {
+        debugger
+        var $th = $(this).closest(".ui-search-toolbar>th"),
+            colIndex = $th[0].cellIndex,
+            $colHeader = $th.parent().siblings(".ui-jqgrid-labels").children("th").eq(colIndex),
+            colHeaderText = $colHeader.children("div").text();
+        var searchString = $(this).val();
+        $("#grid").setGridParam({ datatype: 'json', mtype: "POST", postData: { "searchField": colHeaderText, "searchString": searchString } }).trigger("reloadGrid");
+
+
+        if (this.value.length > maxNameLength) {
+            alert(colHeaderText + ' is longer than ' + maxNameLength + ' characters.');
+        }
+
+
+    });
 
 
 }

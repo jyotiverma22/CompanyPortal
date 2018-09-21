@@ -23,14 +23,20 @@ namespace CompanyPortal.Controllers
         /// <param name="rows"> number of rows appeared in jqgrid</param>
         /// <param name="page">number of pages</param>
         /// <returns></returns>
-        public JsonResult GetProjects(string sidx, string sord, int rows, int page, string status)
-        {
+        
+        
+        public JsonResult GetProjects(string sIndex, string sOrder, int rows, int page,
+                                    bool _search,string searchField,string sopt, string searchString,string status)
+            {
             var token = Session["token"];
             var username = Session["username"];
-            sord = (sord == null) ? "" : sord;
+            sOrder = (sOrder == null) ? "" : sOrder;
+            searchString = (searchString== null) ? "" : searchString;
             int PageIndex = Convert.ToInt32(page) - 1;
             int pagesize = rows;
             var list = new List<ProjectViewModel>();
+
+            //Retrieving the data from the server
             using (HttpClient client = new HttpClient())
             {
                 UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["detailsUrl"]);
@@ -50,9 +56,25 @@ namespace CompanyPortal.Controllers
             }
 
 
+            //searching from the list
+            if (_search)
+            {
+                switch (searchField)
+                {
+                    case "Project_Name":
+                        list = list.Where(t => t.Project_Name.Contains(searchString)).ToList();
+                        break;
+                    case "Mgr_Id":
+                        list = list.Where(t => t.Mgr_Id.Contains(searchString)).ToList();
+                        break;
+                    
+
+                }
+            }
+            //sorting and page size
             int totalRecords = list.Count();
             var totalPages = (int)Math.Ceiling((float)totalRecords / (float)rows);
-            if (sord.ToUpper() == "DESC")
+            if (sOrder.ToUpper() == "DESC")
             {
                 list = list.OrderByDescending(t => t.Project_Name).ToList();
                 list = list.Skip(PageIndex * pagesize).Take(pagesize).ToList();
