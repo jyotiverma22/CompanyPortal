@@ -26,14 +26,16 @@ function jqgridInitialize(status) {
             url: "/ProjectJQGrid/GetProjects?status=" + status,
             datatype: "json",
             mtype: "Get",
-            colNames: ['Project Name', 'Manager Id', 'Status'],
+            colNames: ['Project Name', 'Manager Id', 'Status','Actions'],
             colModel: [
                 {
                     key: false, name: 'Project_Name', index: 'Project_Name', editable: true, search: true
                     , searchoptions: { sopt: ['eq'] }, sortable: true,sorttype:'text'
                 },
                 { key: false, name: 'Mgr_Id', index: 'Mgr_Id', editable: true, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc', sorttype: 'text'},
-                { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype: 'string', sortable: true, sorttype: 'text'}
+                { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype: 'string', sortable: true, sorttype: 'text' },
+                { key: false, name: 'Actions', index: 'Actions', editable: false, formatter: displayButtons }
+
             ],
             pager: jQuery('#pager') ,
             rowNum: 5,
@@ -139,4 +141,21 @@ function showChildGrid(parentRowID, parentRowKey) {
     });
 }
 
+//custom formator function to display the Links
+function displayButtons(cellvalue, options, rowObject) {
+    var edit = "<a href='#'>Edit</a>",
+        Details = "<a href='#'>Details</a> |",
+        Delete = "<a href='#'>Delete</a>";
+    return edit + Details + Delete;
+}
+
+
+function ToggleColumn(role_) {
+    if (role_ == "Member") {
+        jQuery("#grid").jqGrid('hideCol', ["Actions"]);
+    }
+    else if (role_ == "Admin") {
+        jQuery("#grid").jqGrid('showCol', ["Actions"]);    
+    }
+}
 

@@ -13,11 +13,8 @@
             </li>
         </ul>
         <div class="nav-item navitem" id="attendenece"> Attendence</div>
-        @if (Session["role"].ToString() == "Admin")
-        {
-        <div class="nav-item navitem"> Employee Details</div>
-        }
         <!--
+        <div class="nav-item navitem"> Team Details</div>
         <div class="nav-item navitem"> Team Details</div>
         <div class="nav-item navitem"> Team Details</div>
 
@@ -53,12 +50,12 @@
                 <div id='regModalContent'>
                     <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel">Employee Detail</h4>
-               
+
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
                     </div>
                     <div id="EmpModal">
-                       
+
                     </div>
                 </div>
             </div>
@@ -73,8 +70,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         debugger
-        var role_=@Session["role"].ToString();
-
+        
         var a = 0;
         $("#personaldetails").click(function () {
             debugger
@@ -98,10 +94,9 @@
 
         $("#wproj").click(function () {
             debugger
-            $("#projdetail").show();           
+            $("#projdetail").show();
             $("#emp").hide();
             jqgridInitialize("working");
-            ToggleColumn(role_);
 
         });
 
@@ -133,7 +128,7 @@
 
 
         });
-     
+
 
     }
 </script>

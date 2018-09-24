@@ -11,7 +11,7 @@
 
     <div class="row">
 
-        @if (Convert.ToString(Session["role"]) == "Member")
+        @if (Convert.ToString(Session["role"]) == "Member" || Convert.ToString(Session["role"]) == "Admin")
         {
 
             Html.RenderAction("MemberPartial");
@@ -27,7 +27,7 @@
         }
         else
         {
-            Html.RenderAction("AdminPartial");
+            <!--Html.RenderAction("AdminPartial");-->
         }
 
     </div>
