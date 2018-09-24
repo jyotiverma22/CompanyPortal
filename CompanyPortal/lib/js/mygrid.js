@@ -20,19 +20,20 @@ function jqgridInitialize(status) {
             url: "/ProjectJQGrid/GetProjects?status=" + status,
             datatype: "json",
             mtype: "Get",
-            colNames: ['Project_Name', 'Mgr_Id', 'Status'],
+            colNames: ['Project Name', 'Manager Id', 'Status'],
             colModel: [
                 {
                     key: false, name: 'Project_Name', index: 'Project_Name', editable: true, search: true
-                    , searchoptions: { sopt: ['eq'] }
+                    , searchoptions: { sopt: ['eq'] }, sortable: true
                 },
-                { key: false, name: 'Mgr_Id', index: 'Mgr_Id', editable: true, search: true, searchtype: 'string', searhField:"ab"},
-                { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype:'string' }
+                { key: false, name: 'Mgr_Id', index: 'Mgr_Id', editable: true, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc'},
+                { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype: 'string', sortable: true}
             ],
-            pager: jQuery('#pager'),
+            pager: jQuery('#pager') ,
             rowNum: 5,
-            searchField: "Project_Name",
-            seachString:"abcd",     
+            searchfield: "Project_Name",
+            seachstring: "abcd",
+            sortname:"Project_Name",
             rowList: [5, 10, 15, 20],
             height: "100%",
             viewrecords: true,

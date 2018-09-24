@@ -25,12 +25,12 @@ namespace CompanyPortal.Controllers
         /// <returns></returns>
         
         
-        public JsonResult GetProjects(string sIndex, string sOrder, int rows, int page,
+        public JsonResult GetProjects(string sidx, string sord, int rows, int page,
                                     bool _search,string searchField,string sopt, string searchString,string status)
             {
             var token = Session["token"];
             var username = Session["username"];
-            sOrder = (sOrder == null) ? "" : sOrder;
+            sord = (sord == null) ? "" : sord;
             searchString = (searchString== null) ? "" : searchString;
             int PageIndex = Convert.ToInt32(page) - 1;
             int pagesize = rows;
@@ -71,20 +71,45 @@ namespace CompanyPortal.Controllers
 
                 }
             }
+
             //sorting and page size
             int totalRecords = list.Count();
             var totalPages = (int)Math.Ceiling((float)totalRecords / (float)rows);
-            if (sOrder.ToUpper() == "DESC")
+
+            switch (sidx.ToLower())
             {
-                list = list.OrderByDescending(t => t.Project_Name).ToList();
-                list = list.Skip(PageIndex * pagesize).Take(pagesize).ToList();
-            }
-            else
-            {
-                list = list.OrderBy(t => t.Project_Name).ToList();
-                list = list.Skip(PageIndex * pagesize).Take(pagesize).ToList();
+                case "project_name":
+                    if (sord.ToUpper() == "DESC")
+                    {
+                        list = list.OrderByDescending(t => t.Project_Name).ToList();
+                        list = list.Skip(PageIndex * pagesize).Take(pagesize).ToList();
+                    }
+                    else
+                    {
+                        list = list.OrderBy(t => t.Project_Name).ToList();
+                        list = list.Skip(PageIndex * pagesize).Take(pagesize).ToList();
+
+                    }
+
+                    break;
+                case "manager_name":
+                    if (sord.ToUpper() == "DESC")
+                    {
+                        list = list.OrderByDescending(t => t.Mgr_Id).ToList();
+                        list = list.Skip(PageIndex * pagesize).Take(pagesize).ToList();
+                    }
+                    else
+                    {
+                        list = list.OrderBy(t => t.Mgr_Id).ToList();
+                        list = list.Skip(PageIndex * pagesize).Take(pagesize).ToList();
+
+                    }
+
+                    break;
 
             }
+
+
 
             var jsondata = new
             {
