@@ -149,17 +149,13 @@
   <ItemGroup>
     <Compile Include="DbContexts\CompanyDbContext.cs" />
     <Compile Include="DbContexts\DataLayer.cs" />
-    <Compile Include="Migrations\20180904042245_UserMigration.cs" />
-    <Compile Include="Migrations\20180904042245_UserMigration.designer.cs">
-      <DependentUpon>20180904042245_UserMigration.cs</DependentUpon>
+    <Compile Include="Migrations\20180924071252_companyMigration.cs" />
+    <Compile Include="Migrations\20180924071252_companyMigration.designer.cs">
+      <DependentUpon>20180924071252_companyMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20180906124730_databaseMigration.cs" />
-    <Compile Include="Migrations\20180906124730_databaseMigration.designer.cs">
-      <DependentUpon>20180906124730_databaseMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20180910051928_CompanyMigration.cs" />
-    <Compile Include="Migrations\20180910051928_CompanyMigration.designer.cs">
-      <DependentUpon>20180910051928_CompanyMigration.cs</DependentUpon>
+    <Compile Include="Migrations\20180924073102_companyMigration2.cs" />
+    <Compile Include="Migrations\20180924073102_companyMigration2.designer.cs">
+      <DependentUpon>20180924073102_companyMigration2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\CompanyDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -176,6 +172,7 @@
       <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

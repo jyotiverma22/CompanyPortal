@@ -20,6 +20,7 @@ namespace DatabaseLayer.DbContexts
             {
                 registration.DId = 5;
                 registration.RId = 4;
+                registration.R_M_Id = "CMP-1001";
                 registration.Password = Password.EncodePassword(registration.Password, registration.Username);
                 companyDbContext.UserRegistration.Add(registration);
                 companyDbContext.SaveChanges();

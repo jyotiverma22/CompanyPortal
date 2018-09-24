@@ -16,7 +16,7 @@ namespace Models
         public string LogOutTime { get; set; }
         public string TotalTime { get; set; }
         public string Status{ get; set; }
-        public int Emp_Id { get; set; }
+        public string Emp_Id { get; set; }
         
     }
 }

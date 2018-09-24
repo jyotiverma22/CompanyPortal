@@ -3,7 +3,13 @@
 $(document).ready(function () {
     debugger
 
-  
+    $("#grid").extend(jQuery.jgrid.defaults, {
+
+        prmNames: {
+            id: "_rowid", page: "_page", rows: "_rows",
+            oper: "_oper", sortname: "_sidx", sord: "_sord"
+        }
+    });
 
 });
     
@@ -24,16 +30,16 @@ function jqgridInitialize(status) {
             colModel: [
                 {
                     key: false, name: 'Project_Name', index: 'Project_Name', editable: true, search: true
-                    , searchoptions: { sopt: ['eq'] }, sortable: true
+                    , searchoptions: { sopt: ['eq'] }, sortable: true,sorttype:'text'
                 },
-                { key: false, name: 'Mgr_Id', index: 'Mgr_Id', editable: true, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc'},
-                { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype: 'string', sortable: true}
+                { key: false, name: 'Mgr_Id', index: 'Mgr_Id', editable: true, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc', sorttype: 'text'},
+                { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype: 'string', sortable: true, sorttype: 'text'}
             ],
             pager: jQuery('#pager') ,
             rowNum: 5,
             searchfield: "Project_Name",
             seachstring: "abcd",
-            sortname:"Project_Name",
+            sortname:"jyot",
             rowList: [5, 10, 15, 20],
             height: "100%",
             viewrecords: true,
@@ -66,6 +72,8 @@ function jqgridInitialize(status) {
         searchOperators: true
 
     });
+
+  
 
     var maxNameLength = 10;
     $("input[id=gs_Project_Name]").blur(function () {

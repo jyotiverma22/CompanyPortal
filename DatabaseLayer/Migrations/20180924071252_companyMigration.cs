@@ -3,40 +3,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DatabaseLayer.Migrations
 {
-    public partial class CompanyMigration : Migration
+    public partial class companyMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_UserRegistration_BloodGroups_Id",
-                table: "UserRegistration");
-
-            migrationBuilder.RenameColumn(
-                name: "Id",
-                table: "UserRegistration",
-                newName: "RId");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_UserRegistration_Id",
-                table: "UserRegistration",
-                newName: "IX_UserRegistration_RId");
-
-            migrationBuilder.RenameColumn(
-                name: "Id",
-                table: "BloodGroups",
-                newName: "BId");
-
-            migrationBuilder.AddColumn<int>(
-                name: "BId",
-                table: "UserRegistration",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<int>(
-                name: "DId",
-                table: "UserRegistration",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.CreateTable(
+                name: "BloodGroups",
+                columns: table => new
+                {
+                    BId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BloodGroupName = table.Column<string>(nullable: true),
+                    Active = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BloodGroups", x => x.BId);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Departments",
@@ -63,7 +46,7 @@ namespace DatabaseLayer.Migrations
                     LogOutTime = table.Column<string>(nullable: true),
                     TotalTime = table.Column<string>(nullable: true),
                     Status = table.Column<string>(nullable: true),
-                    Emp_Id = table.Column<int>(nullable: false)
+                    Emp_Id = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,8 +59,8 @@ namespace DatabaseLayer.Migrations
                 {
                     Emp_Rep_Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Emp_ID = table.Column<int>(nullable: false),
-                    Rep_Mgr = table.Column<int>(nullable: false)
+                    Emp_ID = table.Column<string>(nullable: true),
+                    Rep_Mgr = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,8 +74,8 @@ namespace DatabaseLayer.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     PId = table.Column<int>(nullable: false),
-                    Mgr_Id = table.Column<int>(nullable: false),
-                    Team_Id = table.Column<int>(nullable: false)
+                    Mgr_Id = table.Column<string>(nullable: true),
+                    Team_Id = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -106,7 +89,7 @@ namespace DatabaseLayer.Migrations
                     PID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ProjectName = table.Column<string>(nullable: true),
-                    Mgr_Id = table.Column<int>(nullable: false),
+                    Mgr_Id = table.Column<string>(nullable: true),
                     Status = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -128,6 +111,56 @@ namespace DatabaseLayer.Migrations
                     table.PrimaryKey("PK_Roles", x => x.RID);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserRegistration",
+                columns: table => new
+                {
+                    Sno = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<string>(nullable: true),
+                    Username = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    Firstname = table.Column<string>(nullable: true),
+                    Lastname = table.Column<string>(nullable: true),
+                    Gender = table.Column<string>(nullable: true),
+                    DOB = table.Column<string>(nullable: true),
+                    BId = table.Column<int>(nullable: false),
+                    DId = table.Column<int>(nullable: false),
+                    RId = table.Column<int>(nullable: false),
+                    R_M_Id = table.Column<string>(nullable: true),
+                    Rep_MgrSno = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRegistration", x => x.Sno);
+                    table.ForeignKey(
+                        name: "FK_UserRegistration_BloodGroups_BId",
+                        column: x => x.BId,
+                        principalTable: "BloodGroups",
+                        principalColumn: "BId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRegistration_Departments_DId",
+                        column: x => x.DId,
+                        principalTable: "Departments",
+                        principalColumn: "DId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRegistration_Roles_RId",
+                        column: x => x.RId,
+                        principalTable: "Roles",
+                        principalColumn: "RID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRegistration_UserRegistration_Rep_MgrSno",
+                        column: x => x.Rep_MgrSno,
+                        principalTable: "UserRegistration",
+                        principalColumn: "Sno",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_UserRegistration_BId",
                 table: "UserRegistration",
@@ -138,48 +171,19 @@ namespace DatabaseLayer.Migrations
                 table: "UserRegistration",
                 column: "DId");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_UserRegistration_BloodGroups_BId",
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRegistration_RId",
                 table: "UserRegistration",
-                column: "BId",
-                principalTable: "BloodGroups",
-                principalColumn: "BId",
-                onDelete: ReferentialAction.Cascade);
+                column: "RId");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_UserRegistration_Departments_DId",
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRegistration_Rep_MgrSno",
                 table: "UserRegistration",
-                column: "DId",
-                principalTable: "Departments",
-                principalColumn: "DId",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_UserRegistration_Roles_RId",
-                table: "UserRegistration",
-                column: "RId",
-                principalTable: "Roles",
-                principalColumn: "RID",
-                onDelete: ReferentialAction.Cascade);
+                column: "Rep_MgrSno");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_UserRegistration_BloodGroups_BId",
-                table: "UserRegistration");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_UserRegistration_Departments_DId",
-                table: "UserRegistration");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_UserRegistration_Roles_RId",
-                table: "UserRegistration");
-
-            migrationBuilder.DropTable(
-                name: "Departments");
-
             migrationBuilder.DropTable(
                 name: "Emp_Attendence");
 
@@ -193,46 +197,16 @@ namespace DatabaseLayer.Migrations
                 name: "Projects");
 
             migrationBuilder.DropTable(
+                name: "UserRegistration");
+
+            migrationBuilder.DropTable(
+                name: "BloodGroups");
+
+            migrationBuilder.DropTable(
+                name: "Departments");
+
+            migrationBuilder.DropTable(
                 name: "Roles");
-
-            migrationBuilder.DropIndex(
-                name: "IX_UserRegistration_BId",
-                table: "UserRegistration");
-
-            migrationBuilder.DropIndex(
-                name: "IX_UserRegistration_DId",
-                table: "UserRegistration");
-
-            migrationBuilder.DropColumn(
-                name: "BId",
-                table: "UserRegistration");
-
-            migrationBuilder.DropColumn(
-                name: "DId",
-                table: "UserRegistration");
-
-            migrationBuilder.RenameColumn(
-                name: "RId",
-                table: "UserRegistration",
-                newName: "Id");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_UserRegistration_RId",
-                table: "UserRegistration",
-                newName: "IX_UserRegistration_Id");
-
-            migrationBuilder.RenameColumn(
-                name: "BId",
-                table: "BloodGroups",
-                newName: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_UserRegistration_BloodGroups_Id",
-                table: "UserRegistration",
-                column: "Id",
-                principalTable: "BloodGroups",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
     }
 }

@@ -26,5 +26,6 @@ namespace Models
         public Department department { get; set; }
         public int RId { get; set; }
         public Role role { get; set; }
+        public string R_M_Id { get; set; }
     }
 }
