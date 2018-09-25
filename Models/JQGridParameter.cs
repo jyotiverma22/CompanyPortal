@@ -8,10 +8,12 @@ namespace Models
 {
    public class JQGridParameter
     {
-        public string sortname{ get; set; }
-        public string sord{ get; set; }
-        public int page{ get; set; }
-        public int rows{ get; set; }
+        public string SortBy{ get; set; }
+        public string OrderBy{ get; set; }
+        public int Page{ get; set; }
+        public int Rows{ get; set; }
         public bool _search { get; set; }
+        public string SearchField { get; set; }
+        public string SearchString { get; set; }
     }
 }

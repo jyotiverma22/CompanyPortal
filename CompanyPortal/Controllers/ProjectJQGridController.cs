@@ -26,16 +26,18 @@ namespace CompanyPortal.Controllers
         /// <returns></returns>
         
         
-        public JsonResult GetProjects(JQGridParameter jQGridParameter,string searchField,string sopt, string searchString,string status)
-
-
-        {
+        public JsonResult GetProjects(JQGridParameter jQGridParameter,string status)
+       {
+            jQGridParameter.SortBy = (jQGridParameter.SortBy==null)? "project_name" : jQGridParameter.SortBy;
+            jQGridParameter.OrderBy = (jQGridParameter.OrderBy == null) ? "asc" : jQGridParameter.OrderBy;
+            jQGridParameter.Rows = 5;
+            jQGridParameter.Page = 1;
             var token = Session["token"];
             var username = Session["username"];
-           jQGridParameter.sord = (jQGridParameter.sord == null) ? "" : jQGridParameter.sord;
-            searchString = (searchString== null) ? "" : searchString;
-            int PageIndex = Convert.ToInt32(jQGridParameter.page) - 1;
-            int pagesize = jQGridParameter.rows;
+            jQGridParameter.OrderBy = (jQGridParameter.OrderBy == null) ? "" : jQGridParameter.OrderBy;
+            jQGridParameter.SearchString = (jQGridParameter.SearchString == null) ? "" : jQGridParameter.SearchString;
+            int PageIndex = Convert.ToInt32(jQGridParameter.Page) - 1;
+            int pagesize = jQGridParameter.Page;
             var list = new List<ProjectViewModel>();
 
             //Retrieving the data from the server
@@ -61,13 +63,13 @@ namespace CompanyPortal.Controllers
             //searching from the list
             if (jQGridParameter._search)
             {
-                switch (searchField)
+                switch (jQGridParameter.SearchField)
                 {
                     case "Project Name":
-                        list = list.Where(t => t.Project_Name.Contains(searchString)).ToList();
+                        list = list.Where(t => t.Project_Name.Contains(jQGridParameter.SearchString)).ToList();
                         break;
                     case "Mgr_Id":
-                        list = list.Where(t => t.Mgr_Id.Contains(searchString)).ToList();
+                        list = list.Where(t => t.Mgr_Id.Contains(jQGridParameter.SearchString)).ToList();
                         break;
                     
 
@@ -76,12 +78,12 @@ namespace CompanyPortal.Controllers
 
             //sorting and page size
             int totalRecords = list.Count();
-            var totalPages = (int)Math.Ceiling((float)totalRecords / (float)jQGridParameter.rows);
+            var totalPages = (int)Math.Ceiling((float)totalRecords / (float)jQGridParameter.Rows);
 
-            switch (jQGridParameter.sortname.ToLower())
+            switch (jQGridParameter.SortBy.ToLower())
             {
                 case "project_name":
-                    if (jQGridParameter.sord.ToUpper() == "DESC")
+                    if (jQGridParameter.OrderBy.ToUpper() == "DESC")
                     {
                         list = list.OrderByDescending(t => t.Project_Name).ToList();
                         list = list.Skip(PageIndex * pagesize).Take(pagesize).ToList();
@@ -95,7 +97,7 @@ namespace CompanyPortal.Controllers
 
                     break;
                 case "manager_name":
-                    if (jQGridParameter.sord.ToUpper() == "DESC")
+                    if (jQGridParameter.OrderBy.ToUpper() == "DESC")
                     {
                         list = list.OrderByDescending(t => t.Mgr_Id).ToList();
                         list = list.Skip(PageIndex * pagesize).Take(pagesize).ToList();
@@ -116,7 +118,7 @@ namespace CompanyPortal.Controllers
             var jsondata = new
             {
                 total = totalPages,
-                jQGridParameter.page,
+                jQGridParameter.Page,
                 records = totalRecords,
                 rows = list
             };

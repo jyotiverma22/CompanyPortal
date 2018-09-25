@@ -1,20 +1,5 @@
 ﻿
     
-$(document).ready(function () {
-    debugger
-
-    $("#grid").extend(jQuery.jgrid.defaults, {
-
-        prmNames: {
-            id: "_rowid", page: "_page", rows: "_rows",
-            oper: "_oper", sortname: "_sidx", sord: "_sord"
-        }
-    });
-
-});
-    
-
-
 function jqgridInitialize(status) {
     debugger
     $("#grid").setGridParam({ datatype: 'json', url: "/ProjectJQGrid/GetProjects?status=" + status});
@@ -26,29 +11,40 @@ function jqgridInitialize(status) {
             url: "/ProjectJQGrid/GetProjects?status=" + status,
             datatype: "json",
             mtype: "Get",
+            postData:"", 
             colNames: ['Project Name', 'Manager Id', 'Status','Actions'],
             colModel: [
                 {
-                    key: false, name: 'Project_Name', index: 'Project_Name', editable: true, search: true
-                    , searchoptions: { sopt: ['eq'] }, sortable: true,sorttype:'text'
+                  key: false, name: 'Project_Name', index: 'Project_Name', editable: true, search: true
+                    , searchoptions: { sopt: ['cn'] }, sortable: true,sorttype:'text'
                 },
                 { key: false, name: 'Mgr_Id', index: 'Mgr_Id', editable: true, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc', sorttype: 'text'},
                 { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype: 'string', sortable: true, sorttype: 'text' },
-                { key: false, name: 'Actions', index: 'Actions', editable: false, formatter: displayButtons }
+                { key: false, name: 'Actions', index: 'Actions', editable: false, formatter: displayButtons, search:false }
 
             ],
-            pager: jQuery('#pager') ,
-            rowNum: 5,
-            searchfield: "Project_Name",
-            seachstring: "abcd",
-            sortname:"jyot",
+            pager: jQuery('#pager') ,           
+            searchfield: "Project_Name",          
             rowList: [5, 10, 15, 20],
             height: "100%",
             viewrecords: true,
             caption: "Project Details",
-            emptyrecords: "No projects to show",
-            
+            emptyrecords: "No projects to show",            
             loadOnce: true,
+            multiselect:true,
+
+            onSortCol: function (name, index,order) {
+                debugger
+                $("#grid").setGridParam({ postData: { "SortBy": name, "OrderBy":order } });
+                s = $("#grid").getGridParam('selarrrow');
+                $("#grid").jqGrid('setSelection', 1,true)
+                alert(s);
+            },
+            ondblClickRow: function (id) {
+                debugger    
+                    },
+
+       
             jsonReader: {
                 root: "rows",
                 page: "page",
@@ -65,34 +61,37 @@ function jqgridInitialize(status) {
             }
 
 
-        }).navGrid('#pager', { edit: true, add: true, del: true, search: false, refresh: true });
+        });
 
     $("#grid").jqGrid('filterToolbar', {
-        autosearch: true,
-        stringResult: false,
-        searchOnEnter: true,
-        searchOperators: true
+        
+        searchOperators: true,
+        stringResult: true,
+        searchOnEnter: true
 
     });
 
-  
+    jQuery("#grid").jqGrid('navGrid', '#pager', { del: false, add: false, edit: false, search: false });
 
     var maxNameLength = 10;
-    $("input[id=gs_Project_Name]").blur(function () {
+    $("input[id=gs_Project_Name]").keypress(function (e) {
         debugger
-        var $th = $(this).closest(".ui-search-toolbar>th"),
-            colIndex = $th[0].cellIndex,
-            $colHeader = $th.parent().siblings(".ui-jqgrid-labels").children("th").eq(colIndex),
-            colHeaderText = $colHeader.children("div").text();
-        var searchString = $(this).val();
-        $("#grid").setGridParam({ datatype: 'json', mtype: "POST", postData: { "searchField": colHeaderText, "searchString": searchString } }).trigger("reloadGrid");
+        var key = e.charCode || e.keyCode || 0;
+        if (key === $.ui.keyCode.ENTER) {
+            var $th = $(this).closest(".ui-search-toolbar>th"),
+                colIndex = $th[0].cellIndex,
+                $colHeader = $th.parent().siblings(".ui-jqgrid-labels").children("th").eq(colIndex),
+                colHeaderText = $colHeader.children("div").text();
+            var searchString = $(this).val();
+
+            $("#grid").setGridParam({ datatype: 'json', mtype: "POST", postData: { "SearchField": colHeaderText, "SearchString": searchString } }).trigger("reloadGrid");
 
 
-        if (this.value.length > maxNameLength) {
-            alert(colHeaderText + ' is longer than ' + maxNameLength + ' characters.');
+            if (this.value.length > maxNameLength) {
+                alert(colHeaderText + ' is longer than ' + maxNameLength + ' characters.');
+            }
+
         }
-
-
     });
 
 
@@ -126,6 +125,7 @@ function showChildGrid(parentRowID, parentRowKey) {
         
         width: 500,
         height: '100%',
+        rowNum: 5,
         pager: "#" + childGridPagerID,
         caption: "Team Details",
         emptyrecords: "No projects to show",
