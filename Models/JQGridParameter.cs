@@ -15,5 +15,6 @@ namespace Models
         public bool _search { get; set; }
         public string SearchField { get; set; }
         public string SearchString { get; set; }
+        public string filters { get; set; }
     }
 }

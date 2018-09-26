@@ -65,7 +65,7 @@ namespace CompanyPortal.Controllers
             {
                 switch (jQGridParameter.SearchField)
                 {
-                    case "Project Name":
+                    case "Project_Name":
                         list = list.Where(t => t.Project_Name.Contains(jQGridParameter.SearchString)).ToList();
                         break;
                     case "Mgr_Id":

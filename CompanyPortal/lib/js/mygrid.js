@@ -19,7 +19,7 @@ function jqgridInitialize(status) {
                     , searchoptions: { sopt: ['cn'] }, sortable: true,sorttype:'text'
                 },
                 { key: false, name: 'Mgr_Id', index: 'Mgr_Id', editable: true, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc', sorttype: 'text'},
-                { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype: 'string', sortable: true, sorttype: 'text' },
+                { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype: 'string', sortable: true, sorttype: 'text',search:false },
                 { key: false, name: 'Actions', index: 'Actions', editable: false, formatter: displayButtons, search:false }
 
             ],
@@ -31,6 +31,7 @@ function jqgridInitialize(status) {
             caption: "Project Details",
             emptyrecords: "No projects to show",            
             loadOnce: true,
+            ignoreCase:true,
             multiselect:true,
 
             onSortCol: function (name, index,order) {
@@ -38,7 +39,7 @@ function jqgridInitialize(status) {
                 $("#grid").setGridParam({ postData: { "SortBy": name, "OrderBy":order } });
                 s = $("#grid").getGridParam('selarrrow');
                 $("#grid").jqGrid('setSelection', 1,true)
-                alert(s);
+              //  alert(s);
             },
             ondblClickRow: function (id) {
                 debugger    
@@ -67,32 +68,52 @@ function jqgridInitialize(status) {
         
         searchOperators: true,
         stringResult: true,
-        searchOnEnter: true
+        searchOnEnter: true,
+        autoSearch: false,
+        groupOp: "AND",
+        beforeSearch: function () {
+            debugger
+
+
+
+            var ProjectSearch = $("input[id=gs_Project_Name]").val() + "";
+            var Mgr_IdSearch = $("input[id=gs_Mgr_Id]").val() + "";
+
+            var rules = [], i, cm, postData = $("#grid").jqGrid("getGridParam", "postData"),
+                colModel = $("#grid").jqGrid("getGridParam", "colModel"),
+                searchText = $("#globalSearchText").val(),
+                l = colModel.length;
+            for (i = 0; i < l; i++) {
+                cm = colModel[i];
+                if (cm.search !== false && (cm.stype === undefined || cm.stype === "text")) {
+                    rules.push({
+                        field: cm.name,
+                        op: "cn",
+                        data: ProjectSearch
+                    });
+                }
+            }
+            postData.filters = JSON.stringify({
+                groupOp: "OR",
+                rules: rules
+            });
+           // postData.filer
+
+            $("#grid").setGridParam({
+                mtype: "POST", postData: {
+                    "SearchField": "Project_Name", "SearchString": ProjectSearch, "filters": postData.filters = JSON.stringify({
+                        groupOp: "OR",
+                        rules: rules
+                    })} }).trigger("reloadGrid");
+
+        }
 
     });
 
     jQuery("#grid").jqGrid('navGrid', '#pager', { del: false, add: false, edit: false, search: false });
 
     var maxNameLength = 10;
-    $("input[id=gs_Project_Name]").keypress(function (e) {
-        debugger
-        var key = e.charCode || e.keyCode || 0;
-        if (key === $.ui.keyCode.ENTER) {
-            var $th = $(this).closest(".ui-search-toolbar>th"),
-                colIndex = $th[0].cellIndex,
-                $colHeader = $th.parent().siblings(".ui-jqgrid-labels").children("th").eq(colIndex),
-                colHeaderText = $colHeader.children("div").text();
-            var searchString = $(this).val();
-
-            $("#grid").setGridParam({ datatype: 'json', mtype: "POST", postData: { "SearchField": colHeaderText, "SearchString": searchString } }).trigger("reloadGrid");
-
-
-            if (this.value.length > maxNameLength) {
-                alert(colHeaderText + ' is longer than ' + maxNameLength + ' characters.');
-            }
-
-        }
-    });
+   
 
 
 }
