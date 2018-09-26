@@ -10,6 +10,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Mvc;
+using System.Json;
+
 
 namespace CompanyPortal.Controllers
 {
@@ -63,23 +65,31 @@ namespace CompanyPortal.Controllers
             //searching from the list
             if (jQGridParameter._search)
             {
-                switch (jQGridParameter.SearchField)
-                {
-                    case "Project_Name":
-                        list = list.Where(t => t.Project_Name.Contains(jQGridParameter.SearchString)).ToList();
-                        break;
-                    case "Mgr_Id":
-                        list = list.Where(t => t.Mgr_Id.Contains(jQGridParameter.SearchString)).ToList();
-                        break;
-                    
+                /* switch (jQGridParameter.SearchField)
+                 {
+                     case "Project_Name":
+                         list = list.Where(t => t.Project_Name.Contains(jQGridParameter.SearchString)).ToList();
+                         break;
+                     case "Mgr_Id":
+                         list = list.Where(t => t.Mgr_Id.Contains(jQGridParameter.SearchString)).ToList();
+                         break;
+                 }*/
 
-                }
+
+               var filter = JSON.parse(jQGridParameter.filters);
+
+
+
+
             }
 
             //sorting and page size
             int totalRecords = list.Count();
             var totalPages = (int)Math.Ceiling((float)totalRecords / (float)jQGridParameter.Rows);
 
+            
+
+            // sorting of the data
             switch (jQGridParameter.SortBy.ToLower())
             {
                 case "project_name":
