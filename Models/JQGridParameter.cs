@@ -13,8 +13,21 @@ namespace Models
         public int Page{ get; set; }
         public int Rows{ get; set; }
         public bool _search { get; set; }
-        public string SearchField { get; set; }
-        public string SearchString { get; set; }
-        public string filters { get; set; }
+        public Filter filters { get; set; }
+    }
+
+
+    public class Filter
+    {
+        public string groupOp { get; set; }
+        public List<Rule> rules { get; set; }
+    }
+
+
+    public class Rule
+    {
+        public string field { get; set; }
+        public string op { get; set; }
+        public string data { get; set; }
     }
 }

@@ -4,7 +4,7 @@ function jqgridInitialize(status) {
     debugger
     $("#grid").setGridParam({ datatype: 'json', url: "/ProjectJQGrid/GetProjects?status=" + status});
     
-    $("#grid").trigger("reloadGrid")
+    $("#grid").trigger("reloadGrid");
 
     $("#grid").jqGrid(
         {
@@ -37,8 +37,8 @@ function jqgridInitialize(status) {
             onSortCol: function (name, index,order) {
                 debugger
                 $("#grid").setGridParam({ postData: { "SortBy": name, "OrderBy":order } });
-                s = $("#grid").getGridParam('selarrrow');
-                $("#grid").jqGrid('setSelection', 1,true)
+                //s = $("#grid").getGridParam('selarrrow');
+               // $("#grid").jqGrid('setSelection', 1,true)
               //  alert(s);
             },
             ondblClickRow: function (id) {
@@ -65,7 +65,7 @@ function jqgridInitialize(status) {
         });
 
     $("#grid").jqGrid('filterToolbar', {
-        
+
         searchOperators: true,
         stringResult: true,
         searchOnEnter: true,
@@ -75,48 +75,48 @@ function jqgridInitialize(status) {
             debugger
 
 
-
-            var ProjectSearch = $("input[id=gs_Project_Name]").val() + "";
-            var Mgr_IdSearch = $("input[id=gs_Mgr_Id]").val() + "";
-
             var rules = [], i, cm, postData = $("#grid").jqGrid("getGridParam", "postData"),
-                colModel = $("#grid").jqGrid("getGridParam", "colModel"),
-                searchText = $("#globalSearchText").val(),
-                l = colModel.length;
-            for (i = 0; i < l; i++) {
+                colModel = $("#grid").jqGrid("getGridParam", "colModel");
+                
+        
+            for (i = 0; i < colModel.length; i++) {
                 cm = colModel[i];
                 if (cm.search !== false && (cm.stype === undefined || cm.stype === "text")) {
                     rules.push({
                         field: cm.name,
                         op: "cn",
-                        data: ProjectSearch
+                        data:$.trim( $("input[id=gs_" + cm.name + "]").val())
                     });
                 }
             }
-            postData.filters = JSON.stringify({
-                groupOp: "OR",
-                rules: rules
-            });
-           // postData.filer
-
             $("#grid").setGridParam({
                 mtype: "POST", postData: {
-                    "SearchField": "Project_Name", "SearchString": ProjectSearch, "filters": postData.filters = JSON.stringify({
+                    "filters": {
                         groupOp: "OR",
                         rules: rules
-                    })} }).trigger("reloadGrid");
+                    },
+                    _search:true
+                }
+            }).trigger("reloadGrid");
 
+        },
+
+        afterSearch: function(){
+            /*var colModel = colModel = $("#grid").jqGrid("getGridParam", "colModel");
+            for (var i = 0; i < colModel.length; i++) {
+                $("input[id=gs_" + colModel[i].name + "]").val("");
+            }*/
         }
 
     });
-
-    jQuery("#grid").jqGrid('navGrid', '#pager', { del: false, add: false, edit: false, search: false });
-
-    var maxNameLength = 10;
+    
    
 
 
 }
+
+
+
 // the event handler on expanding parent row receives two parameters
 // the ID of the grid tow  and the primary key of the row
 function showChildGrid(parentRowID, parentRowKey) {
@@ -164,10 +164,10 @@ function showChildGrid(parentRowID, parentRowKey) {
 
 //custom formator function to display the Links
 function displayButtons(cellvalue, options, rowObject) {
-    var edit = "<a href='#'>Edit</a>",
-        Details = "<a href='#'>Details</a> |",
-        Delete = "<a href='#'>Delete</a>";
-    return edit + Details + Delete;
+    var edit = "<a href='#' onclick='EditProjectDetail(this)'>Edit</a> | ",
+        AddTeam = "<a href='#' onclick='AddTeamMembers(this)'>Add Team</a> | ",
+        changeStatus = "<a href='#' onclick='ProjectChangeStatus(this)'>change Status</a>";
+    return edit + AddTeam + changeStatus;
 }
 
 
@@ -180,3 +180,19 @@ function ToggleColumn(role_) {
     }
 }
 
+function EditProjectDetail(item) {
+    debugger
+    var rowid = $(item).closest("tr").attr("id");
+    //  jQuery('#grid').editRow(rowid);
+    jQuery("#grid").jqGrid('editGridRow', rowid, { addCaption:"Edit row"});
+}
+
+function AddTeamMembers(item) {
+    var rowid = $(item).closest("tr").attr("id");
+
+}
+
+function ProjectChangeStatus(item) {
+    var rowid = $(item).closest("tr").attr("id");
+
+}

@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Mvc;
-using System.Json;
+
 
 
 namespace CompanyPortal.Controllers
@@ -37,11 +37,10 @@ namespace CompanyPortal.Controllers
             var token = Session["token"];
             var username = Session["username"];
             jQGridParameter.OrderBy = (jQGridParameter.OrderBy == null) ? "" : jQGridParameter.OrderBy;
-            jQGridParameter.SearchString = (jQGridParameter.SearchString == null) ? "" : jQGridParameter.SearchString;
             int PageIndex = Convert.ToInt32(jQGridParameter.Page) - 1;
-            int pagesize = jQGridParameter.Page;
+            int pagesize = jQGridParameter.Rows;
             var list = new List<ProjectViewModel>();
-
+            var templist = new List<ProjectViewModel>();
             //Retrieving the data from the server
             using (HttpClient client = new HttpClient())
             {
@@ -75,10 +74,43 @@ namespace CompanyPortal.Controllers
                          break;
                  }*/
 
+                if (jQGridParameter.filters.groupOp == "AND")
+                {
+                    foreach(var rule in jQGridParameter.filters.rules)
+                    {
 
-               var filter = JSON.parse(jQGridParameter.filters);
+                        switch(rule.field)
+                        {
+                            case "Project_Name":
+                                list = list.Where(t => t.Project_Name.Contains(rule.data)).ToList();
+                                break;
+                            case "Mgr_Id":
+                                list = list.Where(t => t.Mgr_Id.Contains(rule.data)).ToList();
+                                break;
+                        }
+                    }
+                }
+                else if(jQGridParameter.filters.groupOp=="OR")
+                {
 
-
+                    foreach(var rule in jQGridParameter.filters.rules)
+                    {
+                        List<ProjectViewModel> temp;
+                        switch (rule.field)
+                        {
+                            case "Project_Name":
+                                temp = list.Where(t => t.Project_Name.Contains(rule.data??"")).ToList();
+                                templist = templist.Concat(temp).ToList();
+                                break;
+                            case "Mgr_Id":
+                                temp = list.Where(t => t.Mgr_Id.Contains(rule.data??"")).ToList();
+                                templist = templist.Concat(temp).ToList();
+                                break;
+                        }
+                    }
+                    list = templist.Distinct().ToList();
+                }
+             
 
 
             }

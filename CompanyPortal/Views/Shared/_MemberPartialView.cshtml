@@ -5,6 +5,12 @@
             Project Details
         </div>
         <ul id="projsbar" style="display:none">
+            @if (Session["role"].ToString() == "Admin")
+            {
+                <li class="nav-item">
+                    <a id="addProject"> Add Projects</a>
+                </li>
+            }
             <li class="nav-item">
                 <a id="wproj"> Working Projects</a>
             </li>
