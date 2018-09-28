@@ -198,6 +198,22 @@ namespace DatabaseLayer.DbContexts
         }
 
 
+        public bool SaveErrorLoggingDetails(DbLogging dbLogging)
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+                if(dbLogging!=null)
+                {
+                    companyDbContext.Add(dbLogging);
+                    companyDbContext.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+                
+        }
+
+
 
     }
 }

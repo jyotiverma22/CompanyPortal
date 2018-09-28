@@ -26,5 +26,7 @@ namespace RepositoryLayer.Repositories
         IEnumerable<Project> GetProjectDetail(string username,string status);
 
         IEnumerable<Registration> getTeamDetails(int pid);
+
+        bool SaveErrorLoggingDetails(DbLogging dbLogging); 
     }
 }

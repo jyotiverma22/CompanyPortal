@@ -8,6 +8,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
+using Models;
+using System.Text;
 
 namespace CompanyPortal.Controllers
 {
@@ -42,6 +45,8 @@ namespace CompanyPortal.Controllers
         {
             return PartialView("_MemberPartialView");
         }
+
+
         /// <summary>
         /// shows the project manager partial view
         /// </summary>
@@ -94,31 +99,96 @@ namespace CompanyPortal.Controllers
             {
                 return RedirectToAction("Index", "home");
             }
-            using (HttpClient client = new HttpClient())
+            try
             {
-                UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["detailsUrl"]);
-                //  url.Query = "username=" + username;
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.ToString());
-
-                var result = client.GetAsync(url.Uri + "/getemployeedetails?username=" + username).Result;
-                if (result.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
                 {
-                    employees = JsonConvert.DeserializeObject<EmployeeDetailsViewModel>(result.Content.ReadAsStringAsync().Result);
-                    return PartialView("_EmployeeDetails",employees);
+                    UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["detailsUrl"]);
+                    //  url.Query = "username=" + username;
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.ToString());
+
+                    var result = client.GetAsync(url.Uri + "/getemployeedetails?username=" + username).Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        employees = JsonConvert.DeserializeObject<EmployeeDetailsViewModel>(result.Content.ReadAsStringAsync().Result);
+                        return PartialView("_EmployeeDetails", employees);
+
+                    }
+                    else
+                    {
+                        Session["token"]=null;
+                        return RedirectToAction("Index", "home");
+
+                    }
+
+                }
+            }
+            catch(Exception e)
+            {
+                //Token authentication time out
+                string path = ConfigurationManager.AppSettings["logPath"].ToString();
+                 
+               if(System.IO.File.Exists(path))
+                {
+                    //Error logging into the log file 
+                    StreamWriter sw = new StreamWriter(path);
+                    sw.Write("\nToken authentication expired ");
+                    sw.Write("\nType of exception  "+e.GetType().Name);
+                    sw.Write("\nMessage "+e.Message);
+
+                    DbLogging dbLogging = new DbLogging {
+                        ExceptionMessage = e.Message.ToString(),
+                        ExceptionType = e.GetType().Name.ToString(),
+                        ExceptionSource = e.StackTrace.ToString(),
+                        ExceptionUrl = ConfigurationManager.AppSettings["detailsUrl"] + "/ getemployeedetails ? username = " + username,
+                        LogDate = DateTime.Now
+                        };
+
+                    //Error logging into the Database
+                    using (HttpClient httpclient = new HttpClient())
+                    {
+                        UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["baseUrl"]);
+                        var json = JsonConvert.SerializeObject(dbLogging);
+                        var content = new StringContent(json, Encoding.UTF8, "application/json");
+                        var result =httpclient.PostAsync(url.Uri + "SaveErrorLoggingDetails",content).Result;
+
+                        if(result.IsSuccessStatusCode)
+                        {
+                             //Exception written into the database
+                        }
+                        else { //error in writing the exception into the database
+                        }
+
+
+
+                    }
 
                 }
                 else
                 {
-                    return RedirectToAction("Index", "home");
 
                 }
 
+                Session["token"] = null;
+                return RedirectToAction("Index", "home");
             }
 
+
+
           }
+        
+        [HttpGet]
+        public ActionResult EditProjectDetails()
+        {
+            return PartialView("");
+        }
 
+        [HttpPost]
+        public ActionResult EditProjectDetails(ProjectViewModel projectViewModel)
+        {
+            return null;
+        }
 
-    
 
     }
 }

@@ -57,5 +57,10 @@ namespace RepositoryLayer.Repositories
         {
             return datalayer.GetUserId();
         }
+
+        public bool SaveErrorLoggingDetails(DbLogging dbLogging)
+        {
+            return datalayer.SaveErrorLoggingDetails(dbLogging);
+        }
     }
 }

@@ -590,6 +590,7 @@
     <Content Include="Views\Shared\_ProjectDetails.cshtml" />
     <Content Include="Views\Shared\_MemberPartialView.cshtml" />
     <Content Include="Views\Shared\_ProjManagerPartialView.cshtml" />
+    <Content Include="Views\Shared\_EditProjectDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

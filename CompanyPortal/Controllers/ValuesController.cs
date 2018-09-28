@@ -81,34 +81,15 @@ namespace CompanyPortal.Controllers
             return Ok(companyRepository.CheckUser(login));
         }
 
-      
-
-
-        // GET api/values
-        public IEnumerable<string> Get()
+       [HttpPost]
+       public bool SaveErrorLoggingDetails(DbLogging dbLogging)
         {
-            return new string[] { "value1", "value2" };
+            return (companyRepository.SaveErrorLoggingDetails(dbLogging));
         }
 
-        // GET api/values/5
-        public string Get(int id)
-        {
-            return "value";
-        }
 
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
+    
+       
+        
     }
 }

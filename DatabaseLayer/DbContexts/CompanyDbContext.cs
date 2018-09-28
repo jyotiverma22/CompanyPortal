@@ -34,6 +34,7 @@ namespace DatabaseLayer.DbContexts
         public DbSet<Project> Projects { get; set; }
         public DbSet<Project_Team> Project_Teams { get; set; }
         public DbSet<Emp_Reporting> Emp_Reportings { get; set; }
+        public DbSet<DbLogging> DbLoggings { get; set; }
 
       
 

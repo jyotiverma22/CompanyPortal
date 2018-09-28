@@ -157,6 +157,10 @@
     <Compile Include="Migrations\20180924073102_companyMigration2.designer.cs">
       <DependentUpon>20180924073102_companyMigration2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20180928053728_errorloggingTableMigration.cs" />
+    <Compile Include="Migrations\20180928053728_errorloggingTableMigration.designer.cs">
+      <DependentUpon>20180928053728_errorloggingTableMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\CompanyDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -184,7 +184,25 @@ function EditProjectDetail(item) {
     debugger
     var rowid = $(item).closest("tr").attr("id");
     //  jQuery('#grid').editRow(rowid);
-    jQuery("#grid").jqGrid('editGridRow', rowid, { addCaption:"Edit row"});
+   // jQuery("#grid").jqGrid('editGridRow', rowid, { addCaption: "Edit row" });
+    $("#editprojectdetaildialog").dialog({
+        autoOpen: false,
+        title: "Edit Project Details",
+        modal: true,
+        open: function (event, ui) {
+            debugger
+        },
+        buttons: {
+            "Close": function () {
+                $(this).dialog("close");
+            }
+        }
+
+    });
+
+    $("#editprojectdetaildialog").dialog("open");
+
+
 }
 
 function AddTeamMembers(item) {
