@@ -169,7 +169,15 @@ namespace CompanyPortal.Controllers
         }
 
 
-
+        /// <summary>
+        /// function for getting the team details of a particular project
+        /// </summary>
+        /// <param name="sidx"></param>
+        /// <param name="sord"></param>
+        /// <param name="rows"></param>
+        /// <param name="page"></param>
+        /// <param name="pid"></param>
+        /// <returns></returns>
         public JsonResult getTeamDetails(string sidx, string sord, int rows, int page, int pid)
         {
             var token = Session["token"];

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
+    //model for department details
    public class Department
     {[Key]
         public int DId{ get; set; }

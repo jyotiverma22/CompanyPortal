@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
+    // model for storing the error logging details
    public class DbLogging
     {
         [Key]

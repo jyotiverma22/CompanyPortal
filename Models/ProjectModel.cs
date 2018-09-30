@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Models
 {
+    /// <summary>
+    /// model for project entity into the database
+    /// </summary>
   public  class ProjectModel
     {
         public int PId { get; set; }

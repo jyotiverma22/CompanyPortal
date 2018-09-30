@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
+    //custom object for storing jqgrid parameters
    public class JQGridParameter
     {
         public string SortBy{ get; set; }

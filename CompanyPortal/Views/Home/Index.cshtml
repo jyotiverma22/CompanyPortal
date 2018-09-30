@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
-<!--AlertBox-->
+<!--AlertBox.. shows if the username/password incorrect-->
 
 @if (!string.IsNullOrEmpty(ViewBag.Message))
 {
@@ -15,8 +15,8 @@
     </script>
 }
 
-<!--AlertBox-->
-<!--Login Model starts-->
+
+<!--Login Model starts -- Partial view for login popup-->
 <div id='myModal' class='modal'>
     <div class="modal-dialog">
         <div class="modal-content">
@@ -30,7 +30,7 @@
 </div>
 <!--Login Model ends-->
 
-<!--Register Model starts-->
+<!--Register Model starts - partial view for register popup-->
 <div id='myModalregister' class='modal'>
     <div class="modal-dialog">
         <div class="modal-content">
@@ -174,10 +174,7 @@ Pellentesque efficitur dapibus augue.
 
         $(document).ready(function () {
 
-            $("#btnlogout").click(function () {
-                $("#btnlogin").show();
-                $("#btnreg").show();
-            });
+
            
 
             $('#btnlogin').click(function () {
@@ -186,7 +183,6 @@ Pellentesque efficitur dapibus augue.
                 var options = { "backdrop": "static", keyboard: true };
                 $('#myModal').modal(options);
                 $('#myModal').modal('show');
-                //     $("#myModalContent").load("/home/login");
 
                 $("#closbtn").click(function () {
                     $('#myModal').modal('hide');
@@ -209,6 +205,7 @@ Pellentesque efficitur dapibus augue.
 
 
 
+        //Ajax for retrieving the bloodgroup from database into the list
 
         $.ajax({
 
@@ -231,6 +228,8 @@ Pellentesque efficitur dapibus augue.
             }
         });
 
+
+        //dtate picker setting the date conditions
         $("#DOB").datepicker({
             changeMonth: true,
             changeYear: true,
@@ -326,11 +325,11 @@ Pellentesque efficitur dapibus augue.
                     $('#subbutton').prop('disabled', true);
                 }
                 else {
-                    //post to check is username already take
+                    //post to check if username already taken
 
                     $.ajax({
                         url: '/api/values/checkUsernameStatus?username=' + user,
-                        method: 'POST',
+                        method: 'GET',
 
                         success: function (response) {
                             console.log(response);
@@ -385,7 +384,7 @@ Pellentesque efficitur dapibus augue.
 
                     $.ajax({
                         url: '/api/values/checkEmailStatus?email=' + email,
-                        method: 'POST',
+                        method: 'GET',
 
                         success: function (response) {
                             console.log(response);
@@ -434,7 +433,7 @@ Pellentesque efficitur dapibus augue.
         $("#Phone").focusout(function () {
             var user = $(this).val();
 
-            //Checking the length of username
+            //Checking the length of phone
             if (user.length > 0) {
                 if (isNaN(user)) {
                     document.getElementById("valid-phone").innerHTML = "Phone number contains only digits";
@@ -477,7 +476,7 @@ Pellentesque efficitur dapibus augue.
         $("#Password").focusout(function () {
             var user = $(this).val();
 
-            //Checking the length of username
+            //Checking the length of password
             if (user.length > 0) {
                 if (user.length < 8) {
                     document.getElementById("valid-pass").innerHTML = "Password must have atleast 8 characters";
@@ -523,7 +522,7 @@ Pellentesque efficitur dapibus augue.
         $("#ConfirmPassword").focusout(function () {
             var user = $(this).val();
             var password = $("#Password").val();
-            //Checking the length of username
+            //Checking the length of confirm password
             if (user.length > 0) {
                 if (user === password) {
                     count = count + 1;
@@ -556,7 +555,7 @@ Pellentesque efficitur dapibus augue.
         $("#Firstname").focusout(function () {
             var user = $(this).val();
 
-            //Checking the length of username
+            //Checking the length of firstname
             if (user.length === 0) {
                 document.getElementById("valid-fn").innerHTML = "This field is required";
                 $("#valid-fn").show();
@@ -593,7 +592,7 @@ Pellentesque efficitur dapibus augue.
         $("#Lastname").focusout(function () {
             var user = $(this).val();
 
-            //Checking the length of username
+            //Checking the length of lastname
             if (user.length === 0) {
                 document.getElementById("valid-ln").innerHTML = "This field is required";
                 $("#valid-ln").show();
@@ -632,7 +631,7 @@ Pellentesque efficitur dapibus augue.
 
             var user = $(this).val();
 
-            //Checking the length of username
+            //Checking if blood group is selected or not
             if (user === "") {
                 document.getElementById("valid-blood").innerHTML = "Please Select Blood Group";
                 $("#valid-blood").show();

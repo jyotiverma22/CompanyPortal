@@ -6,11 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Models
+
 {
+
+    //reporting managers and their employees
  public class Emp_Reporting
     {
         [Key]
-        public int Emp_Rep_Id { get; set; }
+        public int Emp_Rep_Id { get; set; } 
         public string Emp_ID { get; set; }
         public string Rep_Mgr { get; set; }
     }

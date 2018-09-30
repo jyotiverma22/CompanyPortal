@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Models
 {
+    /// <summary>
+    /// Model for the role entity
+    /// </summary>
    public class Role
     {
         [Key]

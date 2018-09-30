@@ -15,6 +15,7 @@ using System.Web.Mvc;
 
 namespace CompanyPortal.Controllers
 {
+    //MVC controller for registration and login
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -179,7 +180,7 @@ namespace CompanyPortal.Controllers
             return age;
         }
 
-
+        //Actions performed on log out
         public ActionResult LogOut()
         {
             Session["username"] = null;

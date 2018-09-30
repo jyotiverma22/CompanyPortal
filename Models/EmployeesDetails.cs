@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace Models
 {
+    //custom model for getting the employee details
   public  class EmployeesDetails
     {
         [Key]
         public string userId { get; set; }
 
-           public string Username { get; set; }
+        public string Username { get; set; }
 
          public string Email { get; set; }
 

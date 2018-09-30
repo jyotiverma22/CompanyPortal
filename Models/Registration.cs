@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Models
 {
+    /// <summary>
+    /// model for storing the details into the database
+    /// </summary>
   public  class Registration
     {
         [Key]

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
+    //attendence model 
    public class Attendence
     {
         [Key]

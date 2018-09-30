@@ -1,5 +1,5 @@
 ﻿
-    
+ //intializing the jqgrid for project details   
 function jqgridInitialize(status) {
     debugger
     $("#grid").setGridParam({ datatype: 'json', url: "/ProjectJQGrid/GetProjects?status=" + status});
@@ -101,7 +101,9 @@ function jqgridInitialize(status) {
 
         },
 
-        afterSearch: function(){
+        afterSearch: function () {
+            //to empty the search boxes after search
+
             /*var colModel = colModel = $("#grid").jqGrid("getGridParam", "colModel");
             for (var i = 0; i < colModel.length; i++) {
                 $("input[id=gs_" + colModel[i].name + "]").val("");
@@ -109,10 +111,6 @@ function jqgridInitialize(status) {
         }
 
     });
-    
-   
-
-
 }
 
 
@@ -127,7 +125,7 @@ function showChildGrid(parentRowID, parentRowKey) {
     var childGridPagerID = parentRowID + "_pager";
 
     // send the parent row primary key to the server so that we know which grid to show
-    var childGridURL = "/ProjectJQGrid/getTeamDetails?pid=" + parentRowKey;
+    var  childGridURL = "/ProjectJQGrid/getTeamDetails?pid=" + parentRowKey;
     // add a table and pager HTML elements to the parent grid row - we will render the child grid here
     $('#' + parentRowID).append('<table id=' + childGridID + '></table><div id=' + childGridPagerID + '></div>');
   //  $("#" + childGridID).setGridParam({ datatype: 'json', url: childGridID }).trigger("reloadGrid");
@@ -170,7 +168,7 @@ function displayButtons(cellvalue, options, rowObject) {
     return edit + AddTeam + changeStatus;
 }
 
-
+// to show and hide the action links
 function ToggleColumn(role_) {
     if (role_ == "Member") {
         jQuery("#grid").jqGrid('hideCol', ["Actions"]);
@@ -185,6 +183,8 @@ function EditProjectDetail(item) {
     var rowid = $(item).closest("tr").attr("id");
     //  jQuery('#grid').editRow(rowid);
    // jQuery("#grid").jqGrid('editGridRow', rowid, { addCaption: "Edit row" });
+
+    //custom dialog box on edit action link 
     $("#editprojectdetaildialog").dialog({
         autoOpen: false,
         title: "Edit Project Details",
@@ -205,11 +205,14 @@ function EditProjectDetail(item) {
 
 }
 
+//custom fuction for adding team member
 function AddTeamMembers(item) {
     var rowid = $(item).closest("tr").attr("id");
 
 }
 
+
+//custom function for changing project status
 function ProjectChangeStatus(item) {
     var rowid = $(item).closest("tr").attr("id");
 

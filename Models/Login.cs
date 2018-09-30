@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
+    //model for sending only username and password to server
    public class Login
     {
         public string Username{ get; set; }

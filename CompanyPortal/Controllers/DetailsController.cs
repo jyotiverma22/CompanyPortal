@@ -12,6 +12,8 @@ using System.Web.Http;
 
 namespace CompanyPortal.Controllers
 {
+
+    //Api controller after the user logged in
     [RoutePrefix("api/details")]
     public class DetailsController : ApiController
     {

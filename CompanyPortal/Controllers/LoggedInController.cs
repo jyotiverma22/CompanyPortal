@@ -14,7 +14,7 @@ using System.Text;
 
 namespace CompanyPortal.Controllers
 {
-    
+    //MVC controller after the user logged  in
     public class LoggedInController : Controller
     {
         
@@ -66,14 +66,7 @@ namespace CompanyPortal.Controllers
         }
 
 
-        /// <summary>
-        /// shows the admin partial view
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult AdminPartial()
-        {
-            return PartialView("_AdminPartialView");
-        }
+        
 
         /// <summary>
         /// renders the partial view of the project details 
@@ -177,12 +170,15 @@ namespace CompanyPortal.Controllers
 
           }
         
+
+        //working on this part- this function is not complete
         [HttpGet]
         public ActionResult EditProjectDetails()
         {
             return PartialView("");
         }
 
+        //working on this part- this function is not complete
         [HttpPost]
         public ActionResult EditProjectDetails(ProjectViewModel projectViewModel)
         {
