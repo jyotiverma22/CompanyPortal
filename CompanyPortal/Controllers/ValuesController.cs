@@ -124,6 +124,11 @@ namespace CompanyPortal.Controllers
         {
             return (companyRepository.SaveErrorLoggingDetails(dbLogging));
         }
-        
+
+        [HttpGet]
+       public IEnumerable<string> GetallProjectManagers()
+        {
+            return companyRepository.getAllProjectManagers();
+        }        
     }
 }

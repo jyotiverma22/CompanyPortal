@@ -175,7 +175,7 @@ namespace CompanyPortal.Controllers
         [HttpGet]
         public ActionResult EditProjectDetails()
         {
-            return PartialView("");
+            return PartialView("_EditProjectDetails",new ProjectViewModel());
         }
 
         //working on this part- this function is not complete

@@ -191,6 +191,7 @@ function EditProjectDetail(item) {
         modal: true,
         open: function (event, ui) {
             debugger
+            $(this).load("LoggedIn/EditProjectDetails");
         },
         buttons: {
             "Close": function () {

@@ -99,6 +99,7 @@ namespace DatabaseLayer.DbContexts
         //returns the list of blood group
         public List<BloodGroup> GetBloodGroups()
         {
+            
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
                 return companyDbContext.BloodGroups.ToList();
@@ -211,6 +212,39 @@ namespace DatabaseLayer.DbContexts
                 return false;
             }
                 
+        }
+
+
+        public IEnumerable<string> getAllProjectManagers()
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+              
+              var  P_mgrs_Id = (from p in companyDbContext.UserRegistration
+                             join r in companyDbContext.Roles on p.RId equals r.RID
+                             where( r.Active == "true" && r.RoleName=="P_Manager")
+                             select(p.UserId)).ToList();
+                
+                return P_mgrs_Id;
+            }
+        }
+
+        public bool AddProject(Project project)
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+                if (project != null)
+                {
+                    companyDbContext.Projects.Add(project);
+                    companyDbContext.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
         }
 
 

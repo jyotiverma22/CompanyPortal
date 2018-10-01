@@ -45,7 +45,11 @@
         }
     </div>
 
-
+    <div id="addprojectdetail" style="display:none">
+        @{ 
+            Html.RenderAction("AddProjectDetails","Admin");
+        }
+    </div>
 
     <div id="attend">
 
@@ -113,17 +117,33 @@
         });
 
         $("#cproj").click(function () {
-            debugger
             $("#projdetail").show();
             jqgridInitialize("completed");
             $("#emp").hide();
         });
 
+        $("#addProject").click(function () {
+            debugger
+            $("#emp").hide();
+            $("#projdetail").hide();
+            $("#addprojectdetail").show();
+
+        });
 
         $("#closbtn").click(function () {
             $('#myModalemp').modal('hide');
+            
         });
 
+        $.get("/api/Values/GetallProjectManagers", function (data) {
+            for (var i = 0; i < data.length; i++) {
+
+                var opt = new Option(data[i], data[i]);
+                $('#Mgr_Id').append(opt);
+            }
+        });
+
+      
 
     });
 
@@ -141,8 +161,8 @@
 
         });
 
+        //scripts for add project partial view
 
      
-
     }
 </script>

@@ -27,6 +27,8 @@ namespace RepositoryLayer.Repositories
 
         IEnumerable<Registration> getTeamDetails(int pid);
 
-        bool SaveErrorLoggingDetails(DbLogging dbLogging); 
+        bool SaveErrorLoggingDetails(DbLogging dbLogging);
+
+        IEnumerable<string> getAllProjectManagers();
     }
 }

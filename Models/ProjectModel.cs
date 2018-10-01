@@ -18,5 +18,7 @@ namespace Models
         public string Manager_Name { get; set; }
 
         public string Status { get; set; }
+
+        public string Description { get; set; }
     }
 }

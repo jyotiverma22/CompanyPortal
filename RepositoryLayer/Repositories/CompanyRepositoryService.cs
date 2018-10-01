@@ -31,6 +31,11 @@ namespace RepositoryLayer.Repositories
             return datalayer.CheckUsernameStatus(username);
         }
 
+        public IEnumerable<string> getAllProjectManagers()
+        {
+            return datalayer.getAllProjectManagers();
+        }
+
         public List<BloodGroup> GetBloodGroups()
         {
             return datalayer.GetBloodGroups();

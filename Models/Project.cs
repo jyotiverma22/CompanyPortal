@@ -14,5 +14,6 @@ namespace Models
         public string ProjectName{ get; set; }
         public string Mgr_Id{ get; set; }
         public string Status { get; set; } //status shows project is completed or in working status
+        public string Description { get; set; }
     }
 }

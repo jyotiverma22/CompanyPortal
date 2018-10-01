@@ -13,7 +13,6 @@
 
         @if (Convert.ToString(Session["role"]) == "Member" || Convert.ToString(Session["role"]) == "Admin")
         {
-
             Html.RenderAction("MemberPartial");
 
         }
