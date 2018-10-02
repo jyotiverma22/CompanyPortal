@@ -36,14 +36,6 @@ namespace DatabaseLayer.DbContexts
         public DbSet<Emp_Reporting> Emp_Reportings { get; set; }
         public DbSet<DbLogging> DbLoggings { get; set; }
 
-      
-
-       
      
-
-      
-
-     
-
     }
 }
