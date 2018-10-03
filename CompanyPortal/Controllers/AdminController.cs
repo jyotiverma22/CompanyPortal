@@ -1,7 +1,11 @@
 ﻿using CompanyPortal.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,17 +19,6 @@ namespace CompanyPortal.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult AddProjectDetails()
-        {
-            return PartialView("_AddProjectPartialView");
-        }
-
-
-        [HttpPost]
-        public ActionResult AddProjectDetails(ProjectViewModel projectViewModel)
-        {
-            return PartialView("_AddProjectPartialView");
-        }
+       
     }
 }

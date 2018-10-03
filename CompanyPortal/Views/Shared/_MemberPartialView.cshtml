@@ -47,7 +47,7 @@
 
     <div id="addprojectdetail" style="display:none">
         @{ 
-            Html.RenderAction("AddProjectDetails","Admin");
+            Html.RenderAction("AddProject");
         }
     </div>
 
@@ -91,6 +91,7 @@
             debugger
             $("#emp").show();
             $("#projdetail").hide();
+            $("#addprojectdetail").hide();
         });
 
         $("#projectdetails").click(function () {
@@ -111,6 +112,7 @@
             debugger
             $("#projdetail").show();           
             $("#emp").hide();
+            $("#addprojectdetail").hide();
             jqgridInitialize("working");
             ToggleColumn(role_);
 
@@ -120,6 +122,7 @@
             $("#projdetail").show();
             jqgridInitialize("completed");
             $("#emp").hide();
+            $("#addprojectdetail").hide();
         });
 
         $("#addProject").click(function () {
@@ -137,13 +140,13 @@
 
         $.get("/api/Values/GetallProjectManagers", function (data) {
             for (var i = 0; i < data.length; i++) {
-
                 var opt = new Option(data[i], data[i]);
                 $('#Mgr_Id').append(opt);
             }
         });
 
-      
+
+    
 
     });
 
@@ -160,9 +163,34 @@
 
 
         });
+    }
 
         //scripts for add project partial view
-
+        function AddProjectSuccess() {
+            debugger
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Simple confirm!',
+                buttons: {
+                    confirm: function () {
+                        $.alert('Confirmed!');
+                    },
+                    cancel: function () {
+                        $.alert('Canceled!');
+                    },
+                    somethingElse: {
+                        text: 'Something else',
+                        btnClass: 'btn-blue',
+                        keys: ['enter', 'shift'],
+                        action: function () {
+                            $.alert('Something else?');
+                        }
+                    }
+                }
+            });
+        }
+    
      
-    }
+    
+
 </script>

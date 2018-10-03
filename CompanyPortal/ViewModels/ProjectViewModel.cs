@@ -13,7 +13,7 @@ namespace CompanyPortal.ViewModels
         public string Project_Name { get; set; }
         [Required]
         public string Mgr_Id { get; set; }
-        [Required]
+        
         public string Status{ get; set; }
         [Required]
         public string Description{ get; set; }

@@ -11,7 +11,8 @@ namespace CompanyPortal
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/i18n/grid.locale-en.js",
-                        "~/Scripts/jquery.jqGrid.min.js"
+                        "~/Scripts/jquery.jqGrid.min.js",
+                         "~/Scripts/jquery.unobtrusive-ajax.js"
                         ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

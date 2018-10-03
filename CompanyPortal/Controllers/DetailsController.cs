@@ -73,6 +73,23 @@ namespace CompanyPortal.Controllers
             return regs;
         }
 
+        [HttpPost, Route("addProjectDetails")]
+        public bool AddProjectDetails(ProjectViewModel projectViewModel)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<ProjectViewModel, Project>()
+                .ForMember(t=>t.PID,o=>o.Ignore())
+                .ForMember(t=>t.Status,o=>o.MapFrom(opt=>"working"))
+                .ForMember(t=>t.ProjectName,o=>o.MapFrom(opt=>opt.Project_Name));
+            });
+
+            IMapper mapper = config.CreateMapper();
+            Project project = new Project();
+            project = mapper.Map<ProjectViewModel, Project>(projectViewModel);
+            return ICompany.AddProjects(project);
+        }
+
 
         // [Authorize, Route("getprojectdetails"), HttpGet]
         //public IHttpActionResult getProjectDetails()

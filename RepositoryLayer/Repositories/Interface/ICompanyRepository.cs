@@ -30,5 +30,7 @@ namespace RepositoryLayer.Repositories
         bool SaveErrorLoggingDetails(DbLogging dbLogging);
 
         IEnumerable<string> getAllProjectManagers();
+
+        bool AddProjects(Project project);
     }
 }

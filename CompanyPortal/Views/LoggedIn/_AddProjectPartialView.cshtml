@@ -1,6 +1,6 @@
 ﻿@model CompanyPortal.ViewModels.ProjectViewModel
 
-@using (Html.BeginForm())
+@using (Ajax.BeginForm("AddProject","LoggedIn",new AjaxOptions { HttpMethod="POST",OnSuccess="AddProjectSuccess"}))
 {
     @Html.AntiForgeryToken()
 

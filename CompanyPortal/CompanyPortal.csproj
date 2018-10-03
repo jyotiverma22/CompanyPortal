@@ -591,11 +591,12 @@
     <Content Include="Views\Shared\_MemberPartialView.cshtml" />
     <Content Include="Views\Shared\_ProjManagerPartialView.cshtml" />
     <Content Include="Views\Shared\_EditProjectDetails.cshtml" />
-    <Content Include="Views\Admin\_AddProjectPartialView.cshtml" />
+    <Content Include="Views\LoggedIn\_AddProjectPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

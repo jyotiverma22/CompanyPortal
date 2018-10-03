@@ -11,6 +11,12 @@ namespace RepositoryLayer.Repositories
     public class CompanyRepositoryService : ICompanyRepository
     {
         DataLayer datalayer = new DataLayer();
+
+        public bool AddProjects(Project project)
+        {
+            return datalayer.AddProject(project);
+        }
+
         public bool AddUsers(Registration registration)
         {
             return datalayer.AddUsers(registration);
