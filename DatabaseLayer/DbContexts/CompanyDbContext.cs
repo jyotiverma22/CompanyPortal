@@ -35,7 +35,10 @@ namespace DatabaseLayer.DbContexts
         public DbSet<Project_Team> Project_Teams { get; set; }
         public DbSet<Emp_Reporting> Emp_Reportings { get; set; }
         public DbSet<DbLogging> DbLoggings { get; set; }
+        public DbSet<TechnologyStack> TechnologyStacks{ get; set; }
+        public DbSet<User_TechnologyStack> User_TechnologyStacks{ get; set; }
+        public DbSet<Project_TechnologyStack> Project_TechnologyStacks { get; set; }
 
-     
+
     }
 }

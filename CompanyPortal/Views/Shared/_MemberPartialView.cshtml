@@ -166,9 +166,39 @@
     }
 
         //scripts for add project partial view
-        function AddProjectSuccess() {
+        function AddProjectSuccess(data) {
             debugger
-            $.confirm({
+            var res;
+            var dialog = $('<div id="msg_dialog"></div>').dialog();
+            dialog.dialog({
+                modal: true,
+                autoOpen: true,
+                title: 'Test',
+                buttons: [
+                    {
+                        text: 'Later',
+                        click: function () {
+                            debugger
+//                            $('#res').empty().append('<h1>Open<h1>');
+                            $('#msg_dialog').remove();
+                            res= true;
+                        }
+                    },
+                    {
+                        text: 'Ok',
+                        click: function () {
+                            debugger
+  //                          $('#res').empty().append('<h1>Close<h1>');
+                            $('#msg_dialog').remove();
+                            res= false;
+                        }
+                    }
+                ]
+            });
+
+            dialog.dialog("open");
+            return res;
+        /*    $.confirm({
                 title: 'Confirm!',
                 content: 'Simple confirm!',
                 buttons: {
@@ -187,10 +217,10 @@
                         }
                     }
                 }
-            });
+            });*/
         }
-    
-     
+
+
     
 
 </script>
