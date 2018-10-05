@@ -1,6 +1,6 @@
 ﻿@model CompanyPortal.ViewModels.ProjectViewModel
 
-@using (Ajax.BeginForm("AddProject","LoggedIn",new AjaxOptions { HttpMethod="POST",OnBegin= "return AddProjectSuccess()" }))
+@using (Ajax.BeginForm("","",new AjaxOptions { }))
 {
     @Html.AntiForgeryToken()
 
@@ -37,7 +37,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default"  />
+                <input type="button" value="Next" class="btn btn-default" id="btn_project_Submit" />
             </div>
         </div>
     </div>
@@ -48,13 +48,9 @@
         $(document).ready(function () {
             debugger
 
-            $.ajax({
-                
-            });
+           
 
-            $("#Project_Name").click(function () {
-                debugger
-            });
+           
 
         });
 

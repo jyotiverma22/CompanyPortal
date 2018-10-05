@@ -206,7 +206,7 @@ namespace CompanyPortal.Controllers
                     var result = httpclient.PostAsync(url.Uri + "/AddProjectDetails", content).Result;
                     if (result.IsSuccessStatusCode)
                     {
-                        return Json(projectViewModel);
+                        return Json(Convert.ToInt32(result.Content.ReadAsStringAsync().Result));
                       //  return Json(new { data = projectViewModel }, JsonRequestBehavior.AllowGet); ;
                     }
                     else

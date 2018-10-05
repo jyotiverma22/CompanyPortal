@@ -74,7 +74,7 @@ namespace CompanyPortal.Controllers
         }
 
         [HttpPost, Route("addProjectDetails")]
-        public bool AddProjectDetails(ProjectViewModel projectViewModel)
+        public int AddProjectDetails(ProjectViewModel projectViewModel)
         {
             var config = new MapperConfiguration(cfg =>
             {

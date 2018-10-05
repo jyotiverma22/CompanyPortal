@@ -31,6 +31,6 @@ namespace RepositoryLayer.Repositories
 
         IEnumerable<string> getAllProjectManagers();
 
-        bool AddProjects(Project project);
+        int AddProjects(Project project);
     }
 }

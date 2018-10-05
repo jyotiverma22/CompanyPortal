@@ -12,7 +12,7 @@ namespace RepositoryLayer.Repositories
     {
         DataLayer datalayer = new DataLayer();
 
-        public bool AddProjects(Project project)
+        public int AddProjects(Project project)
         {
             return datalayer.AddProject(project);
         }

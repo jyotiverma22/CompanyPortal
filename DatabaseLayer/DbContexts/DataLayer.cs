@@ -229,7 +229,7 @@ namespace DatabaseLayer.DbContexts
             }
         }
 
-        public bool AddProject(Project project)
+        public int AddProject(Project project)
         {
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
@@ -237,11 +237,11 @@ namespace DatabaseLayer.DbContexts
                 {
                     companyDbContext.Projects.Add(project);
                     companyDbContext.SaveChanges();
-                    return true;
+                    return project.PID;
                 }
                 else
                 {
-                    return false;
+                    return 0;
                 }
 
             }

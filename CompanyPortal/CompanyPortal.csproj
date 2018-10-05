@@ -347,6 +347,7 @@
     <Compile Include="ViewModels\EmployeeDetailsViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
+    <Compile Include="ViewModels\Project_TechnologyStackViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -592,6 +593,7 @@
     <Content Include="Views\Shared\_ProjManagerPartialView.cshtml" />
     <Content Include="Views\Shared\_EditProjectDetails.cshtml" />
     <Content Include="Views\LoggedIn\_AddProjectPartialView.cshtml" />
+    <Content Include="Views\LoggedIn\_AddProjectTechnologyStackPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

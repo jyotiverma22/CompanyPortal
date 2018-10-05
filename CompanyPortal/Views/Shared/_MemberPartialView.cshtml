@@ -146,6 +146,28 @@
         });
 
 
+        $("#btn_project_Submit").click(function () {
+            $('#form0').validate();
+
+            if ($('#form0').valid()) {
+                //trigger modal
+                debugger
+                var b="{";
+                var a = $('#form0').serializeArray()
+                $.each(a, function (i, field) {
+                    if (i === 0) { }
+                    else
+                    b=b+""+("\""+field.name+"\"" + ":" + "\""+field.value+"\"" + ",");
+                });
+                b = b.replace(/.$/, "}");
+             //   alert(JSON.stringify($.trim(b)));
+
+                InitializeAddTeamDialog($.trim(b));
+
+            }
+        });
+
+
     
 
     });
@@ -166,37 +188,10 @@
     }
 
         //scripts for add project partial view
-        function AddProjectSuccess(data) {
+        function AddProjectSuccess($data) {
             debugger
-            var res;
-            var dialog = $('<div id="msg_dialog"></div>').dialog();
-            dialog.dialog({
-                modal: true,
-                autoOpen: true,
-                title: 'Test',
-                buttons: [
-                    {
-                        text: 'Later',
-                        click: function () {
-                            debugger
-//                            $('#res').empty().append('<h1>Open<h1>');
-                            $('#msg_dialog').remove();
-                            res= true;
-                        }
-                    },
-                    {
-                        text: 'Ok',
-                        click: function () {
-                            debugger
-  //                          $('#res').empty().append('<h1>Close<h1>');
-                            $('#msg_dialog').remove();
-                            res= false;
-                        }
-                    }
-                ]
-            });
-
-            dialog.dialog("open");
+            var result = $data.serialize();
+   
             return res;
         /*    $.confirm({
                 title: 'Confirm!',
@@ -219,6 +214,16 @@
                 }
             });*/
         }
+
+    function SaveDataProjectIntoDatabase(data) {
+        debugger
+        $.post("/LoggedIn/AddProject", JSON.parse(data), function (result) {
+            if (result !== 0)
+                alert("Data Saved" + result);
+            else
+                alert("Error in saving Project Details!.. Try Again After some time");
+        });
+    }
 
 
     

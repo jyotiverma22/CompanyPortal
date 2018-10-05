@@ -10,8 +10,11 @@ namespace Models
     public class Project_TechnologyStack
     {
         [Key]
-        public int Id{ get; set; }
+        public int Id { get; set; }
         public string Technology { get; set; }
-        public string  UserId{ get; set; }
+        public string  UserId { get; set; }
+        public int projectId { get; set; }
+        public Project project { get; set; }
+
     }
 }
