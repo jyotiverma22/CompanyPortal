@@ -220,5 +220,13 @@ namespace CompanyPortal.Controllers
            // return PartialView("_AddProjectPartialView", projectViewModel);
         }
 
+
+
+       
+        public ActionResult AddTeam(ProjectViewModel projectViewModel )
+        {
+            return PartialView("_AddProjectTechnologyStackViewModel",projectViewModel);
+        }
+
     }
 }

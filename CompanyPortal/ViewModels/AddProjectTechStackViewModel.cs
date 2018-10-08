@@ -6,19 +6,15 @@ using System.Web;
 
 namespace CompanyPortal.ViewModels
 {
-    public class ProjectViewModel
+    public class AddProjectTechStackViewModel
     {
-        public int PId{ get; set; }
         [Required]
-        public string Project_Name { get; set; }
+        public string Technology { get; set; }
         [Required]
-        public string Mgr_Id { get; set; }
-        
-        public string Status{ get; set; }
-        [Required]
-        public string Description{ get; set; }
+        public string UserId { get; set; }
+    }
 
+    public class ProjectTechnologyList {
         public List<AddProjectTechStackViewModel> ProjectTechStackList { get; set; }
-
     }
 }

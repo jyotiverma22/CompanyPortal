@@ -177,6 +177,10 @@
     <Compile Include="Migrations\20181005041334_projectandprojectstackMigration.designer.cs">
       <DependentUpon>20181005041334_projectandprojectstackMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20181008034116_techstack2Migration.cs" />
+    <Compile Include="Migrations\20181008034116_techstack2Migration.designer.cs">
+      <DependentUpon>20181008034116_techstack2Migration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\CompanyDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

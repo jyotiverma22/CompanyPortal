@@ -76,6 +76,10 @@
 
     </div>
 
+    <div id="addteamDialog" style="display:none">
+
+    </div>
+
 </div>
 
 <script src="~/Scripts/jquery-3.3.1.js" type="text/javascript"></script>
@@ -153,16 +157,16 @@
                 //trigger modal
                 debugger
                 var b="{";
-                var a = $('#form0').serializeArray()
-                $.each(a, function (i, field) {
+                var a = $('#form0').serialize();
+            /*    $.each(a, function (i, field) {
                     if (i === 0) { }
                     else
                     b=b+""+("\""+field.name+"\"" + ":" + "\""+field.value+"\"" + ",");
                 });
                 b = b.replace(/.$/, "}");
              //   alert(JSON.stringify($.trim(b)));
-
-                InitializeAddTeamDialog($.trim(b));
+             */
+                InitializeAddTeamConfirmDialog(a);
 
             }
         });
@@ -217,7 +221,7 @@
 
     function SaveDataProjectIntoDatabase(data) {
         debugger
-        $.post("/LoggedIn/AddProject", JSON.parse(data), function (result) {
+        $.post("/LoggedIn/AddProject", data, function (result) {
             if (result !== 0)
                 alert("Data Saved" + result);
             else

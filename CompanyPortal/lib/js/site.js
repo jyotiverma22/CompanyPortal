@@ -22,7 +22,7 @@ function capitalizeFirstLetter(name) {
     return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 }
 
-function InitializeAddTeamDialog(formdata) {
+function InitializeAddTeamConfirmDialog(formdata) {
     var dialog = $('<div id="msg_dialog"> </div>').dialog();
     dialog.dialog({
         modal: true,
@@ -46,9 +46,9 @@ function InitializeAddTeamDialog(formdata) {
                 text: 'Yes',
                 click: function () {
                     debugger
-                    //                          $('#res').empty().append('<h1>Close<h1>');
+                    // 4 $('#res').empty().append('<h1>Close<h1>');
                     $('#msg_dialog').remove();
-
+                    openAddTeamDialog(formdata);
                     res = false;
                 }
             }
@@ -61,3 +61,23 @@ function InitializeAddTeamDialog(formdata) {
 }
 
 
+function openAddTeamDialog(formdata)
+{
+    var addteam = $("#addteamDialog");
+
+    addteam.dialog({
+        modal: true,
+        autoOpen: true,
+        title: "Add team",
+        width: "300px",
+        open: function () {
+            debugger
+            $(this).load("/LoggedIn/AddTeam", formdata);
+
+        }
+    });
+
+    addteam.show();
+    addteam.dialog('open');
+
+}

@@ -1,0 +1,78 @@
+﻿@model CompanyPortal.ViewModels.ProjectViewModel
+
+
+
+<form id="form1">
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+ 
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.ProjectTechStackList[0].Technology, htmlAttributes: new { @class = "control-label col-md-5" })
+
+            @Html.LabelFor(model => model.ProjectTechStackList[0].UserId, htmlAttributes: new { @class = "control-label col-md-5" })
+
+
+            <div id="row" class="col-md-12">
+                <div id="eachrow">
+                    <div class="col-md-5">
+                        @Html.DropDownListFor(model => model.ProjectTechStackList[0].Technology, new SelectList("1 , 2"), "Select Technology", new { value = "123" })
+                        @Html.ValidationMessageFor(model => model.ProjectTechStackList[0].Technology, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-5">
+                        @Html.DropDownListFor(model => model.ProjectTechStackList[0].UserId, new SelectList("A", "B"), "Select Team Member", new { value = "456" })
+                        @Html.ValidationMessageFor(model => model.ProjectTechStackList[0].UserId, "", new { @class = "text-danger" })
+                    </div>
+                    <button type="button" id="btnaddrow" value="addrow"></button>
+                </div>
+                <div id="eachrow">
+                    <div class="col-md-5">
+                        @Html.DropDownListFor(model => model.ProjectTechStackList[1].Technology, new SelectList("1 , 2"), "Select Technology", new { value = "123" })
+                        @Html.ValidationMessageFor(model => model.ProjectTechStackList[1].Technology, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-5">
+                        @Html.DropDownListFor(model => model.ProjectTechStackList[1].UserId, new SelectList("A", "B"), "Select Team Member", new { value = "456" })
+                        @Html.ValidationMessageFor(model => model.ProjectTechStackList[1].UserId, "", new { @class = "text-danger" })
+                    </div>
+                    <button type="button" id="btnaddrow" value="addrow"></button>
+                </div>
+            </div>
+            
+
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button" value="Add Team" class="btn btn-default" id="submit" />
+                </div>
+            </div>
+    </div>
+</form>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            debugger
+
+            $("#btnaddrow").click(function () {
+
+                var newRow = $("#eachrow").clone();
+                $("#row").append(newRow);
+            });
+
+
+            $("#submit").click(function () {
+                debugger
+                var model =  @Html.Raw(Json.Encode(Model));
+               // model["ProjectTechStackList"] = Json.encode($("#form1").serialize());
+
+              // var data = $("#form1").serializeArray();
+                //var m = model + data;
+                SaveDataProjectIntoDatabase(model);
+            });
+
+
+        });
+
+    </script>
+
+
