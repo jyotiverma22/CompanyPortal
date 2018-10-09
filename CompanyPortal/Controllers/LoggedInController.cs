@@ -194,7 +194,8 @@ namespace CompanyPortal.Controllers
 
 
         [HttpPost]
-        public ActionResult AddProject(ProjectViewModel projectViewModel)
+        public ActionResult AddProject(ProjectViewModel projectViewModel,List<AddProjectTechStackViewModel> teamlist)
+
         {
             if (ModelState.IsValid)
             {

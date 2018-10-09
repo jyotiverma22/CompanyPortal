@@ -69,7 +69,8 @@ function openAddTeamDialog(formdata)
         modal: true,
         autoOpen: true,
         title: "Add team",
-        width: "300px",
+        width: "600px",
+        top: "150px",
         open: function () {
             debugger
             $(this).load("/LoggedIn/AddTeam", formdata);

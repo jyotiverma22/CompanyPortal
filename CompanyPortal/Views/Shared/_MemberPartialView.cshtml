@@ -219,13 +219,32 @@
             });*/
         }
 
-    function SaveDataProjectIntoDatabase(data) {
+    function SaveDataProjectIntoDatabase(model,formdata) {
         debugger
-        $.post("/LoggedIn/AddProject", data, function (result) {
+        model.ProjectTechStackList = formdata;
+
+        var data = {
+            projectViewModel: model,
+        }
+      /*  $.post("/LoggedIn/AddProject", data, function (result) {
             if (result !== 0)
                 alert("Data Saved" + result);
             else
                 alert("Error in saving Project Details!.. Try Again After some time");
+        });*/
+
+        $.ajax({
+            url: "/LoggedIn/AddProject",
+            method: "POST",
+            data: data,
+            datatype: 'json',
+            ContentType: 'application/json;utf-8',
+            success: function (result) {
+                if (result !== 0)
+                    alert("Data Saved" + result);
+                else
+                    alert("Error in saving Project Details!.. Try Again After some time");
+            }
         });
     }
 

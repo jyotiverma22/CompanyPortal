@@ -10,41 +10,37 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
 
-            @Html.LabelFor(model => model.ProjectTechStackList[0].Technology, htmlAttributes: new { @class = "control-label col-md-5" })
+            @Html.LabelFor(model => model.ProjectTechStackList[0].Technology, htmlAttributes: new { @class = "control-label col-md-5", style = "text-align:center" })
 
-            @Html.LabelFor(model => model.ProjectTechStackList[0].UserId, htmlAttributes: new { @class = "control-label col-md-5" })
+            @Html.LabelFor(model => model.ProjectTechStackList[0].UserId, htmlAttributes: new { @class = "control-label col-md-5", style = "text-align:center" })
+
+            <button type="button" id="btnaddrow" class="ui-icon-circle-plus" value="addrow"></button>
 
 
             <div id="row" class="col-md-12">
-                <div id="eachrow">
-                    <div class="col-md-5">
-                        @Html.DropDownListFor(model => model.ProjectTechStackList[0].Technology, new SelectList("1 , 2"), "Select Technology", new { value = "123" })
-                        @Html.ValidationMessageFor(model => model.ProjectTechStackList[0].Technology, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-5">
-                        @Html.DropDownListFor(model => model.ProjectTechStackList[0].UserId, new SelectList("A", "B"), "Select Team Member", new { value = "456" })
-                        @Html.ValidationMessageFor(model => model.ProjectTechStackList[0].UserId, "", new { @class = "text-danger" })
-                    </div>
-                    <button type="button" id="btnaddrow" value="addrow"></button>
-                </div>
-                <div id="eachrow">
-                    <div class="col-md-5">
-                        @Html.DropDownListFor(model => model.ProjectTechStackList[1].Technology, new SelectList("1 , 2"), "Select Technology", new { value = "123" })
-                        @Html.ValidationMessageFor(model => model.ProjectTechStackList[1].Technology, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-5">
-                        @Html.DropDownListFor(model => model.ProjectTechStackList[1].UserId, new SelectList("A", "B"), "Select Team Member", new { value = "456" })
-                        @Html.ValidationMessageFor(model => model.ProjectTechStackList[1].UserId, "", new { @class = "text-danger" })
-                    </div>
-                    <button type="button" id="btnaddrow" value="addrow"></button>
-                </div>
-            </div>
-            
 
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="button" value="Add Team" class="btn btn-default" id="submit" />
+                <div id="eachrow0" class="col-md-12 dialogdiv">
+
+                    @Html.DropDownListFor(model => model.ProjectTechStackList[0].Technology, new SelectList("12"), "Select Technology", new { @class = "dialogdiv" })
+
+                    @Html.DropDownListFor(model => model.ProjectTechStackList[0].UserId, new SelectList("AB"), "Select Team Member", new { @class = "dialogdiv margindiv" })
+ 
+                    <button type="button" value="addrow" onclick="DeleteRow(this)"></button>
+
+                    @Html.ValidationMessageFor(model => model.ProjectTechStackList[0].Technology, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.ProjectTechStackList[0].UserId, "", new { @class = "text-danger" })
+
                 </div>
+
+
+               
             </div>
+
+
+            <div class="col-md-offset-4 col-md-5 btnaddDiv" >
+                <input type="button" value="Add Team" class="btn btn-default btnSaveteam" id="submit" />
+            </div>
+        </div>
     </div>
 </form>
 
@@ -52,10 +48,13 @@
     <script type="text/javascript">
         $(document).ready(function () {
             debugger
-
+            var i = 0;
             $("#btnaddrow").click(function () {
+                debugger
 
                 var newRow = $("#eachrow").clone();
+                i = i + 1;
+                newRow.id = "eachrow" + i;
                 $("#row").append(newRow);
             });
 
@@ -64,14 +63,34 @@
                 debugger
                 var model =  @Html.Raw(Json.Encode(Model));
                // model["ProjectTechStackList"] = Json.encode($("#form1").serialize());
-
-              // var data = $("#form1").serializeArray();
+            //  var formdata = $("#form1").serialize();
                 //var m = model + data;
-                SaveDataProjectIntoDatabase(model);
+                var formdata = [];
+                var elements = document.getElementById("row").childNodes;
+                for (var i = 0; i < elements.length; i++)
+                {
+                    if (elements[i].nodeName == "DIV") {
+                        var a = elements[i].childNodes;
+                        formdata.push
+                            ({
+                                "Technology": a[1].value,
+                                "UserId": a[3].value
+                            });
+
+                    }
+                }
+               
+                SaveDataProjectIntoDatabase(model, formdata);
             });
 
 
         });
+
+        
+
+        function DeleteRow($this) {
+
+        }
 
     </script>
 

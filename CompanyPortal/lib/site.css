@@ -316,3 +316,61 @@ input {
         display: block;
     }
 }
+
+
+/* Add Team Dialog box css starts*/
+.dialogdiv{
+    display:inline-block;
+
+}
+
+.ui-dialog-titlebar {
+    background-color: #e2b13c;
+}
+
+.ui-icon-circle-plus{
+    background-image: url("images/add.png");
+    background-size:100% 100%;
+    background-repeat: no-repeat;
+    height:20px;
+    width:20px;
+    border-radius:5px;
+}
+
+#eachrow{
+    margin-top:10px;
+    margin-bottom:5px;
+}
+
+.margindiv{
+    margin-left:50px;
+    margin-right:25px;
+}
+.btnaddDiv{
+    margin-left:100px;
+    margin-top:20px;
+        
+}
+
+.btnSaveteam{
+    width:200px;
+    border-radius:20px;
+    background-color:#000;
+    color:#fff;
+
+}
+
+
+.btnSaveteam :hover{
+    background-color: #e2b13c;
+}
+
+.btnSaveteam :active {
+    background-color: #e2b13c;
+}
+
+.btnSaveteam :focus{
+    background-color: #e2b13c;
+}
+
+/*Add Team Dialog box css ends */

@@ -426,6 +426,7 @@
     <Content Include="lib\images\5.jpg" />
     <Content Include="lib\images\7.jpg" />
     <Content Include="lib\images\about.jpg" />
+    <Content Include="lib\images\add.png" />
     <Content Include="lib\images\bgimage.JPG" />
     <Content Include="lib\images\images.jpg" />
     <Content Include="lib\images\logo.png" />
