@@ -32,5 +32,9 @@ namespace RepositoryLayer.Repositories
         IEnumerable<string> getAllProjectManagers();
 
         int AddProjects(Project project);
+
+        List<String> GetAllTechnologies();
+
+        List<String> GetTechnologyUserId(string tech);
     }
 }

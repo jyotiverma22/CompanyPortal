@@ -248,6 +248,25 @@ namespace DatabaseLayer.DbContexts
         }
 
 
+        public List<String> GetAllTechnologies()
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+                List<String> Techs = companyDbContext.TechnologyStacks.Where(c => c.IsActive).Select(c=>c.Technology).ToList();
+                return Techs;
+            }
+        }
+
+        public List<String> GetTechnologyUserId(string tech)
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+               List<String> list= companyDbContext.User_TechnologyStacks.Where(c => c.technologyStack.Technology == tech).Select(c => c.UserId).ToList();
+                return list;
+            }
+        }
+
+
 
     }
 }

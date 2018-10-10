@@ -42,6 +42,11 @@ namespace RepositoryLayer.Repositories
             return datalayer.getAllProjectManagers();
         }
 
+        public List<string> GetAllTechnologies()
+        {
+            return datalayer.GetAllTechnologies();
+        }
+
         public List<BloodGroup> GetBloodGroups()
         {
             return datalayer.GetBloodGroups();
@@ -62,6 +67,11 @@ namespace RepositoryLayer.Repositories
         public IEnumerable<Registration> getTeamDetails(int pid)
         {
             return datalayer.getTeamDetails(pid);
+        }
+
+        public List<string> GetTechnologyUserId(string tech)
+        {
+            return datalayer.GetTechnologyUserId(tech);
         }
 
         public string GetUserId()

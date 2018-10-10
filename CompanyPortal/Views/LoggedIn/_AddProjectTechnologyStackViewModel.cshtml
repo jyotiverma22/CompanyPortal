@@ -21,9 +21,9 @@
 
                 <div id="eachrow0" class="col-md-12 dialogdiv">
 
-                    @Html.DropDownListFor(model => model.ProjectTechStackList[0].Technology, new SelectList("12"), "Select Technology", new { @class = "dialogdiv" })
+                    @Html.DropDownListFor(model => model.ProjectTechStackList[0].Technology, new SelectList(""), "Select Technology", new { @class = "dialogdiv selectTech" })
 
-                    @Html.DropDownListFor(model => model.ProjectTechStackList[0].UserId, new SelectList("AB"), "Select Team Member", new { @class = "dialogdiv margindiv" })
+                    @Html.DropDownListFor(model => model.ProjectTechStackList[0].UserId, new SelectList(""), "Select Team Member", new { @class = "dialogdiv margindiv selectUser" })
  
                     <button type="button" value="addrow" onclick="DeleteRow(this)"></button>
 
@@ -46,16 +46,68 @@
 
 
     <script type="text/javascript">
+        var users = [];
         $(document).ready(function () {
             debugger
             var i = 0;
+            var TechList = [];
+
+            $.get("/api/Details/GetAllTechnologies", function (response) {
+                debugger
+                TechList = response;
+                for (var j = 0; j < response.length; j++) {
+                    var opt = new Option(response[j], response[j]);
+                    $('#ProjectTechStackList_0__Technology').append(opt);
+                }
+            });
+
+            $("#row").on('change', ".selectUser", function () {
+                debugger
+                var a = $(this).val();
+                
+               
+                users.push(a);
+            });
+
+            $("#row").on('change', ".selectTech", function () {
+                debugger
+                var tech = $(this).val();
+                var userSelect = document.getElementById($(this).parent().attr("id")).childNodes[3];
+
+                $.get("/api/Details/GetTechnologyUserId", {"tech": tech }, function (response) {
+                    debugger
+                    for (var j = 0; j < response.length; j++) {
+                        var opt = new Option(response[j], response[j]);
+                        $(userSelect).append(opt);
+                    }
+                });
+
+
+            });
+
             $("#btnaddrow").click(function () {
                 debugger
+                var newRow = '<div id="eachrow0" class="col-md-12 dialogdiv">'+
+                  ' <select class="dialogdiv selectTech"><option value="">Select Technology</option>'+
+                       ' </select > ' +
+                     ' <select class="dialogdiv margindiv selectUser"><option value="">Select Team Member</option>'+
+                     '  </select > '+
+                ' <button type="button" value="addrow" onclick="DeleteRow(this)"></button>' +
+                   ' <span class="field-validation-valid text-danger" data-valmsg-for="ProjectTechStackList[0].Technology" data-valmsg-replace="true"></span>'+
+                   '<span class="field-validation-valid text-danger" data-valmsg-for="ProjectTechStackList[0].UserId" data-valmsg-replace="true"></span>'+
+                 ' </div > ';
 
-                var newRow = $("#eachrow").clone();
                 i = i + 1;
-                newRow.id = "eachrow" + i;
-                $("#row").append(newRow);
+                var a = $(newRow);
+                a.attr('id', 'eachrow' + i);// increment the id of the eachrow div to uniquely identify the row
+
+                $("#row").append(a);
+                var select = document.getElementById('eachrow' + i).childNodes[1];
+                for (var j = 0; j < TechList.length; j++) {
+
+                    var opt = new Option(TechList[j], TechList[j]);
+                    $(select).append(opt);
+                }
             });
 
 
@@ -63,8 +115,8 @@
                 debugger
                 var model =  @Html.Raw(Json.Encode(Model));
                // model["ProjectTechStackList"] = Json.encode($("#form1").serialize());
-            //  var formdata = $("#form1").serialize();
-                //var m = model + data;
+               //  var formdata = $("#form1").serialize();
+               //var m = model + data;
                 var formdata = [];
                 var elements = document.getElementById("row").childNodes;
                 for (var i = 0; i < elements.length; i++)
@@ -89,6 +141,15 @@
         
 
         function DeleteRow($this) {
+            debugger
+            
+            var parent = $($this).parent();
+            var parentelement = document.getElementById("" + parent.attr("id"));
+            var value = parentelement.childNodes[3].value;
+
+            users.splice(users.indexOf(value), 1);
+            $(parent).remove();
+
 
         }
 

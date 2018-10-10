@@ -98,6 +98,17 @@ namespace CompanyPortal.Controllers
         //     return null;
         // }
 
+        [HttpGet, Route("GetAllTechnologies")]
+        public List<String> GetAllTechnologies()
+        {
+            return ICompany.GetAllTechnologies();
+        }
+
+        [HttpGet, Route("GetTechnologyUserId")]
+        public List<String> GetTechnologyUserId(string tech)
+        {
+            return ICompany.GetTechnologyUserId(tech);
+        }
 
     }
 }
