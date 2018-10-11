@@ -231,21 +231,43 @@ namespace DatabaseLayer.DbContexts
 
         public int AddProject(Project project)
         {
+            int id;
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
-                if (project != null)
-                {
+                Project proj = companyDbContext.Projects.Where(n => n.ProjectName == project.ProjectName).FirstOrDefault();
+             if (project != null)
+             {
+                    if (proj == null)
+                     {
+                    project.CreatedOn = DateTime.Now;
+                    project.CreatedBy = "CMP-1001";
+
+                     }
+                    project.UpdatedOn = DateTime.Now;
+                    project.UpdatedBy = "CMP-1001";
+                    
                     companyDbContext.Projects.Add(project);
                     companyDbContext.SaveChanges();
+                    id=project.PID;
+                    if (project.project_TechnologyStacks != null)
+                    {
+                        foreach( var key in project.project_TechnologyStacks)
+                        {
+                            key.projectId = id;
+                            companyDbContext.Project_TechnologyStacks.Add(key);
+                        }
+                    }
                     return project.PID;
+
                 }
-                else
-                {
-                    return 0;
+                return 0;
+                   
+
                 }
+            
 
             }
-        }
+        
 
 
         public List<String> GetAllTechnologies()

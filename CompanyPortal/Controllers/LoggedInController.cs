@@ -11,13 +11,15 @@ using System.Web.Mvc;
 using System.IO;
 using Models;
 using System.Text;
+using CompanyPortal.CustomFilter;
 
 namespace CompanyPortal.Controllers
 {
     //MVC controller after the user logged  in
     public class LoggedInController : Controller
     {
-        
+
+        log4net.ILog logger = log4net.LogManager.GetLogger(typeof(LoggedInController));
         // GET: LoggedIn
         /// <summary>
         /// if user logged in then dashboard appears
@@ -94,6 +96,7 @@ namespace CompanyPortal.Controllers
             }
             try
             {
+                throw new Exception("Exception occured");
                 using (HttpClient client = new HttpClient())
                 {
                     UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["detailsUrl"]);
@@ -120,8 +123,12 @@ namespace CompanyPortal.Controllers
             {
                 //Token authentication time out
                 string path = ConfigurationManager.AppSettings["logPath"].ToString();
-                 
-               if(System.IO.File.Exists(path))
+                
+                logger.Info(e.ToString());
+             
+                Log.Error("ExceptionOccured",e);
+                logger.Error(e.ToString());
+                /*if (System.IO.File.Exists(path))
                 {
                     //Error logging into the log file 
                     StreamWriter sw = new StreamWriter(path);
@@ -160,10 +167,10 @@ namespace CompanyPortal.Controllers
                 else
                 {
 
-                }
+                }*/
 
                 Session["token"] = null;
-                return RedirectToAction("Index", "home");
+                return RedirectToAction("Index");
             }
 
 

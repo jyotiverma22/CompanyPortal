@@ -79,11 +79,14 @@ namespace CompanyPortal.Controllers
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<ProjectViewModel, Project>()
-                .ForMember(t=>t.PID,o=>o.Ignore())
-                .ForMember(t=>t.Status,o=>o.MapFrom(opt=>"working"))
-                .ForMember(t=>t.ProjectName,o=>o.MapFrom(opt=>opt.Project_Name));
-            });
+                .ForMember(t => t.PID, o => o.Ignore())
+                .ForMember(t => t.Status, o => o.MapFrom(opt => "working"))
+                .ForMember(t => t.ProjectName, o => o.MapFrom(opt => opt.Project_Name))
+                .ForMember(t=>t.project_TechnologyStacks,o=>o.MapFrom(opt=>opt.ProjectTechStackList));
 
+                cfg.CreateMap<AddProjectTechStackViewModel, Project_TechnologyStack>();
+            });
+           
             IMapper mapper = config.CreateMapper();
             Project project = new Project();
             project = mapper.Map<ProjectViewModel, Project>(projectViewModel);
