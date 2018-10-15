@@ -46,12 +46,13 @@
 
 
     <script type="text/javascript">
-        var users = [];
+
+        var userlist = [];
         $(document).ready(function () {
             debugger
             var i = 0;
             var TechList = [];
-
+            var prevIndex = "";
             $.get("/api/Details/GetAllTechnologies", function (response) {
                 debugger
                 TechList = response;
@@ -63,22 +64,52 @@
 
             $("#row").on('change', ".selectUser", function () {
                 debugger
-                var a = $(this).val();
-                
+                var validationField = document.getElementById($(this).parent().attr("id")).childNodes[7];
+                $(validationField).html("");
+                var index = $(this).parent().index();
+                if (index == prevIndex) {
+                    userlist.splice(-1, 1)
+                }
+                else {
+                    prevIndex = index;
+                }
+
                
-                users.push(a);
+                var a = $(this).val();
+             //   userlist.splice(index, 1, a);
+                userlist.push(a); 
             });
 
             $("#row").on('change', ".selectTech", function () {
                 debugger
+                $(".selectUser").attr("disabled", true);
+                var count = 0;
                 var tech = $(this).val();
                 var userSelect = document.getElementById($(this).parent().attr("id")).childNodes[3];
+                $(userSelect).attr("disabled",false);
 
+                var selectedValue = $(userSelect).children('option:selected').val();
+                (selectedValue!=="")? userlist.splice(userlist.indexOf(selectedValue), 1) :"";
+                $(userSelect).children('option:not(:first)').remove();
+
+                var validationField = document.getElementById($(this).parent().attr("id")).childNodes[7];
+                $(validationField).html("");
+               
                 $.get("/api/Details/GetTechnologyUserId", {"tech": tech }, function (response) {
                     debugger
                     for (var j = 0; j < response.length; j++) {
-                        var opt = new Option(response[j], response[j]);
-                        $(userSelect).append(opt);
+                        for (var k = 0; k < userlist.length; k++) {
+                            if (response[j] == userlist[k]) {
+                                count = 1;
+                            }
+                        }
+                        if (count == 0) {
+                            var opt = new Option(response[j], response[j]);
+                            $(userSelect).append(opt);
+                        }
+                        else {
+                            count = 0;
+                        }
                     }
                 });
 
@@ -87,6 +118,19 @@
 
             $("#btnaddrow").click(function () {
                 debugger
+                var elements = document.getElementById("row").childNodes;
+                for (var i = 0; i < elements.length; i++) {
+                    if (elements[i].nodeName == "DIV") {
+                        var a = elements[i].childNodes;
+
+                        if ((a[1].value == "") || (a[3].value == "")) {
+                            $(a[7]).html("Please fill the complete details");
+                            return;
+                        }
+
+                    }
+                }
+
                 var newRow = '<div id="eachrow0" class="col-md-12 dialogdiv">'+
                   ' <select class="dialogdiv selectTech"><option value="">Select Technology</option>'+
                        ' </select > ' +
@@ -108,6 +152,8 @@
                     var opt = new Option(TechList[j], TechList[j]);
                     $(select).append(opt);
                 }
+
+                $(".selectUser").attr("disabled", true);
             });
 
 
@@ -123,6 +169,7 @@
                 {
                     if (elements[i].nodeName == "DIV") {
                         var a = elements[i].childNodes;
+                        
                         formdata.push
                             ({
                                 "Technology": a[1].value,
@@ -146,8 +193,7 @@
             var parent = $($this).parent();
             var parentelement = document.getElementById("" + parent.attr("id"));
             var value = parentelement.childNodes[3].value;
-
-            users.splice(users.indexOf(value), 1);
+            userlist.splice(userlist.indexOf(value), 1);
             $(parent).remove();
 
 

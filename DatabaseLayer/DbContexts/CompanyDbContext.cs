@@ -38,7 +38,7 @@ namespace DatabaseLayer.DbContexts
         public DbSet<TechnologyStack> TechnologyStacks{ get; set; }
         public DbSet<User_TechnologyStack> User_TechnologyStacks{ get; set; }
         public DbSet<Project_TechnologyStack> Project_TechnologyStacks { get; set; }
-
+        public DbSet<Logs> Log{ get; set; }
 
     }
 }

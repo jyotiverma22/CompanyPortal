@@ -11,7 +11,6 @@ using System.Web.Mvc;
 using System.IO;
 using Models;
 using System.Text;
-using CompanyPortal.CustomFilter;
 
 namespace CompanyPortal.Controllers
 {
@@ -30,6 +29,9 @@ namespace CompanyPortal.Controllers
         /// </returns>
         public ActionResult Index()
         {
+
+           // log4net.Config.XmlConfigurator.Configure();
+          //  logger.Error("This is logger Message");
             var token = Session["token"];
             if (token == null)
             {
@@ -96,7 +98,7 @@ namespace CompanyPortal.Controllers
             }
             try
             {
-                throw new Exception("Exception occured");
+          //     throw new Exception("Exception occured");
                 using (HttpClient client = new HttpClient())
                 {
                     UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["detailsUrl"]);
@@ -126,9 +128,8 @@ namespace CompanyPortal.Controllers
                 
                 logger.Info(e.ToString());
              
-                Log.Error("ExceptionOccured",e);
                 logger.Error(e.ToString());
-                /*if (System.IO.File.Exists(path))
+                if (System.IO.File.Exists(path))
                 {
                     //Error logging into the log file 
                     StreamWriter sw = new StreamWriter(path);
@@ -150,7 +151,7 @@ namespace CompanyPortal.Controllers
                         UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["baseUrl"]);
                         var json = JsonConvert.SerializeObject(dbLogging);
                         var content = new StringContent(json, Encoding.UTF8, "application/json");
-                        var result =httpclient.PostAsync(url.Uri + "SaveErrorLoggingDetails",content).Result;
+                        var result =httpclient.PostAsync(url.Uri + "/SaveErrorLoggingDetails",content).Result;
 
                         if(result.IsSuccessStatusCode)
                         {
@@ -167,7 +168,7 @@ namespace CompanyPortal.Controllers
                 else
                 {
 
-                }*/
+                }
 
                 Session["token"] = null;
                 return RedirectToAction("Index");

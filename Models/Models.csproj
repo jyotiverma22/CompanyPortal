@@ -51,6 +51,7 @@
     <Compile Include="EmployeesDetails.cs" />
     <Compile Include="Emp_Reporting.cs" />
     <Compile Include="JQGridParameter.cs" />
+    <Compile Include="Logs.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="Password.cs" />
     <Compile Include="Project.cs" />

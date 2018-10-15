@@ -31,6 +31,11 @@
 .headerbg{
     background-color:#fff;
     transition:1s;
+    top:0;
+    position:fixed;
+    left:0;
+    right:0;
+    z-index:100;
 
 }
 
@@ -59,6 +64,7 @@
 
 .bgmiddle {
     background-color: #fff;
+    margin-top:60px;
 }
 .ulMargin{
     margin-left:40px;
@@ -66,8 +72,6 @@
 .setmargin {
     margin-top: 35px;
 }
-
-
 
 .navbar-light .navbar-nav .nav-link:focus {
     color: #e2b13c;
@@ -174,15 +178,18 @@ background: url("images/bgimage.JPG") no-repeat 0px 0px;
 background-size:cover;
 min-height:250px;
 }
+.carousel-caption {
+    color: #e2b13c
+}
 /* section 1 CSS ends*/
-
-
 /* section About CSS starts*/
-
-.about{
-    padding:20px;
-    min-height:250px;
-    background-color:#fff;
+.about {
+    padding: 20px;
+    min-height: 250px;
+    background-color: #fff;
+    background-image: url("images/aboutbg.jpg");
+    background-repeat:no-repeat;
+    background-size:100% 100%;
 }
 .aboutfirst{
     margin:20px;
@@ -211,6 +218,12 @@ img {
 
 /* banner slde ends*/
 
+/*section contact CSS start*/
+.contact{
+    background-image:url("images/contactbg.jpg");
+    background-size:cover;
+}
+/* section Contact CSS ends*/
 
 /* Login modal starts*/
 
