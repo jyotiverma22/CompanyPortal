@@ -98,8 +98,7 @@ namespace DatabaseLayer.DbContexts
 
         //returns the list of blood group
         public List<BloodGroup> GetBloodGroups()
-        {
-            
+        {      
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
                 return companyDbContext.BloodGroups.ToList();
@@ -146,7 +145,7 @@ namespace DatabaseLayer.DbContexts
             using (CompanyDbContext companyDbContext=new CompanyDbContext())
             {
                 EmployeesDetails employees = new EmployeesDetails();
-                employees =companyDbContext.UserRegistration.Where(x => (x.Username == username || x.Email == username || x.UserId==username)).Select(c => new EmployeesDetails { userId = c.UserId, Username = c.Username, FullName = (c.Firstname + " " + c.Lastname), DOB = c.DOB, Email = c.Email, Phone = c.Phone, Gender = c.Gender, Bloodgroup = c.bloodGroup.BloodGroupName, Department_name = c.department.Dname, Role_name = c.role.RoleName, Rep_Manager = (companyDbContext. UserRegistration.Where(m => m.UserId == (companyDbContext.Emp_Reportings.Where(u => u.Emp_ID == c.UserId).Select(u => u.Rep_Mgr).FirstOrDefault())).Select(m => m.Username).FirstOrDefault()) }).FirstOrDefault();
+                 employees =companyDbContext.UserRegistration.Where(x => (x.Username == username || x.Email == username || x.UserId==username)).Select(c => new EmployeesDetails { userId = c.UserId, Username = c.Username, FullName = (c.Firstname + " " + c.Lastname), DOB = c.DOB, Email = c.Email, Phone = c.Phone, Gender = c.Gender, Bloodgroup = c.bloodGroup.BloodGroupName, Department_name = c.department.Dname, Role_name = c.role.RoleName, Rep_Manager = (companyDbContext. UserRegistration.Where(m => m.UserId == (companyDbContext.Emp_Reportings.Where(u => u.Emp_ID == c.UserId).Select(u => u.Rep_Mgr).FirstOrDefault())).Select(m => m.Username).FirstOrDefault()) }).FirstOrDefault();
                 //   Department d = Departments.Where(x => x.DId == reg.DId).FirstOrDefault();
                 //   employees.userId = reg.UserId;
                 return employees;
@@ -156,16 +155,32 @@ namespace DatabaseLayer.DbContexts
         // Get project details to set in jq grid
         public IEnumerable<Project> GetProjectDetails(string username,string status)
         {
+            IQueryable<int> query=null;
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
                 List<Project> projs = new List<Project>();
                 if (username == null)
                 {
+                    
                     return companyDbContext.Projects.ToList();
                 }
                 else
                 {
-                    IQueryable<int> query =companyDbContext.Project_Teams.Where(t => t.Team_Id == (companyDbContext. UserRegistration.Where(r => (r.Username == username || r.Email == username)).Select(r => r.UserId).FirstOrDefault())).Select(p => p.PId);
+                    var role = companyDbContext.UserRegistration.Where(u => (u.Username == username || u.Email == username)).Select(r => r.role.RoleName).FirstOrDefault();
+                    if(role=="Admin")
+                    {
+                        query = companyDbContext.Project_Teams.Select(p => p.PId);
+
+                    }
+                    else if(role=="Proj_Manager")
+                    {
+                        query = companyDbContext.Project_Teams.Where(t => t.Mgr_Id== (companyDbContext.UserRegistration.Where(r => (r.Username == username || r.Email == username)).Select(r => r.UserId).FirstOrDefault())).Select(p => p.PId);
+
+                    }
+                    else if(role=="Member")
+                    {
+                        query = companyDbContext.Project_Teams.Where(t => t.Team_Id == (companyDbContext.UserRegistration.Where(r => (r.Username == username || r.Email == username)).Select(r => r.UserId).FirstOrDefault())).Select(p => p.PId);
+                    }
                     foreach (int pid in query)
                     {
                         //&& c.Status=="status"
@@ -230,8 +245,9 @@ namespace DatabaseLayer.DbContexts
         }
 
         public int AddProject(Project project)
-        {
+        { 
             int id;
+            List<Project_Team> projectTeams = new List<Project_Team>(); 
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
                 Project proj = companyDbContext.Projects.Where(n => n.ProjectName == project.ProjectName).FirstOrDefault();
@@ -255,7 +271,15 @@ namespace DatabaseLayer.DbContexts
                         {
                             key.projectId = id;
                             companyDbContext.Project_TechnologyStacks.Add(key);
+
+                            projectTeams.Add(new Project_Team
+                            {
+                                PId = id,
+                                Mgr_Id = project.Mgr_Id,
+                                Team_Id = key.UserId
+                            });
                         }
+                        companyDbContext.Project_Teams.AddRange(projectTeams);
                     }
                     return project.PID;
 
