@@ -26,17 +26,20 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ulMargin">
                         <li class="nav-item ">
-                            <a class="nav-link " href="@Url.Action("Index", "home")"><b>Home</b> <span class="sr-only">(current)</span></a>
+                            <a class="nav-link home" href="@Url.Action("Index", "home")"><b>Home</b> <span class="sr-only">(current)</span></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about"><b>Projects</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about"><b>About Us</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="#contact"><b>Contact</b></a>
-                        </li>
+                        @if (ViewBag.Page == "home")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="#about"><b>Projects</b></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#about"><b>About Us</b></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="#contact"><b>Contact</b></a>
+                            </li>
+                        }
                     </ul>
 
 
@@ -49,7 +52,10 @@
 
                         else
                         {
-                            <button type="button" class="btn btn-info btnpadding" id="btndash" onclick="location.href='@Url.Action("Index", "LoggedIn")'">DASHBOARD</button>
+                            if (ViewBag.Page == "home")
+                            {
+                                <button type="button" class="btn btn-info btnpadding" id="btndash" onclick="location.href='@Url.Action("Index", "LoggedIn")'">DASHBOARD</button>
+                            }
                             <button type="button" class=" btn btn-info btnpadding" id="btnlogout" onclick="location.href='@Url.Action("LogOut", "Home")'">LOGOUT</button>
 
                         }
@@ -64,7 +70,6 @@
 
 
     <!--Header section ends here -->
-
     <!--Body section of the page-->
 
     <div class="bgmiddle">
@@ -82,7 +87,10 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/js")
     @Styles.Render("~/Content/css")
+
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryui")
+
     @Styles.Render("~/Content/cssjqryUi")
     @Scripts.Render("~/bundles/site")
 
@@ -92,5 +100,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+    <script type="application/json">
+
+
+        $(document).ready(function(){
+
+        });
+    </script>
 </body>
 </html>

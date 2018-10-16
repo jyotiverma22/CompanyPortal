@@ -21,8 +21,8 @@
 }
 
 
-.h1{
-    font-size:1.6em;
+.h1 {
+    font-size: 1.6em;
 }
 
 .displayspan {
@@ -62,9 +62,12 @@
     padding-top:30px;
 }
 
+.setheight{
+    min-height:530px;
+}
 .bgmiddle {
     background-color: #fff;
-    margin-top:60px;
+    margin-top: 60px;
 }
 .ulMargin{
     margin-left:40px;
@@ -73,16 +76,22 @@
     margin-top: 35px;
 }
 
-.navbar-light .navbar-nav .nav-link:focus {
+.navbar-light .navbar-nav .nav-link:focus{
     color: #e2b13c;
+
+}
+.abc{
+    color: #e2b13c !important;
+
+}
+.navbar-light .navbar-nav .nav-link:after {
+    color: attr(color);
 }
 
-
-.btnpadding{
-    padding:7px 20px;
-    margin-right:10px;
-    background-color:#000;
-
+.btnpadding {
+    padding: 7px 20px;
+    margin-right: 10px;
+    background-color: #000;
 }
 
 .btn-info:not(:disabled):not(.disabled):focus {
@@ -187,12 +196,11 @@ min-height:250px;
     padding: 20px;
     min-height: 250px;
     background-color: #fff;
-    background-image: url("images/aboutbg.jpg");
-    background-repeat:no-repeat;
-    background-size:100% 100%;
+   
 }
 .aboutfirst{
     margin:20px;
+    padding-left:110px;
 }
 
 pre {
@@ -203,10 +211,11 @@ pre {
     top: 0;
     right: 0;
     margin: 20px;
-    margin-left: 120px;
+    margin-left: 50px;
     vertical-align: baseline;
-    min-height:230px;
+    max-height:250px;
 }
+
 
 img {
     vertical-align: super;
@@ -220,8 +229,8 @@ img {
 
 /*section contact CSS start*/
 .contact{
-    background-image:url("images/contactbg.jpg");
-    background-size:cover;
+    background-image:url("images/bg.jpg");
+    background-size:100% 100%;
 }
 /* section Contact CSS ends*/
 
@@ -320,9 +329,12 @@ input {
     text-align: center;
 }
 
+.empdata{
+    padding-top:20px;
+    border:2px solid #000;
+}
 
 /*employee details css ends*/
-
 /* Responsive CSS */
 @media (min-width:468px) and (max-width:767px) {
     .txtBlock {
@@ -387,3 +399,85 @@ input {
 }
 
 /*Add Team Dialog box css ends */
+
+
+/*Add project css starts */
+
+.verticlealign{
+    vertical-align:top;
+}
+
+.formdesign{
+   border: solid #000 1px;
+    padding-top:50px;
+    min-height:400px;
+    margin-top:7px;
+    min-height:520px;
+}
+
+.nextbtn {
+    border-radius: 0;
+    width: 95%;
+    margin-left: 6px;
+    background-color: #e2b13c;
+}
+
+    .nextbtn:hover {
+        background-color: #000;
+        color:#fff;
+
+    }
+
+    .nextbtn:focus{
+        background-color: #000;
+        color: #fff;
+    }
+
+.dropdowndesign {
+    width: inherit;
+    height: 35px;
+}
+.inputdesign{
+    width:94%;
+    border-radius:0;
+    border:solid,0.5px,#000;
+}
+.textareadesign {
+    border-radius: 0;
+    border: solid,0.5px,#000;
+}
+/*Add Project css ends */
+
+/*Add Team Dialog Confirm css starts */
+.ui-dialog{
+    padding:0 !important;
+}
+.ui-dialog-titlebar {
+    background-color: #e2b13c !important;
+    border-radius: 0 !important;
+}
+
+.ui-dialog-buttonset {
+    width: 100% !important;
+
+}
+    .ui-dialog-buttonset .ui-button:first-child {
+        margin-left: 30px !important;
+       
+    }
+
+.ui-dialog-buttonset .ui-button:nth-child(2) {
+    right: 0 !important;
+    margin-left: 100px !important;
+}
+    .ui-dialog-buttonset .ui-button {
+        background-color: #e2b13c !important;
+    }
+        .ui-dialog-buttonset .ui-button:hover, .ui-dialog-buttonset .ui-button:focus {
+            color: #fff !important;
+            background-color: #000 !important;
+        }
+
+    
+        
+/*Add Team Dialog Confirm css ends */

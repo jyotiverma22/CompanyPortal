@@ -428,12 +428,11 @@
     <Content Include="lib\images\4.jpg" />
     <Content Include="lib\images\5.jpg" />
     <Content Include="lib\images\7.jpg" />
-    <Content Include="lib\images\about.jpg" />
-    <Content Include="lib\images\aboutbg.jpg" />
+    <Content Include="lib\images\about2.jpg" />
     <Content Include="lib\images\add.png" />
+    <Content Include="lib\images\bg.jpg" />
     <Content Include="lib\images\bgimage.JPG" />
-    <Content Include="lib\images\contactbg.jpg" />
-    <Content Include="lib\images\images.jpg" />
+    <Content Include="lib\images\contact3.png" />
     <Content Include="lib\images\logo.png" />
     <Content Include="lib\js\mygrid.js" />
     <Content Include="lib\js\responsive.js" />

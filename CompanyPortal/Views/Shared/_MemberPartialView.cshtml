@@ -1,4 +1,4 @@
-﻿<div class="col-md-3 sidenavbar ">
+﻿<div class="col-md-3 sidenavbar setheight ">
     <div class="col-12 side-nav">
         <div class="nav-item navitem " id="personaldetails"> Personal Details</div>
         <div class="nav-item navitem" id="projectdetails">
@@ -87,6 +87,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
         debugger
+
+
+        var bootstrapButton = $.fn.button.noConflict(); // return $.fn.button to previously assigned value
+        $.fn.bootstrapBtn = bootstrapButton            // give $().bootstrapBtn the Bootstrap functionality
+
+
         var role_;
         role_ = "@Session["role"].ToString()";
 

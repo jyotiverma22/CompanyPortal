@@ -277,6 +277,7 @@ namespace DatabaseLayer.DbContexts
                                 PId = id,
                                 Mgr_Id = project.Mgr_Id,
                                 Team_Id = key.UserId
+                                
                             });
                         }
                         companyDbContext.Project_Teams.AddRange(projectTeams);

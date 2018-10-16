@@ -96,6 +96,11 @@
 <section class="about" id="about">
     <div class="container">
         <div class="row">
+            <div class="col-md-5 d-inline-block">
+                <div class="img">
+                    <img src="/lib/images/about2.jpg" class="img-responsive">
+                </div>
+            </div>
             <div class="col-md-5 d-inline-block aboutfirst">
                 <h2><b>About Us</b></h2>
                 <pre>
@@ -110,11 +115,8 @@ sed rutrum ex tempor. Nam vel feugiat odio.
 Pellentesque efficitur dapibus augue.
 </pre>
             </div>
-            <div class="col-md-5 d-inline-block">
-                <div class="img">
-                    <img src="/lib/images/about.jpg">
-                </div>
-            </div>
+
+
         </div>
 
     </div>
@@ -146,7 +148,7 @@ Pellentesque efficitur dapibus augue.
             </div>
             <div class="col-md-5 d-inline-block">
                 <div class="img">
-                    <img src="/lib/images/about.jpg">
+                    <img src="~/lib/images/contact3.png">
                 </div>
             </div>
         </div>
@@ -174,7 +176,13 @@ Pellentesque efficitur dapibus augue.
 
         $(document).ready(function () {
 
+            $(".home").addClass("abc");
 
+            $(".nav-link").focusin(function () {
+                debugger
+                $(".nav-link").removeClass("abc");
+                $(this).addClass("abc");
+            });
            
 
             $('#btnlogin').click(function () {

@@ -21,6 +21,7 @@ namespace CompanyPortal.Controllers
         public ActionResult Index()
         {            
                 ViewBag.Message = null;
+                ViewBag.Page = "home";
                 return View();            
         }
 

@@ -4,40 +4,39 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Add Project Details</h4>
-        <hr />
+    <div class="form-horizontal formdesign" >
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Project_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Project_Name, new { htmlAttributes = new { @class = "form-control" } })
+            <label class="control-label col-md-3 offset-md-1 verticlealign" for="Project_Name">Project Name</label>
+            <div class="col-md-5" style="display:inline-block">
+                @Html.EditorFor(model => model.Project_Name, new { htmlAttributes = new { @class = "form-control inputdesign" } })
                 @Html.ValidationMessageFor(model => model.Project_Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Mgr_Id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Mgr_Id, new SelectList(""), "Select project manager")
+            <label class="control-label col-md-3 offset-md-1 verticlealign" for="Mgr_Id">Select Manager</label>
+            <div class="col-md-5" style="display:inline-block">
+                @Html.DropDownListFor(model => model.Mgr_Id, new SelectList(""), "Select project manager",  new { @class = "dropdowndesign"  })
                 @Html.ValidationMessageFor(model => model.Mgr_Id, "", new { @class = "text-danger" })
             </div>
         </div>
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description, 4, 20, htmlAttributes: new { @class = "form-control", @placeholder = "Enter project description..." })
+            <label class="control-label col-md-3 offset-md-1 verticlealign" for="Description">Description</label>
+
+            <div class="col-md-5" style="display:inline-block">
+                @Html.TextAreaFor(model => model.Description, 4, 20, htmlAttributes: new { @class = "form-control textareadesign", @placeholder = "Enter project description..." })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Next" class="btn btn-default" id="btn_project_Submit" />
+            <div class="offset-md-4 col-md-5">
+                <input type="button" value="Next" class="btn btn-default nextbtn" id="btn_project_Submit" />
             </div>
         </div>
     </div>
@@ -48,9 +47,7 @@
         $(document).ready(function () {
             debugger
 
-           
 
-           
 
         });
 

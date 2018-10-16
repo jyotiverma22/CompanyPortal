@@ -37,6 +37,7 @@ namespace CompanyPortal.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            ViewBag.Page = "LoggedIn";
             return View();
         }
 

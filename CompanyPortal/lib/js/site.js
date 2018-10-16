@@ -23,15 +23,18 @@ function capitalizeFirstLetter(name) {
 }
 
 function InitializeAddTeamConfirmDialog(formdata) {
-    var dialog = $('<div id="msg_dialog"> </div>').dialog();
+    var dialog = $('<div id="msg_dialog" title="Add Team Members"> Do you want to add Team Members? </div>').dialog();
     dialog.dialog({
         modal: true,
         autoOpen: true,
-        title: 'Add Team?',
+        resizable: false,
         open: function () {
-            var markup = 'Do you want to add Add Project Team Now?';
-            dialog.appnedTo('body').html(markup);
-        },
+            debugger
+        /*    $(this).closest(".ui-dialog")
+                .find(".ui-dialog-titlebar-close")
+                .removeClass("ui-dialog-titlebar-close")
+                .html("<span class='ui-button-icon-primary ui-icon ui-icon-closethick'></span>");
+       */ },
         buttons: [
             {
                 text: 'Later',
