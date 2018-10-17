@@ -14,7 +14,7 @@
 
             @Html.LabelFor(model => model.ProjectTechStackList[0].UserId, htmlAttributes: new { @class = "control-label col-md-5", style = "text-align:center" })
 
-            <button type="button" id="btnaddrow" class="ui-icon-circle-plus" value="addrow"></button>
+            <button type="button" id="btnaddrow"  value="addrow" class="fa fa-plus-circle"></button>
 
 
             <div id="row" class="col-md-12">
@@ -25,7 +25,7 @@
 
                     @Html.DropDownListFor(model => model.ProjectTechStackList[0].UserId, new SelectList(""), "Select Team Member", new { @class = "dialogdiv margindiv selectUser" })
  
-                    <button type="button" value="addrow" onclick="DeleteRow(this)"></button>
+                    <button type="button" value="addrow" onclick="DeleteRow(this)" class="fa fa-minus-circle"></button>
 
                     @Html.ValidationMessageFor(model => model.ProjectTechStackList[0].Technology, "", new { @class = "text-danger" })
                     @Html.ValidationMessageFor(model => model.ProjectTechStackList[0].UserId, "", new { @class = "text-danger" })
@@ -37,8 +37,8 @@
             </div>
 
 
-            <div class="col-md-offset-4 col-md-5 btnaddDiv" >
-                <input type="button" value="Add Team" class="btn btn-default btnSaveteam" id="submit" />
+            <div class=" col-md-12 btnaddDiv" >
+                <input type="button" value="Submit" class="btn btn-default btnSaveteam" id="submit" />
             </div>
         </div>
     </div>
@@ -136,7 +136,7 @@
                        ' </select > ' +
                      ' <select class="dialogdiv margindiv selectUser"><option value="">Select Team Member</option>'+
                      '  </select > '+
-                ' <button type="button" value="addrow" onclick="DeleteRow(this)"></button>' +
+                ' <button type="button" value="addrow" onclick="DeleteRow(this)" class="fa fa-minus-circle"></button>' +
                    ' <span class="field-validation-valid text-danger" data-valmsg-for="ProjectTechStackList[0].Technology" data-valmsg-replace="true"></span>'+
                    '<span class="field-validation-valid text-danger" data-valmsg-for="ProjectTechStackList[0].UserId" data-valmsg-replace="true"></span>'+
                  ' </div > ';

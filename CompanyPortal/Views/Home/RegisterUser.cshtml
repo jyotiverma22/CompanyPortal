@@ -93,7 +93,7 @@
             <label class="control-label col-md-5" for="Bloodgroup"><b>Bloodgroup</b></label>
 
             <div class="col-md-12">
-                @Html.DropDownListFor(model => model.Bloodgroup, new SelectList(""), "Select BloodGroup")
+                @Html.DropDownListFor(model => model.Bloodgroup, new SelectList(""), "Select BloodGroup", new { @class = "selectDesign" })
                 @Html.ValidationMessageFor(model => model.Bloodgroup, "", new { @class = "text-danger", @id = "valid-blood" })
             </div>
         </div>

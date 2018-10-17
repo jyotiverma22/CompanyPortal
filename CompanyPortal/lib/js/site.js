@@ -23,7 +23,7 @@ function capitalizeFirstLetter(name) {
 }
 
 function InitializeAddTeamConfirmDialog(formdata) {
-    var dialog = $('<div id="msg_dialog" title="Add Team Members"> Do you want to add Team Members? </div>').dialog();
+    var dialog = $('<div id="msg_dialog" title="Add Team Members"> Do you want to add Team Members? </div>');
     dialog.dialog({
         modal: true,
         autoOpen: true,
@@ -42,6 +42,7 @@ function InitializeAddTeamConfirmDialog(formdata) {
                     debugger
                     //  $('#res').empty().append('<h1>Open<h1>');
                     $('#msg_dialog').remove();
+                //    $('#msg_dialog').dialog('close');
                     SaveDataProjectIntoDatabase(formdata);
                 }
             },
@@ -50,7 +51,7 @@ function InitializeAddTeamConfirmDialog(formdata) {
                 click: function () {
                     debugger
                     // 4 $('#res').empty().append('<h1>Close<h1>');
-                    $('#msg_dialog').remove();
+                    $('#msg_dialog').dialog('close');
                     openAddTeamDialog(formdata);
                     res = false;
                 }
@@ -60,7 +61,7 @@ function InitializeAddTeamConfirmDialog(formdata) {
 
 
     dialog.dialog("open");
-
+    return false;
 }
 
 

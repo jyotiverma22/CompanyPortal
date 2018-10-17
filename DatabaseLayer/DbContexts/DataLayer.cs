@@ -169,19 +169,19 @@ namespace DatabaseLayer.DbContexts
                     var role = companyDbContext.UserRegistration.Where(u => (u.Username == username || u.Email == username)).Select(r => r.role.RoleName).FirstOrDefault();
                     if(role=="Admin")
                     {
-                        query = companyDbContext.Project_Teams.Select(p => p.PId);
+                        query = companyDbContext.Projects.Select(p => p.PID);
 
                     }
                     else if(role=="Proj_Manager")
                     {
-                        query = companyDbContext.Project_Teams.Where(t => t.Mgr_Id== (companyDbContext.UserRegistration.Where(r => (r.Username == username || r.Email == username)).Select(r => r.UserId).FirstOrDefault())).Select(p => p.PId);
+                        query = companyDbContext.Projects.Where(t => t.Mgr_Id== (companyDbContext.UserRegistration.Where(r => (r.Username == username || r.Email == username)).Select(r => r.UserId).FirstOrDefault())).Select(p => p.PID);
 
                     }
                     else if(role=="Member")
                     {
                         query = companyDbContext.Project_Teams.Where(t => t.Team_Id == (companyDbContext.UserRegistration.Where(r => (r.Username == username || r.Email == username)).Select(r => r.UserId).FirstOrDefault())).Select(p => p.PId);
                     }
-                    foreach (int pid in query)
+                    foreach (var pid in query)
                     {
                         //&& c.Status=="status"
                         projs.AddRange(companyDbContext.Projects.Where(c => (c.PID == pid && c.Status==status)));

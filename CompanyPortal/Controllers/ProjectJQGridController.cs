@@ -32,8 +32,8 @@ namespace CompanyPortal.Controllers
        {
             jQGridParameter.SortBy = (jQGridParameter.SortBy==null)? "project_name" : jQGridParameter.SortBy;
             jQGridParameter.OrderBy = (jQGridParameter.OrderBy == null) ? "asc" : jQGridParameter.OrderBy;
-            jQGridParameter.Rows = 5;
-            jQGridParameter.Page = 1;
+            jQGridParameter.Rows = (jQGridParameter.Rows == 0) ? 20 : jQGridParameter.Rows;
+            jQGridParameter.Page = (jQGridParameter.Page==0)?1:jQGridParameter.Page;
             var token = Session["token"];
             var username = Session["username"];
             jQGridParameter.OrderBy = (jQGridParameter.OrderBy == null) ? "" : jQGridParameter.OrderBy;

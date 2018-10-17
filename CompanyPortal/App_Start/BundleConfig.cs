@@ -28,13 +28,14 @@ namespace CompanyPortal
                 "~/lib/js/responsive.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                        
+                       "~/Content/bootstrap.css",
                       "~/Content/Site.css",
                       "~/lib/site.css",
                       "~/lib/responsive.css",
-
                       "~/Content/themes/base/jquery-ui.css",
-                      "~/Content/jquery.jqGrid/ui.jqgrid.css"));
+                      "~/Content/jquery.jqGrid/ui.jqgrid.css"
+                      ));
 
 
             //js  
@@ -46,7 +47,8 @@ namespace CompanyPortal
             bundles.Add(new ScriptBundle("~/bundles/site").Include("~/lib/js/site.js"));
             //css  
             bundles.Add(new StyleBundle("~/Content/cssjqryUi").Include(
-                   "~/Content/jquery-ui.css"));
+                   "~/Content/jquery-ui.css",
+                   "~/Content/font-awesome.css"));
 
 
             

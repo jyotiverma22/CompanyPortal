@@ -23,16 +23,16 @@ function jqgridInitialize(status) {
                 { key: false, name: 'Actions', index: 'Actions', editable: false, formatter: displayButtons, search:false }
 
             ],
-            pager: jQuery('#pager') ,           
-            searchfield: "Project_Name",          
+            pager: jQuery('#pager') ,              
             rowList: [5, 10, 15, 20],
+            rowNum:20,
             height: "100%",
             viewrecords: true,
             caption: "Project Details",
             emptyrecords: "No projects to show",            
             loadOnce: true,
             ignoreCase:true,
-            multiselect:true,
+           
 
             onSortCol: function (name, index,order) {
                 debugger
@@ -59,12 +59,19 @@ function jqgridInitialize(status) {
             subGridRowExpanded: showChildGrid,
             subGridOptions: {
                 expandOnLoad: false
+            },
+
+            loadComplete: function () {
+                $("tr.jqgrow:odd").addClass('myAltRowClass');
+            
             }
+
+            
 
 
         });
 
-    $("#grid").jqGrid('filterToolbar', {
+  /*  $("#grid").jqGrid('filterToolbar', {
 
         searchOperators: true,
         stringResult: true,
@@ -73,12 +80,8 @@ function jqgridInitialize(status) {
         groupOp: "AND",
         beforeSearch: function () {
             debugger
-
-
             var rules = [], i, cm, postData = $("#grid").jqGrid("getGridParam", "postData"),
-                colModel = $("#grid").jqGrid("getGridParam", "colModel");
-                
-        
+                colModel = $("#grid").jqGrid("getGridParam", "colModel");        
             for (i = 0; i < colModel.length; i++) {
                 cm = colModel[i];
                 if (cm.search !== false && (cm.stype === undefined || cm.stype === "text")) {
@@ -104,13 +107,13 @@ function jqgridInitialize(status) {
         afterSearch: function () {
             //to empty the search boxes after search
 
-            /*var colModel = colModel = $("#grid").jqGrid("getGridParam", "colModel");
+            var colModel = colModel = $("#grid").jqGrid("getGridParam", "colModel");
             for (var i = 0; i < colModel.length; i++) {
                 $("input[id=gs_" + colModel[i].name + "]").val("");
-            }*/
+            }
         }
 
-    });
+    }); */
 }
 
 
@@ -162,8 +165,8 @@ function showChildGrid(parentRowID, parentRowKey) {
 
 //custom formator function to display the Links
 function displayButtons(cellvalue, options, rowObject) {
-    var edit = "<a href='#' onclick='EditProjectDetail(this)'>Edit</a> | ",
-        AddTeam = "<a href='#' onclick='AddTeamMembers(this)'>Add Team</a> | ",
+    var edit = "<a href='#' onclick='EditProjectDetail(this)' class='fa fa-pencil-square-o'></a> | ",
+        AddTeam = "<a href='#' onclick='AddTeamMembers(this)' class='fa fa-user-plus'></a> | ",
         changeStatus = "<a href='#' onclick='ProjectChangeStatus(this)'>change Status</a>";
     return edit + AddTeam + changeStatus;
 }

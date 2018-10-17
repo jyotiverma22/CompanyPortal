@@ -286,11 +286,14 @@ input {
    
 }
 
+.selectDesign{
+    max-width:500px;
+    width:100%;
+    height:35px;
+
+}
 /* Login modal ends*/
-
-
 /* Side nav starts*/
-
 .sidenavbar {
     background-color: #000;
 }
@@ -369,22 +372,25 @@ input {
 
 .margindiv{
     margin-left:50px;
-    margin-right:25px;
+    margin-right:28px;
 }
 .btnaddDiv{
-    margin-left:100px;
     margin-top:20px;
+    text-align:center;
         
 }
 
 .btnSaveteam{
-    width:200px;
-    border-radius:20px;
-    background-color:#000;
-    color:#fff;
+  
+    background-color:#e2b13c;
+    color:#000;
 
 }
 
+    .btnSaveteam:hover {
+        background-color: #000;
+        color: #fff;
+    }
 
 .btnSaveteam :hover{
     background-color: #e2b13c;
@@ -398,6 +404,9 @@ input {
     background-color: #e2b13c;
 }
 
+.ui-icon-circle-plus {
+    background-position: 0 -192px !important;
+}
 /*Add Team Dialog box css ends */
 
 
@@ -446,6 +455,10 @@ input {
     border-radius: 0;
     border: solid,0.5px,#000;
 }
+
+.fa{
+    font-family:'FontAwesome' !important;
+}
 /*Add Project css ends */
 
 /*Add Team Dialog Confirm css starts */
@@ -473,7 +486,7 @@ input {
     .ui-dialog-buttonset .ui-button {
         background-color: #e2b13c !important;
     }
-        .ui-dialog-buttonset .ui-button:hover, .ui-dialog-buttonset .ui-button:focus {
+        .ui-dialog-buttonset .ui-button:hover {
             color: #fff !important;
             background-color: #000 !important;
         }
@@ -481,3 +494,17 @@ input {
     
         
 /*Add Team Dialog Confirm css ends */
+
+
+/*Jqgrid css starts*/
+.myAltRowClass {
+    background-color: #F8E6AB !important;
+
+}
+
+.ui-jqgrid-titlebar , .ui-state-default {
+    background-color: #e2b13c !important;
+}
+
+
+/*JQgrid css ends */
