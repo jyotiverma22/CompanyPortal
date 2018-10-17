@@ -429,6 +429,7 @@
     <Content Include="lib\images\5.jpg" />
     <Content Include="lib\images\7.jpg" />
     <Content Include="lib\images\about2.jpg" />
+    <Content Include="lib\images\aboutbg.jpg" />
     <Content Include="lib\images\add.png" />
     <Content Include="lib\images\bg.jpg" />
     <Content Include="lib\images\bgimage.JPG" />

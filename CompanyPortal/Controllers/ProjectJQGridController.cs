@@ -165,6 +165,8 @@ namespace CompanyPortal.Controllers
                 records = totalRecords,
                 rows = list
             };
+
+
             return Json(jsondata, JsonRequestBehavior.AllowGet);
 
         }

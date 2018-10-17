@@ -193,14 +193,21 @@ min-height:250px;
 /* section 1 CSS ends*/
 /* section About CSS starts*/
 .about {
+    margin-top:20px;
+    margin-bottom:20px;
     padding: 20px;
     min-height: 250px;
     background-color: #fff;
+    background-image:url("images/aboutbg.jpg");
+    background-size:contain;
    
 }
+
 .aboutfirst{
+    color:#e2b13c;
     margin:20px;
     padding-left:110px;
+
 }
 
 pre {
