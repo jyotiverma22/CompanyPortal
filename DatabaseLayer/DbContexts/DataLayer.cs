@@ -256,11 +256,11 @@ namespace DatabaseLayer.DbContexts
                     if (proj == null)
                      {
                     project.CreatedOn = DateTime.Now;
-                    project.CreatedBy = "CMP-1001";
+                    project.CreatedBy = project.UpdatedBy;
 
                      }
                     project.UpdatedOn = DateTime.Now;
-                    project.UpdatedBy = "CMP-1001";
+                    project.UpdatedBy = project.UpdatedBy;
                     
                     companyDbContext.Projects.Add(project);
                     companyDbContext.SaveChanges();

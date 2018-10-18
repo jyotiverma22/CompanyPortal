@@ -227,11 +227,18 @@
 
     function SaveDataProjectIntoDatabase(model,formdata) {
         debugger
-        model.ProjectTechStackList = formdata;
-
-        var data = {
-            projectViewModel: model,
+        if (formdata == null) {
+            data = model;
         }
+        else {
+            model.ProjectTechStackList = formdata;
+            var data = {
+                projectViewModel: model,
+            }
+
+}
+
+       
       /*  $.post("/LoggedIn/AddProject", data, function (result) {
             if (result !== 0)
                 alert("Data Saved" + result);
@@ -247,14 +254,49 @@
             ContentType: 'application/json;utf-8',
             success: function (result) {
                 if (result !== 0)
-                    alert("Data Saved" + result);
+                    //alert("Data Saved" + result);
+                    showProjectSaveResultDialogBox(result);
                 else
                     alert("Error in saving Project Details!.. Try Again After some time");
             }
         });
     }
 
+    function showProjectSaveResultDialogBox(result) {
+        if (result) {
+            var resultDialog = $('<div id="result_dialog" title="Project Added">Project Succesfully Created. Do you want to add more project? </div>');
+        }
+        else {
+            var resultDialog = $('<div id="result_dialog" title="Add Team Members"> An error occurred while creating the project. Try Again </div>');
+        }
 
+        resultDialog.dialog({
+        modal: true,
+        autoOpen: true,
+        resizable: false,
+      
+        buttons: [
+            {
+                text: 'Yes',
+                click: function () {
+                    debugger
+                    $('#result_dialog').remove();
+                    $("#Project_Name").val("");
+                    $("#Mgr_Id").val("");
+                    $("#Description").val("");
+                }
+            },
+            {
+                text: 'No',
+                click: function () {
+                    debugger
+                    $('#result_dialog').dialog('close');
+                    window.location.href = "/LoggedIn";
+                }
+            }
+        ]
+    });
+    }
     
 
 </script>

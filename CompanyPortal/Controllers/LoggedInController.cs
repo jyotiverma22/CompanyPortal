@@ -203,20 +203,20 @@ namespace CompanyPortal.Controllers
 
 
         [HttpPost]
-        public ActionResult AddProject(ProjectViewModel projectViewModel,List<AddProjectTechStackViewModel> teamlist)
-
+        public ActionResult AddProject(ProjectViewModel projectViewModel)
         {
             if (ModelState.IsValid)
             {
                 using (HttpClient httpclient = new HttpClient())
                 {
+                    projectViewModel.UpdatedBy = Session["id"].ToString();                                                                                                                                                                                                          
                     UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["detailsUrl"]);
                     var json = JsonConvert.SerializeObject(projectViewModel);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
                     var result = httpclient.PostAsync(url.Uri + "/AddProjectDetails", content).Result;
                     if (result.IsSuccessStatusCode)
                     {
-                        return Json(Convert.ToInt32(result.Content.ReadAsStringAsync().Result));
+                        return Json(true);
                       //  return Json(new { data = projectViewModel }, JsonRequestBehavior.AllowGet); ;
                     }
                     else
@@ -226,7 +226,7 @@ namespace CompanyPortal.Controllers
 
                 }
             }
-            return Json(false);
+                return Json(false);
            // return PartialView("_AddProjectPartialView", projectViewModel);
         }
 

@@ -17,7 +17,7 @@ namespace CompanyPortal.ViewModels
         public string Status{ get; set; }
         [Required]
         public string Description{ get; set; }
-
+        public string UpdatedBy { get; set; }
         public List<AddProjectTechStackViewModel> ProjectTechStackList { get; set; }
 
     }

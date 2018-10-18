@@ -189,6 +189,7 @@ namespace CompanyPortal.Controllers
             Session["role"] = null;
             Session["firstname"] = null;
             Session["dept"] = null;
+            Session["id"] = null;
             return RedirectToAction("Index", "Home");
         }
     }

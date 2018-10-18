@@ -186,6 +186,8 @@
 background: url("images/bgimage.JPG") no-repeat 0px 0px;
 background-size:cover;
 min-height:250px;
+margin-top:20px;
+margin-bottom:20px;
 }
 .carousel-caption {
     color: #e2b13c
@@ -214,13 +216,20 @@ pre {
     font-family: 'Source Sans Pro',sans-serif;
 }
 
+.predesign {
+    color: antiquewhite;
+    font-size:16px;
+
+}
+
 .img {
     top: 0;
     right: 0;
     margin: 20px;
     margin-left: 50px;
     vertical-align: baseline;
-    max-height:250px;
+    max-height: 250px;
+    padding-top:20px;
 }
 
 
