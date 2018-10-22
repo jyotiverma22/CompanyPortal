@@ -13,8 +13,9 @@ namespace Models
         public string OrderBy{ get; set; }
         public int Page{ get; set; }
         public int Rows{ get; set; }
-        public bool _search { get; set; }
-        public Filter filters { get; set; }
+        public bool Search { get; set; }
+        public string SearchValue { get; set; }
+     //   public Filter filters { get; set; }
     }
 
 

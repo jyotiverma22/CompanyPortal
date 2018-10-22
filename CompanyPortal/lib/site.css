@@ -522,5 +522,18 @@ input {
     background-color: #e2b13c !important;
 }
 
-
+#jqGridButtonDiv {
+    float: right;
+    padding-right: 50px;
+    position: relative;
+    top: -1px;
+    padding-top:5px;
+}
+#jqSubGridButtonDiv {
+    float: right;
+    padding-right: 20px;
+    position: relative;
+    top: -1px;
+    padding-top: 5px;
+}
 /*JQgrid css ends */

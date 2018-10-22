@@ -63,9 +63,10 @@ namespace CompanyPortal.Controllers
 
 
             //searching from the list
-            if (jQGridParameter._search)
+            if (jQGridParameter.Search)
             {
-                /* switch (jQGridParameter.SearchField)
+                list = list.Where(t => (t.Project_Name.Contains(jQGridParameter.SearchValue))||(t.Mgr_Id.Contains(jQGridParameter.SearchValue))).ToList();
+            /* switch (jQGridParameter.SearchField)
                  {
                      case "Project_Name":
                          list = list.Where(t => t.Project_Name.Contains(jQGridParameter.SearchString)).ToList();
@@ -75,43 +76,43 @@ namespace CompanyPortal.Controllers
                          break;
                  }*/
 
-                if (jQGridParameter.filters.groupOp == "AND")
-                {
-                    foreach(var rule in jQGridParameter.filters.rules)
-                    {
+                /*   if (jQGridParameter.filters.groupOp == "AND")
+                   {
+                       foreach(var rule in jQGridParameter.filters.rules)
+                       {
 
-                        switch(rule.field)
-                        {
-                            case "Project_Name":
-                                list = list.Where(t => t.Project_Name.Contains(rule.data)).ToList();
-                                break;
-                            case "Mgr_Id":
-                                list = list.Where(t => t.Mgr_Id.Contains(rule.data)).ToList();
-                                break;
-                        }
-                    }
-                }
-                else if(jQGridParameter.filters.groupOp=="OR")
-                {
+                           switch(rule.field)
+                           {
+                               case "Project_Name":
+                                   list = list.Where(t => t.Project_Name.Contains(rule.data)).ToList();
+                                   break;
+                               case "Mgr_Id":
+                                   list = list.Where(t => t.Mgr_Id.Contains(rule.data)).ToList();
+                                   break;
+                           }
+                       }
+                   }
+                   else if(jQGridParameter.filters.groupOp=="OR")
+                   {
 
-                    foreach(var rule in jQGridParameter.filters.rules)
-                    {
-                        List<ProjectViewModel> temp;
-                        switch (rule.field)
-                        {
-                            case "Project_Name":
-                                temp = list.Where(t => t.Project_Name.Contains(rule.data??"")).ToList();
-                                templist = templist.Concat(temp).ToList();
-                                break;
-                            case "Mgr_Id":
-                                temp = list.Where(t => t.Mgr_Id.Contains(rule.data??"")).ToList();
-                                templist = templist.Concat(temp).ToList();
-                                break;
-                        }
-                    }
-                    list = templist.Distinct().ToList();
-                }
-             
+                       foreach(var rule in jQGridParameter.filters.rules)
+                       {
+                           List<ProjectViewModel> temp;
+                           switch (rule.field)
+                           {
+                               case "Project_Name":
+                                   temp = list.Where(t => t.Project_Name.Contains(rule.data??"")).ToList();
+                                   templist = templist.Concat(temp).ToList();
+                                   break;
+                               case "Mgr_Id":
+                                   temp = list.Where(t => t.Mgr_Id.Contains(rule.data??"")).ToList();
+                                   templist = templist.Concat(temp).ToList();
+                                   break;
+                           }
+                       }
+                       list = templist.Distinct().ToList();
+                   }*/
+
 
 
             }

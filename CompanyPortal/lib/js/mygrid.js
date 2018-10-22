@@ -1,11 +1,16 @@
 ﻿
+var a = 0;
  //intializing the jqgrid for project details   
 function jqgridInitialize(status) {
     debugger
-    $("#grid").setGridParam({ datatype: 'json', url: "/ProjectJQGrid/GetProjects?status=" + status});
+    $("#grid").setGridParam({ datatype: 'json', url: "/ProjectJQGrid/GetProjects?status=" + status, postData: { Search: false } });
+
+    $("#search").val("");
+    //$()
     
     $("#grid").trigger("reloadGrid");
 
+  
     $("#grid").jqGrid(
         {
             url: "/ProjectJQGrid/GetProjects?status=" + status,
@@ -63,6 +68,11 @@ function jqgridInitialize(status) {
 
             loadComplete: function () {
                 $("tr.jqgrow:odd").addClass('myAltRowClass');
+                if (a == 0) {
+                    $('.ui-jqgrid-title').after('<div id="jqGridButtonDiv"><input type="text" name="search" id="search"> <a href="#" onclick="SearchInProject(this)" class="fa fa-search"></a> </div>');
+
+                    a = 1;
+                }
             
             }
 
@@ -144,7 +154,7 @@ function showChildGrid(parentRowID, parentRowKey) {
             { label: 'Firstname', name: 'Firstname', width: 100 },
             { label: 'Email', name: 'Email', width: 100 }
         ],
-        
+
         width: 500,
         height: '100%',
         rowNum: 5,
@@ -160,6 +170,11 @@ function showChildGrid(parentRowID, parentRowKey) {
             repeatitems: false,
             Id: "0"
         },
+        loadComplete: function () {
+            var childgridtitle = document.getElementById("gview_grid_1_table").childNodes[0].childNodes[1]
+            $(childgridtitle).after('<div id="jqSubGridButtonDiv"> <a href="#" onclick="" class="fa fa-user-plus"></a> </div>');
+
+        }
     });
 }
 
@@ -184,7 +199,7 @@ function ToggleColumn(role_) {
 function EditProjectDetail(item) {
     debugger
     var rowid = $(item).closest("tr").attr("id");
-    //  jQuery('#grid').editRow(rowid);
+   //  jQuery('#grid').editRow(rowid);
    // jQuery("#grid").jqGrid('editGridRow', rowid, { addCaption: "Edit row" });
 
     //custom dialog box on edit action link 
@@ -221,3 +236,19 @@ function ProjectChangeStatus(item) {
     var rowid = $(item).closest("tr").attr("id");
 
 }
+
+//function to search in projects
+
+function SearchInProject(item)
+{
+    debugger
+   // var a = item.parent();
+    var value = document.getElementById($(item).parent().attr("id")).childNodes[0].value;
+
+    var postdata = $("#grid").jqGrid('getGridParam', 'postData');
+  
+
+    $("#grid").setGridParam({ mtype: "POST", postData: {Search:true, SearchValue:value} }).trigger("reloadGrid");
+
+}
+
