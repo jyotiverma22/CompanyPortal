@@ -15,7 +15,7 @@ namespace Models
         [Key]
         public int RID { get; set; }
         public string RoleName{ get; set; }
-        public string Active { get; set; }
+        public bool IsActive { get; set; }
         public List<Registration> Users { get; set; }
     }
 }

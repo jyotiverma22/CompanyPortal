@@ -189,6 +189,10 @@
     <Compile Include="Migrations\20181015045432_LogMigration.designer.cs">
       <DependentUpon>20181015045432_LogMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20181023075004_AddActiveColumnsMigration.cs" />
+    <Compile Include="Migrations\20181023075004_AddActiveColumnsMigration.designer.cs">
+      <DependentUpon>20181023075004_AddActiveColumnsMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\CompanyDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

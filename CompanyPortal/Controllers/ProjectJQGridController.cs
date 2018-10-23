@@ -34,6 +34,8 @@ namespace CompanyPortal.Controllers
             jQGridParameter.OrderBy = (jQGridParameter.OrderBy == null) ? "asc" : jQGridParameter.OrderBy;
             jQGridParameter.Rows = (jQGridParameter.Rows == 0) ? 20 : jQGridParameter.Rows;
             jQGridParameter.Page = (jQGridParameter.Page==0)?1:jQGridParameter.Page;
+            jQGridParameter.SearchValue = (jQGridParameter.SearchValue== null) ? "" : jQGridParameter.SearchValue;
+
             var token = Session["token"];
             var username = Session["username"];
             jQGridParameter.OrderBy = (jQGridParameter.OrderBy == null) ? "" : jQGridParameter.OrderBy;
@@ -66,16 +68,7 @@ namespace CompanyPortal.Controllers
             if (jQGridParameter.Search)
             {
                 list = list.Where(t => (t.Project_Name.Contains(jQGridParameter.SearchValue))||(t.Mgr_Id.Contains(jQGridParameter.SearchValue))).ToList();
-            /* switch (jQGridParameter.SearchField)
-                 {
-                     case "Project_Name":
-                         list = list.Where(t => t.Project_Name.Contains(jQGridParameter.SearchString)).ToList();
-                         break;
-                     case "Mgr_Id":
-                         list = list.Where(t => t.Mgr_Id.Contains(jQGridParameter.SearchString)).ToList();
-                         break;
-                 }*/
-
+          
                 /*   if (jQGridParameter.filters.groupOp == "AND")
                    {
                        foreach(var rule in jQGridParameter.filters.rules)

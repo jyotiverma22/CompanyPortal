@@ -17,15 +17,26 @@ function jqgridInitialize(status) {
             datatype: "json",
             mtype: "Get",
             postData:"", 
-            colNames: ['Project Name', 'Manager Id', 'Status','Actions'],
+            colNames: ['','Project Name', 'Manager Id', 'Status',''],
             colModel: [
+                { key:true,  name: 'PId',index: 'PId',width: 100, editable: false,  editrules: {
+                        required: true,
+                        edithidden: true
+                    },
+                    hidden: true,
+                    editoptions: {
+                        dataInit: function (element) {
+                            jq(element).attr("readonly", "readonly");
+                        }
+                    }
+                },
                 {
                   key: false, name: 'Project_Name', index: 'Project_Name', editable: true, search: true
                     , searchoptions: { sopt: ['cn'] }, sortable: true,sorttype:'text'
                 },
                 { key: false, name: 'Mgr_Id', index: 'Mgr_Id', editable: true, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc', sorttype: 'text'},
                 { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype: 'string', sortable: true, sorttype: 'text',search:false },
-                { key: false, name: 'Actions', index: 'Actions', editable: false, formatter: displayButtons, search:false }
+                { key: false, name: 'Actions', index: 'Actions', width :15 ,align:"center",editable: false, formatter: displayButtons, search:false }
 
             ],
             pager: jQuery('#pager') ,              
@@ -69,7 +80,7 @@ function jqgridInitialize(status) {
             loadComplete: function () {
                 $("tr.jqgrow:odd").addClass('myAltRowClass');
                 if (a == 0) {
-                    $('.ui-jqgrid-title').after('<div id="jqGridButtonDiv"><input type="text" name="search" id="search"> <a href="#" onclick="SearchInProject(this)" class="fa fa-search"></a> </div>');
+                    $('.ui-jqgrid-title').after('<div id="jqGridButtonDiv"><input type="text" name="search" id="ProjectSearchID" onkeypress="EnterPressedOnSearchBox(event) "> <a href="#" onclick="SearchInProject()" class="fa fa-search" id="SearchButton"></a> </div>');
 
                     a = 1;
                 }
@@ -130,15 +141,16 @@ function jqgridInitialize(status) {
 
 // the event handler on expanding parent row receives two parameters
 // the ID of the grid tow  and the primary key of the row
-function showChildGrid(parentRowID, parentRowKey) {
+function showChildGrid(gid,rowId) {
     debugger
-  
+ //   var gridId = gid.id;
+    var parentRowID = gid;
     // create unique table and pager
     var childGridID = parentRowID + "_table";
     var childGridPagerID = parentRowID + "_pager";
 
     // send the parent row primary key to the server so that we know which grid to show
-    var  childGridURL = "/ProjectJQGrid/getTeamDetails?pid=" + parentRowKey;
+    var childGridURL = "/ProjectJQGrid/getTeamDetails?pid=" + rowId;
     // add a table and pager HTML elements to the parent grid row - we will render the child grid here
     $('#' + parentRowID).append('<table id=' + childGridID + '></table><div id=' + childGridPagerID + '></div>');
   //  $("#" + childGridID).setGridParam({ datatype: 'json', url: childGridID }).trigger("reloadGrid");
@@ -171,7 +183,8 @@ function showChildGrid(parentRowID, parentRowKey) {
             Id: "0"
         },
         loadComplete: function () {
-            var childgridtitle = document.getElementById("gview_grid_1_table").childNodes[0].childNodes[1]
+            var gridid = "gview_grid_" + rowId + "_table";
+            var childgridtitle = document.getElementById(gridid).childNodes[0].childNodes[1]
             $(childgridtitle).after('<div id="jqSubGridButtonDiv"> <a href="#" onclick="" class="fa fa-user-plus"></a> </div>');
 
         }
@@ -180,10 +193,19 @@ function showChildGrid(parentRowID, parentRowKey) {
 
 //custom formator function to display the Links
 function displayButtons(cellvalue, options, rowObject) {
+    debugger
+    //var value = '<div class="dropdown">' +
+    //    ' <a class="btn btn-default dropdown-toggle" class= "fa fa-ellipsis-v" data - toggle="dropdown" > Tutorials</a >' +
+    //    ' <ul class="dropdown-menu">' +
+    //    ' <li><a tabindex="-1" href="#">HTML</a></li>' +
+    //    ' <li><a tabindex="-1" href="#">CSS</a></li></ul></div>';
+
+    var value = "<a href='#' onclick='showEditingDIV(" + rowObject.PId + ")' class='fa fa-ellipsis-v'></a>"; 
     var edit = "<a href='#' onclick='EditProjectDetail(this)' class='fa fa-pencil-square-o'></a> | ",
         AddTeam = "<a href='#' onclick='AddTeamMembers(this)' class='fa fa-user-plus'></a> | ",
         changeStatus = "<a href='#' onclick='ProjectChangeStatus(this)'>change Status</a>";
-    return edit + AddTeam + changeStatus;
+  //  return edit + AddTeam + changeStatus;
+    return value;
 }
 
 // to show and hide the action links
@@ -239,16 +261,34 @@ function ProjectChangeStatus(item) {
 
 //function to search in projects
 
-function SearchInProject(item)
+function SearchInProject()
 {
     debugger
    // var a = item.parent();
-    var value = document.getElementById($(item).parent().attr("id")).childNodes[0].value;
-
+//    var value = document.getElementById($(item).parent().attr("id")).childNodes[0].value;
+    var value = $("#ProjectSearchID").val();
     var postdata = $("#grid").jqGrid('getGridParam', 'postData');
-  
+    $("#grid").setGridParam({ mtype: "POST", postData: { Search: true, SearchValue: value } }).trigger("reloadGrid");
 
-    $("#grid").setGridParam({ mtype: "POST", postData: {Search:true, SearchValue:value} }).trigger("reloadGrid");
+
+}
+
+function EnterPressedOnSearchBox(e) {
+
+    debugger
+    var key = e.charCode || e.keyCode || 0;
+    if (key === $.ui.keyCode.ENTER) {
+        $("#SearchButton").click();
+    }
+}
+
+function showEditingDIV(PId) {
+    debugger
+    var editingDiv = '<div class="editdialog"><ul>' +
+        '<li><a href="#" class="fa fa-pencil-square-o">Update</a></li>' +
+        '<li><a href="#" class="fa fa-trash">Delete</a></li>' +
+        '<li><a href="#" class="fa fa-eye">View</a></li></ul><div>';
+    return editingDiv;
 
 }
 

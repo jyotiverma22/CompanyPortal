@@ -21,6 +21,7 @@ namespace DatabaseLayer.DbContexts
                 registration.DId = 5;
                 registration.RId = 4;
                 registration.R_M_Id = "CMP-1001";
+                registration.IsActive = true;
                 registration.Password = Password.EncodePassword(registration.Password, registration.Username);
                 companyDbContext.UserRegistration.Add(registration);
                 companyDbContext.SaveChanges();
@@ -101,7 +102,7 @@ namespace DatabaseLayer.DbContexts
         {      
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
-                return companyDbContext.BloodGroups.ToList();
+                return companyDbContext.BloodGroups.Where(t=>t.IsActive==true).ToList();
             }
         }
 
@@ -117,7 +118,7 @@ namespace DatabaseLayer.DbContexts
             {
                 //   login.Password = Password.EncodePassword(login.Password,login.Username);
 
-                Registration user = companyDbContext. UserRegistration.Where(x => (x.Username == login.Username || x.Email == login.Username)).FirstOrDefault();
+                Registration user = companyDbContext. UserRegistration.Where(x => (x.Username == login.Username || x.Email == login.Username)&&(x.IsActive==true)).FirstOrDefault();
                 if (user != null)
                 {
                     login.Password = Password.EncodePassword(login.Password, user.Username);
@@ -169,22 +170,22 @@ namespace DatabaseLayer.DbContexts
                     var role = companyDbContext.UserRegistration.Where(u => (u.Username == username || u.Email == username)).Select(r => r.role.RoleName).FirstOrDefault();
                     if(role=="Admin")
                     {
-                        query = companyDbContext.Projects.Select(p => p.PID);
+                        query = companyDbContext.Projects.Where(t=>t.IsActive==true).Select(p => p.PID);
 
                     }
                     else if(role=="Proj_Manager")
                     {
-                        query = companyDbContext.Projects.Where(t => t.Mgr_Id== (companyDbContext.UserRegistration.Where(r => (r.Username == username || r.Email == username)).Select(r => r.UserId).FirstOrDefault())).Select(p => p.PID);
+                        query = companyDbContext.Projects.Where(t => t.IsActive == true).Where(t => t.Mgr_Id== (companyDbContext.UserRegistration.Where(r => (r.Username == username || r.Email == username)).Select(r => r.UserId).FirstOrDefault())).Select(p => p.PID);
 
                     }
                     else if(role=="Member")
                     {
-                        query = companyDbContext.Project_Teams.Where(t => t.Team_Id == (companyDbContext.UserRegistration.Where(r => (r.Username == username || r.Email == username)).Select(r => r.UserId).FirstOrDefault())).Select(p => p.PId);
+                        query = companyDbContext.Project_TechnologyStacks.Where(t => t.IsActive == true).Where(t => t.UserId == (companyDbContext.UserRegistration.Where(r => (r.Username == username || r.Email == username)).Select(r => r.UserId).FirstOrDefault())).Select(p => p.projectId);
                     }
                     foreach (var pid in query)
                     {
                         //&& c.Status=="status"
-                        projs.AddRange(companyDbContext.Projects.Where(c => (c.PID == pid && c.Status==status)));
+                        projs.AddRange(companyDbContext.Projects.Where(c => (c.PID == pid && c.Status==status && c.IsActive==true)));
                     }
 
                     return projs;
@@ -203,11 +204,11 @@ namespace DatabaseLayer.DbContexts
             {
                 List<Registration> reg = new List<Registration>();
 
-                IQueryable<string> emps = companyDbContext.Project_Teams.Where(c => c.PId == pid).Select(c => c.Team_Id);
+                IQueryable<string> emps = companyDbContext.Project_TechnologyStacks.Where(c => (c.projectId == pid)&&(c.IsActive==true)).Select(c => c.UserId);
 
                 foreach(var e in emps)
                 {
-                    reg.AddRange(companyDbContext.UserRegistration.Where(c => c.UserId == e));
+                    reg.AddRange(companyDbContext.UserRegistration.Where(c => (c.UserId == e)&&(c.IsActive==true)));
                 }
                 return reg;
             }
@@ -237,7 +238,7 @@ namespace DatabaseLayer.DbContexts
               
               var  P_mgrs_Id = (from p in companyDbContext.UserRegistration
                              join r in companyDbContext.Roles on p.RId equals r.RID
-                             where( r.Active == "true" && r.RoleName=="P_Manager")
+                             where( r.IsActive == true && r.RoleName=="P_Manager")
                              select(p.UserId)).ToList();
                 
                 return P_mgrs_Id;
@@ -247,23 +248,26 @@ namespace DatabaseLayer.DbContexts
         public int AddProject(Project project)
         { 
             int id;
-            List<Project_Team> projectTeams = new List<Project_Team>(); 
+         //   List<Project_Team> projectTeams = new List<Project_Team>(); 
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
-                Project proj = companyDbContext.Projects.Where(n => n.ProjectName == project.ProjectName).FirstOrDefault();
-             if (project != null)
-             {
-                    if (proj == null)
-                     {
-                    project.CreatedOn = DateTime.Now;
-                    project.CreatedBy = project.UpdatedBy;
+                Project proj = companyDbContext.Projects.Where(n => (n.ProjectName == project.ProjectName)&&(n.IsActive==true)).FirstOrDefault();
+                 if (project != null)
+                 {
 
-                     }
                     project.UpdatedOn = DateTime.Now;
                     project.UpdatedBy = project.UpdatedBy;
-                    
+                    if (proj == null)
+                    {
+                        project.CreatedOn = DateTime.Now;
+                        project.CreatedBy = project.UpdatedBy;
+                       
+
+                    }
+
                     companyDbContext.Projects.Add(project);
                     companyDbContext.SaveChanges();
+
                     id=project.PID;
                     if (project.project_TechnologyStacks != null)
                     {
@@ -271,16 +275,11 @@ namespace DatabaseLayer.DbContexts
                         {
                             key.projectId = id;
                             companyDbContext.Project_TechnologyStacks.Add(key);
+                           
 
-                            projectTeams.Add(new Project_Team
-                            {
-                                PId = id,
-                                Mgr_Id = project.Mgr_Id,
-                                Team_Id = key.UserId
-                                
-                            });
                         }
-                        companyDbContext.Project_Teams.AddRange(projectTeams);
+                        companyDbContext.SaveChanges();
+
                     }
                     return project.PID;
 
@@ -292,6 +291,13 @@ namespace DatabaseLayer.DbContexts
             
 
             }
+
+
+        public bool AddProjectTeam(int projectId, List<Project_TechnologyStack> projectTeamList) {
+
+            return false;
+
+        }
         
 
 

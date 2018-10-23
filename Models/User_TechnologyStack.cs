@@ -14,6 +14,7 @@ namespace Models
         public string UserId{ get; set; }
         public int technologyStackId { get; set; }
         public TechnologyStack technologyStack{ get; set; }
+        public bool IsActive { get; set; }
 
     }
 }

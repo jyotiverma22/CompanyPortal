@@ -9,12 +9,12 @@ namespace Models
 {
     //model for department details
    public class Department
-    {[Key]
+    {   [Key]
         public int DId{ get; set; }
 
         public string Dname{ get; set; }
 
-        public string Active{ get; set; }
+        public bool IsActive{ get; set; }
 
         public List<Registration> Users { get; set; }
     }

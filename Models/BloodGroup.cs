@@ -12,7 +12,7 @@ namespace Models
         [Key]
         public int BId{ get; set; }
         public string BloodGroupName{ get; set; }
-        public string Active{ get; set; }
+        public bool IsActive{ get; set; }
         public List<Registration> Users{ get; set; }
     }
 }

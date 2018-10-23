@@ -12,26 +12,28 @@ namespace Models
     {
         [Key]
         public string userId { get; set; }
-
+        [Required]
         public string Username { get; set; }
-
-         public string Email { get; set; }
-
-         public string Phone { get; set; }
-
-         public string FullName { get; set; }
-
-          public string Gender { get; set; }
-
-
-         public string Bloodgroup { get; set; }
-         public string DOB { get; set; }
-
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public string Phone { get; set; }
+        [Required]
+        public string FullName { get; set; }
+        [Required]
+        public string Gender { get; set; }
+        [Required]
+        public string Bloodgroup { get; set; }
+        [Required]
+        public string DOB { get; set; }
+        
         public string Department_name { get; set; }
-
+        [Required]
         public string Role_name { get; set; }
 
         public string Rep_Manager { get; set; }
+
+
 
     }
 }
