@@ -31,11 +31,12 @@ namespace Models
         public Role role { get; set; }
         public string R_M_Id { get; set; }
         public bool IsActive { get; set; }
-        [Required]
+       
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
         [Required]
         public string UpdatedBy { get; set; }
+        [Required]
         public DateTime UpdatedOn { get; set; }
     }
 }

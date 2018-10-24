@@ -537,3 +537,22 @@ input {
     padding-top: 5px;
 }
 /*JQgrid css ends */
+
+
+/*Editing div in jqgrid css starts*/
+.relativeDiv {
+    position:relative;
+}
+
+.div-item{
+    position:absolute;
+    display:none;
+}
+
+.div-item-show{
+    display:block;
+    z-index:5;
+}
+
+
+/*Editing div in jqgrid */

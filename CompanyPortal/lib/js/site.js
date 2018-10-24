@@ -51,7 +51,8 @@ function InitializeAddTeamConfirmDialog(formdata) {
                 click: function () {
                     debugger
                     // 4 $('#res').empty().append('<h1>Close<h1>');
-                    $('#msg_dialog').dialog('close');
+                 //   $('#msg_dialog').dialog('close');
+                    $('#msg_dialog').remove();
                     openAddTeamDialog(formdata);
                     res = false;
                 }

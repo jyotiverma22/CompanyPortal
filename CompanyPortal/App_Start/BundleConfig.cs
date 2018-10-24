@@ -12,7 +12,8 @@ namespace CompanyPortal
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/i18n/grid.locale-en.js",
                         "~/Scripts/jquery.jqGrid.min.js",
-                         "~/Scripts/jquery.unobtrusive-ajax.js"
+                         "~/Scripts/jquery.unobtrusive-ajax.js",
+                         "~/Scripts/jquery.contextMenu.js"
                         ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

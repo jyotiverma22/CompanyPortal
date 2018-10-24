@@ -17,8 +17,9 @@ function jqgridInitialize(status) {
             datatype: "json",
             mtype: "Get",
             postData:"", 
-            colNames: ['','Project Name', 'Manager Id', 'Status',''],
+            colNames: ['','','Project Name', 'Manager Id', 'Status'],
             colModel: [
+                { key: false, name: 'Actions', index: 'Actions', width: 15, align: "center", editable: false, formatter: displayButtons, search: false },
                 { key:true,  name: 'PId',index: 'PId',width: 100, editable: false,  editrules: {
                         required: true,
                         edithidden: true
@@ -35,9 +36,8 @@ function jqgridInitialize(status) {
                     , searchoptions: { sopt: ['cn'] }, sortable: true,sorttype:'text'
                 },
                 { key: false, name: 'Mgr_Id', index: 'Mgr_Id', editable: true, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc', sorttype: 'text'},
-                { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype: 'string', sortable: true, sorttype: 'text',search:false },
-                { key: false, name: 'Actions', index: 'Actions', width :15 ,align:"center",editable: false, formatter: displayButtons, search:false }
-
+                { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype: 'string', sortable: true, sorttype: 'text',search:false }
+             
             ],
             pager: jQuery('#pager') ,              
             rowList: [5, 10, 15, 20],
@@ -87,10 +87,15 @@ function jqgridInitialize(status) {
             
             }
 
+
+
+
             
 
 
         });
+
+    
 
   /*  $("#grid").jqGrid('filterToolbar', {
 
@@ -200,10 +205,11 @@ function displayButtons(cellvalue, options, rowObject) {
     //    ' <li><a tabindex="-1" href="#">HTML</a></li>' +
     //    ' <li><a tabindex="-1" href="#">CSS</a></li></ul></div>';
 
-    var value = "<a href='#' onclick='showEditingDIV(" + rowObject.PId + ")' class='fa fa-ellipsis-v'></a>"; 
-    var edit = "<a href='#' onclick='EditProjectDetail(this)' class='fa fa-pencil-square-o'></a> | ",
-        AddTeam = "<a href='#' onclick='AddTeamMembers(this)' class='fa fa-user-plus'></a> | ",
-        changeStatus = "<a href='#' onclick='ProjectChangeStatus(this)'>change Status</a>";
+    var value = "<a href='#' onclick='showEditingDIV(" + rowObject.PId + ",this)' class='fa fa-ellipsis-v relativeDiv editdiv' id=r" + rowObject.PId + "></a>"; 
+
+ //  
+   
+
   //  return edit + AddTeam + changeStatus;
     return value;
 }
@@ -282,13 +288,37 @@ function EnterPressedOnSearchBox(e) {
     }
 }
 
-function showEditingDIV(PId) {
+function showEditingDIV(PId,element) {
     debugger
-    var editingDiv = '<div class="editdialog"><ul>' +
+  //  $("#contextMenu").show();
+
+    $(".editdiv").contextMenu('#contextMenu', {
+        bindings: {
+            'edit': function (t) {
+                /// editRow();
+            },
+            'view': function (t) {
+                // addRow();
+            },
+            'del': function (t) {
+                // delRow();
+            }
+        },
+        onContextMenu: function (event, menu) {
+            debugger
+            var rowId = $(event.target).parent("tr").attr("id");
+            var grid = $("#grid");
+            grid.setSelection(rowId);
+
+            return true;
+        }
+    });
+    var editingDiv = '<div class="editdialog "><ul>' +
         '<li><a href="#" class="fa fa-pencil-square-o">Update</a></li>' +
         '<li><a href="#" class="fa fa-trash">Delete</a></li>' +
         '<li><a href="#" class="fa fa-eye">View</a></li></ul><div>';
-    return editingDiv;
+    $(editingDiv).toggleClass(".div-item-show");
+    $(editingDiv).appendTo("#PId");
 
 }
 

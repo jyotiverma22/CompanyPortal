@@ -248,6 +248,10 @@ namespace DatabaseLayer.DbContexts
         public int AddProject(Project project)
         { 
             int id;
+            foreach (var key in project.project_TechnologyStacks)
+            {
+                key.IsActive = true;
+            }
          //   List<Project_Team> projectTeams = new List<Project_Team>(); 
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
@@ -269,18 +273,19 @@ namespace DatabaseLayer.DbContexts
                     companyDbContext.SaveChanges();
 
                     id=project.PID;
-                    if (project.project_TechnologyStacks != null)
+                    /*if (project.project_TechnologyStacks != null)
                     {
                         foreach( var key in project.project_TechnologyStacks)
                         {
                             key.projectId = id;
+                            key.IsActive = true;
                             companyDbContext.Project_TechnologyStacks.Add(key);
                            
 
                         }
                         companyDbContext.SaveChanges();
 
-                    }
+                    }*/
                     return project.PID;
 
                 }

@@ -193,6 +193,10 @@
     <Compile Include="Migrations\20181023075004_AddActiveColumnsMigration.designer.cs">
       <DependentUpon>20181023075004_AddActiveColumnsMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20181024061016_createdOnMigration.cs" />
+    <Compile Include="Migrations\20181024061016_createdOnMigration.designer.cs">
+      <DependentUpon>20181024061016_createdOnMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\CompanyDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

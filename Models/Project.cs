@@ -19,9 +19,9 @@ namespace Models
         public string Status { get; set; } //status shows project is completed or in working status
         [Required]
         public string Description { get; set; }
-        [Required]
+       
         public string CreatedBy{ get; set; }
-        [Required]
+        
         public DateTime CreatedOn { get; set; }
         [Required]
         public string UpdatedBy{ get; set; }
