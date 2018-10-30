@@ -86,7 +86,7 @@ function jqgridInitialize(status) {
                     a = 1;
                 }
 
-                $("tr.jqgrow", this).contextMenu('contextMenu1', {
+                $("tr.jqgrow", this).contextmenu('contextMenu1', {
 
                     bindings: {
                         'edit': function (trigger) {
