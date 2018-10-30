@@ -103,7 +103,7 @@ function jqgridInitialize(status) {
                             }
                         }
                     },
-                    onContextMenu: function (event/*, menu*/) {
+                    oncontextmenu: function (event/*, menu*/) {
                         var rowId = $(event.target).closest("tr.jqgrow").attr("id");
                         //grid.setSelection(rowId);
                         // disable menu for rows with even rowids
@@ -113,7 +113,7 @@ function jqgridInitialize(status) {
                         } else {
                             $('#del').removeAttr("disabled").removeClass('ui-state-disabled');
                         }
-                        return true;
+                        return false;
                     }
                 });
 
@@ -242,10 +242,7 @@ function displayButtons(cellvalue, options, rowObject) {
     //    ' <li><a tabindex="-1" href="#">CSS</a></li></ul></div>';
 
     var value = "<a href='#' onclick='showEditingDIV(" + rowObject.PId + ",this)' class='fa fa-ellipsis-v relativeDiv editdiv' id=r" + rowObject.PId + "></a>"; 
-
- //  
-   
-
+    
   //  return edit + AddTeam + changeStatus;
     return value;
 }
