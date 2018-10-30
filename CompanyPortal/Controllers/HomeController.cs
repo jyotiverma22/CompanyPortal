@@ -89,6 +89,7 @@ namespace CompanyPortal.Controllers
                 }
             }
 
+            ViewBag.Page = "home";
             ViewBag.Message = "Username/Password Incorrect";
             return View();
 

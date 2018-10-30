@@ -78,12 +78,45 @@ function jqgridInitialize(status) {
             },
 
             loadComplete: function () {
+                debugger
                 $("tr.jqgrow:odd").addClass('myAltRowClass');
                 if (a == 0) {
                     $('.ui-jqgrid-title').after('<div id="jqGridButtonDiv"><input type="text" name="search" id="ProjectSearchID" onkeypress="EnterPressedOnSearchBox(event) "> <a href="#" onclick="SearchInProject()" class="fa fa-search" id="SearchButton"></a> </div>');
 
                     a = 1;
                 }
+
+                $("tr.jqgrow", this).contextMenu('contextMenu1', {
+
+                    bindings: {
+                        'edit': function (trigger) {
+                            // trigger is the DOM element ("tr.jqgrow") which are triggered
+                            grid.editGridRow(trigger.id, editSettings);
+                        },
+                        'view': function (/*trigger*/) {
+                            grid.editGridRow("new", addSettings);
+                        },
+                        'del': function (trigger) {
+                            if ($('#del').hasClass('ui-state-disabled') === false) {
+                                // disabled item can do be choosed
+                                grid.delGridRow(trigger.id, delSettings);
+                            }
+                        }
+                    },
+                    onContextMenu: function (event/*, menu*/) {
+                        var rowId = $(event.target).closest("tr.jqgrow").attr("id");
+                        //grid.setSelection(rowId);
+                        // disable menu for rows with even rowids
+                        $('#del').attr("disabled", Number(rowId) % 2 === 0);
+                        if (Number(rowId) % 2 === 0) {
+                            $('#del').attr("disabled", "disabled").addClass('ui-state-disabled');
+                        } else {
+                            $('#del').removeAttr("disabled").removeClass('ui-state-disabled');
+                        }
+                        return true;
+                    }
+                });
+
             
             }
 
@@ -179,6 +212,15 @@ function showChildGrid(gid,rowId) {
         caption: "Team Details",
         emptyrecords: "No projects to show",
         onSelectRow: exapandEmployeeDetail,
+    
+        loadComplete: function () {
+            debugger
+            var gridid = "gview_grid_" + rowId + "_table";
+            var childgridtitle = document.getElementById(gridid).childNodes[0].childNodes[1]
+            $(childgridtitle).after('<div id="jqSubGridButtonDiv"> <a href="#" onclick="" class="fa fa-user-plus"></a> </div>');
+
+
+        },
         jsonReader: {
             root: "rows",
             page: "page",
@@ -187,18 +229,12 @@ function showChildGrid(gid,rowId) {
             repeatitems: false,
             Id: "0"
         },
-        loadComplete: function () {
-            var gridid = "gview_grid_" + rowId + "_table";
-            var childgridtitle = document.getElementById(gridid).childNodes[0].childNodes[1]
-            $(childgridtitle).after('<div id="jqSubGridButtonDiv"> <a href="#" onclick="" class="fa fa-user-plus"></a> </div>');
-
-        }
     });
 }
 
 //custom formator function to display the Links
 function displayButtons(cellvalue, options, rowObject) {
-    debugger
+   
     //var value = '<div class="dropdown">' +
     //    ' <a class="btn btn-default dropdown-toggle" class= "fa fa-ellipsis-v" data - toggle="dropdown" > Tutorials</a >' +
     //    ' <ul class="dropdown-menu">' +
