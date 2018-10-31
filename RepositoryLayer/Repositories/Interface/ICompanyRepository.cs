@@ -36,5 +36,11 @@ namespace RepositoryLayer.Repositories
         List<String> GetAllTechnologies();
 
         List<String> GetTechnologyUserId(string tech);
+
+        Project ShowParticularProjectdetails(int Pid);
+
+        bool UpdateProject(Project project);
+
+        bool DeleteProject(int pid,string userid);
     }
 }

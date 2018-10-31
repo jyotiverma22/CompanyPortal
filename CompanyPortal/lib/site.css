@@ -552,7 +552,20 @@ input {
 .div-item-show{
     display:block;
     z-index:5;
+    
 }
 
+
+.contextMenu{
+    position:absolute;
+    height:auto;
+    width:auto;
+    background-color:#F8E6AB;
+}
+
+.contextMenu li{
+    list-style:none;
+    cursor:pointer;
+}
 
 /*Editing div in jqgrid */

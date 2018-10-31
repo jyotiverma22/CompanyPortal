@@ -37,6 +37,11 @@ namespace RepositoryLayer.Repositories
             return datalayer.CheckUsernameStatus(username);
         }
 
+        public bool DeleteProject(int pid,string userid)
+        {
+            return datalayer.DeleteProject(pid,userid);
+        }
+
         public IEnumerable<string> getAllProjectManagers()
         {
             return datalayer.getAllProjectManagers();
@@ -82,6 +87,16 @@ namespace RepositoryLayer.Repositories
         public bool SaveErrorLoggingDetails(DbLogging dbLogging)
         {
             return datalayer.SaveErrorLoggingDetails(dbLogging);
+        }
+
+        public Project ShowParticularProjectdetails(int Pid)
+        {
+            return datalayer.ShowParticularProjectDetails(Pid);
+        }
+
+        public bool UpdateProject(Project project)
+        {
+            return datalayer.UpdateProject(project);
         }
     }
 }

@@ -46,9 +46,9 @@
     </div>
 
     <div id="addprojectdetail" style="display:none">
-        @{ 
+        <!--@{
             Html.RenderAction("AddProject");
-        }
+        }-->
     </div>
 
     <div id="attend">
@@ -135,9 +135,11 @@
         });
 
         $("#addProject").click(function () {
-            debugger
+           
             $("#emp").hide();
             $("#projdetail").hide();
+            var url = '@Url.Action("AddProject", "LoggedIn")';
+            $("#addprojectdetail").load(url);
             $("#addprojectdetail").show();
 
         });
@@ -155,26 +157,7 @@
         });
 
 
-        $("#btn_project_Submit").click(function () {
-            $('#form0').validate();
-
-            if ($('#form0').valid()) {
-                //trigger modal
-                debugger
-                var b="{";
-                var a = $('#form0').serialize();
-            /*    $.each(a, function (i, field) {
-                    if (i === 0) { }
-                    else
-                    b=b+""+("\""+field.name+"\"" + ":" + "\""+field.value+"\"" + ",");
-                });
-                b = b.replace(/.$/, "}");
-             //   alert(JSON.stringify($.trim(b)));
-             */
-                InitializeAddTeamConfirmDialog(a);
-                return false;
-            }
-        });
+      
 
 
        
@@ -295,6 +278,13 @@
             }
         ]
     });
+    }
+
+    function SuccessfullyProjectUpdated(data) {
+        debugger
+        $("#editprojectdetaildialog").dialog('close');
+
+        $("#grid").trigger("reloadGrid");
     }
     
 

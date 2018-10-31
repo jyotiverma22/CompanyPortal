@@ -113,5 +113,59 @@ namespace CompanyPortal.Controllers
             return ICompany.GetTechnologyUserId(tech);
         }
 
+        [HttpGet,Route("GetparticularProjectDetails")]
+        public IHttpActionResult GetparticularProjectDetails(int pid)
+        {
+            Project project = ICompany.ShowParticularProjectdetails(pid);
+
+            return Ok(MapProjectIntoProjectViewModel(project));
+        }
+
+        [HttpPost, Route("UpdateProject")]
+        public IHttpActionResult UpdateProject(ProjectViewModel projectViewModel)
+        {
+            Project project = MapProjectViewModelIntoProject(projectViewModel);
+            return Ok(ICompany.UpdateProject(project));
+        }
+
+        [HttpPost, Route("DeleteProject")]
+        public IHttpActionResult DeleteProject(int pid,string userid)
+        {
+           
+            return Ok(ICompany.DeleteProject(pid,userid));
+        }
+
+
+        public ProjectViewModel MapProjectIntoProjectViewModel(Project project)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Project, ProjectViewModel>()
+                .ForMember(t=>t.PId,o=>o.MapFrom(opt=>opt.PID))
+                .ForMember(t => t.Project_Name, o => o.MapFrom(opt => opt.ProjectName));
+
+            });
+
+            IMapper mapper = config.CreateMapper();
+            return mapper.Map<Project, ProjectViewModel>(project);
+
+
+        }
+
+        public Project MapProjectViewModelIntoProject(ProjectViewModel projectViewModel)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<ProjectViewModel, Project>()
+                .ForMember(t => t.PID, o => o.MapFrom(t=>t.PId))
+                .ForMember(t => t.ProjectName, o => o.MapFrom(opt => opt.Project_Name));
+
+                
+            });
+
+            IMapper mapper = config.CreateMapper();
+            return mapper.Map<ProjectViewModel, Project>(projectViewModel);
+        }
+
     }
 }

@@ -329,7 +329,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DetailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoggedInController.cs" />
@@ -610,9 +609,9 @@
     <Content Include="Views\Shared\_ProjectDetails.cshtml" />
     <Content Include="Views\Shared\_MemberPartialView.cshtml" />
     <Content Include="Views\Shared\_ProjManagerPartialView.cshtml" />
-    <Content Include="Views\Shared\_EditProjectDetails.cshtml" />
     <Content Include="Views\LoggedIn\_AddProjectPartialView.cshtml" />
     <Content Include="Views\LoggedIn\_AddProjectTechnologyStackViewModel.cshtml" />
+    <Content Include="Views\LoggedIn\_ShowParticularProjectDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

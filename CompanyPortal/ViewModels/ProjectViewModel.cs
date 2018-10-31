@@ -8,7 +8,7 @@ namespace CompanyPortal.ViewModels
 {
     public class ProjectViewModel
     {
-        public int PId{ get; set; }
+        public int? PId{ get; set; }
         [Required]
         public string Project_Name { get; set; }
         [Required]

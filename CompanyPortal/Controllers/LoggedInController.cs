@@ -30,8 +30,8 @@ namespace CompanyPortal.Controllers
         public ActionResult Index()
         {
 
-           // log4net.Config.XmlConfigurator.Configure();
-          //  logger.Error("This is logger Message");
+            // log4net.Config.XmlConfigurator.Configure();
+            //  logger.Error("This is logger Message");
             var token = Session["token"];
             if (token == null)
             {
@@ -71,7 +71,7 @@ namespace CompanyPortal.Controllers
         }
 
 
-        
+
 
         /// <summary>
         /// renders the partial view of the project details 
@@ -79,7 +79,7 @@ namespace CompanyPortal.Controllers
         /// <returns></returns>
         public ActionResult ProjectDetails(string projectType)
         {
-            return PartialView("_ProjectDetails",projectType);
+            return PartialView("_ProjectDetails", projectType);
         }
 
         /// <summary>
@@ -92,14 +92,14 @@ namespace CompanyPortal.Controllers
 
             EmployeeDetailsViewModel employees = new EmployeeDetailsViewModel();
             var token = Session["token"];
-            var username =(userid!=null)?userid: Session["username"];
+            var username = (userid != null) ? userid : Session["username"];
             if (token == null)
             {
                 return RedirectToAction("Index", "home");
             }
             try
             {
-          //     throw new Exception("Exception occured");
+                //     throw new Exception("Exception occured");
                 using (HttpClient client = new HttpClient())
                 {
                     UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["detailsUrl"]);
@@ -115,28 +115,28 @@ namespace CompanyPortal.Controllers
                     }
                     else
                     {
-                        Session["token"]=null;
+                        Session["token"] = null;
                         return RedirectToAction("Index", "home");
 
                     }
 
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 //Token authentication time out
                 string path = ConfigurationManager.AppSettings["logPath"].ToString();
-                
+
                 logger.Info(e.ToString());
-             
+
                 logger.Error(e.ToString());
                 if (System.IO.File.Exists(path))
                 {
                     //Error logging into the log file 
                     StreamWriter sw = new StreamWriter(path);
                     sw.Write("\nToken authentication expired ");
-                    sw.Write("\nType of exception  "+e.GetType().Name);
-                    sw.Write("\nMessage "+e.Message);
+                    sw.Write("\nType of exception  " + e.GetType().Name);
+                    sw.Write("\nMessage " + e.Message);
 
                     DbLogging dbLogging = new DbLogging {
                         ExceptionMessage = e.Message.ToString(),
@@ -144,7 +144,7 @@ namespace CompanyPortal.Controllers
                         ExceptionSource = e.StackTrace.ToString(),
                         ExceptionUrl = ConfigurationManager.AppSettings["detailsUrl"] + "/ getemployeedetails ? username = " + username,
                         LogDate = DateTime.Now
-                        };
+                    };
 
                     //Error logging into the Database
                     using (HttpClient httpclient = new HttpClient())
@@ -152,11 +152,11 @@ namespace CompanyPortal.Controllers
                         UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["baseUrl"]);
                         var json = JsonConvert.SerializeObject(dbLogging);
                         var content = new StringContent(json, Encoding.UTF8, "application/json");
-                        var result =httpclient.PostAsync(url.Uri + "/SaveErrorLoggingDetails",content).Result;
+                        var result = httpclient.PostAsync(url.Uri + "/SaveErrorLoggingDetails", content).Result;
 
-                        if(result.IsSuccessStatusCode)
+                        if (result.IsSuccessStatusCode)
                         {
-                             //Exception written into the database
+                            //Exception written into the database
                         }
                         else { //error in writing the exception into the database
                         }
@@ -177,14 +177,14 @@ namespace CompanyPortal.Controllers
 
 
 
-          }
-        
+        }
+
 
         //working on this part- this function is not complete
         [HttpGet]
         public ActionResult EditProjectDetails()
         {
-            return PartialView("_EditProjectDetails",new ProjectViewModel());
+            return PartialView("_EditProjectDetails", new ProjectViewModel());
         }
 
         //working on this part- this function is not complete
@@ -195,9 +195,25 @@ namespace CompanyPortal.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddProject()
+        public ActionResult AddProject(int? pid)
         {
+            ProjectViewModel projectViewModel = new ProjectViewModel();
+            if (pid != null)
+            {
+                using (HttpClient httpClient = new HttpClient())
+                {
+                    UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["detailsUrl"]);
+                    var result = httpClient.GetAsync(url.Uri + "/GetparticularProjectDetails?pid=" + pid).Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        projectViewModel = JsonConvert.DeserializeObject<ProjectViewModel>(result.Content.ReadAsStringAsync().Result);
+                        ViewBag.Message = "Edit";
+                        return PartialView("_AddProjectPartialView", projectViewModel);
+                    }
 
+                }
+            }
+            ViewBag.Message = "Add";
             return PartialView("_AddProjectPartialView");
         }
 
@@ -209,15 +225,21 @@ namespace CompanyPortal.Controllers
             {
                 using (HttpClient httpclient = new HttpClient())
                 {
-                    projectViewModel.UpdatedBy = Session["id"].ToString();                                                                                                                                                                                                          
+
+                    projectViewModel.UpdatedBy = Session["id"].ToString();
                     UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["detailsUrl"]);
                     var json = JsonConvert.SerializeObject(projectViewModel);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
                     var result = httpclient.PostAsync(url.Uri + "/AddProjectDetails", content).Result;
+                    if (projectViewModel.PId != 0)
+                    {
+                        result = httpclient.PostAsync(url.Uri + "/UpdateProject", content).Result;
+                    }
+
                     if (result.IsSuccessStatusCode)
                     {
                         return Json(true);
-                      //  return Json(new { data = projectViewModel }, JsonRequestBehavior.AllowGet); ;
+                        //  return Json(new { data = projectViewModel }, JsonRequestBehavior.AllowGet); ;
                     }
                     else
                     {
@@ -226,16 +248,62 @@ namespace CompanyPortal.Controllers
 
                 }
             }
-                return Json(false);
-           // return PartialView("_AddProjectPartialView", projectViewModel);
+            return Json(false);
+            // return PartialView("_AddProjectPartialView", projectViewModel);
         }
 
 
 
-       
-        public ActionResult AddTeam(ProjectViewModel projectViewModel )
+
+        public ActionResult AddTeam(ProjectViewModel projectViewModel)
         {
-            return PartialView("_AddProjectTechnologyStackViewModel",projectViewModel);
+            return PartialView("_AddProjectTechnologyStackViewModel", projectViewModel);
+        }
+
+        public ActionResult ShowParticularProjectDetails(int pid)
+        {
+            ProjectViewModel projectViewModel = new ProjectViewModel();
+
+            using (HttpClient httpClient = new HttpClient())
+            {
+                UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["detailsUrl"]);
+                var result = httpClient.GetAsync(url.Uri + "/GetparticularProjectDetails?pid=" + pid).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    projectViewModel = JsonConvert.DeserializeObject<ProjectViewModel>(result.Content.ReadAsStringAsync().Result);
+                    return PartialView("_ShowParticularProjectDetails", projectViewModel);
+                }
+                else
+                {
+                    ViewBag.Message = "Can't able to retrieve Details";
+                    return PartialView("_ShowParticularProjectDetails", new ProjectViewModel());
+                }
+
+            }
+
+        }
+
+
+        public ActionResult DeleteProject(int pid)
+        {
+            String userid = Convert.ToString(Session["id"]);
+            
+            using (HttpClient httpClient = new HttpClient())
+            {
+                UriBuilder url = new UriBuilder(ConfigurationManager.AppSettings["detailsUrl"]);
+                var json = JsonConvert.SerializeObject(null);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var result = httpClient.PostAsync(url.Uri + "/DeleteProject?pid=" + pid + "&userid="+userid,content).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                      return Json(true);
+                }
+                else
+                {
+                    return Json(false);
+                }
+
+            }
         }
 
     }

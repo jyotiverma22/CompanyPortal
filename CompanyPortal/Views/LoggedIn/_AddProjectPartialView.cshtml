@@ -1,56 +1,124 @@
 ﻿@model CompanyPortal.ViewModels.ProjectViewModel
 
-@using (Ajax.BeginForm("","",new AjaxOptions { }))
+@using (Ajax.BeginForm("AddProject","LoggedIn",new AjaxOptions {OnSuccess="SuccessfullyProjectUpdated" }))
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal formdesign" >
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-horizontal formdesign">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-
-        <div class="form-group">
-            <label class="control-label col-md-3 offset-md-1 verticlealign" for="Project_Name">Project Name</label>
-            <div class="col-md-5" style="display:inline-block">
-                @Html.EditorFor(model => model.Project_Name, new { htmlAttributes = new { @class = "form-control inputdesign" } })
-                @Html.ValidationMessageFor(model => model.Project_Name, "", new { @class = "text-danger" })
-            </div>
+    @Html.HiddenFor(model => model.PId, new { htmlAttributes = new { @class = "form-control inputdesign" } })
+    <div class="form-group">
+        <label class="control-label col-md-3 offset-md-1 verticlealign" for="Project_Name">Project Name</label>
+        <div class="col-md-5" style="display:inline-block">
+            @Html.EditorFor(model => model.Project_Name, new { htmlAttributes = new { @class = "form-control inputdesign" } })
+            @Html.ValidationMessageFor(model => model.Project_Name, "", new { @class = "text-danger" })
         </div>
+    </div>
 
+    @if (Convert.ToString(Session["role"]) == "Admin")
+    {
         <div class="form-group">
             <label class="control-label col-md-3 offset-md-1 verticlealign" for="Mgr_Id">Select Manager</label>
             <div class="col-md-5" style="display:inline-block">
-                @Html.DropDownListFor(model => model.Mgr_Id, new SelectList(""), "Select project manager",  new { @class = "dropdowndesign"  })
+                @Html.DropDownListFor(model => model.Mgr_Id, new SelectList(""), "Select project manager", new { @class = "dropdowndesign" })
                 @Html.ValidationMessageFor(model => model.Mgr_Id, "", new { @class = "text-danger" })
             </div>
         </div>
+    }
 
+    @if (ViewBag.Message == "Edit")
+    {
 
         <div class="form-group">
-            <label class="control-label col-md-3 offset-md-1 verticlealign" for="Description">Description</label>
-
-            <div class="col-md-5" style="display:inline-block">
-                @Html.TextAreaFor(model => model.Description, 4, 20, htmlAttributes: new { @class = "form-control textareadesign", @placeholder = "Enter project description..." })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="form-control" id="Status" name="Status">
+                    <option>Select Status</option>
+                    <option value="working">working</option>
+                    <option value="completed">completed</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
             </div>
         </div>
+    }
 
+    <div class="form-group">
+        <label class="control-label col-md-3 offset-md-1 verticlealign" for="Description">Description</label>
+
+        <div class="col-md-5" style="display:inline-block">
+            @Html.TextAreaFor(model => model.Description, 4, 20, htmlAttributes: new { @class = "form-control textareadesign", @placeholder = "Enter project description..." })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @if (ViewBag.Message == "Add")
+    {
         <div class="form-group">
             <div class="offset-md-4 col-md-5">
                 <input type="button" value="Next" class="btn btn-default nextbtn" id="btn_project_Submit" />
             </div>
         </div>
-    </div>
+    }
+    else if (ViewBag.Message == "Edit")
+    {
+        <div class="form-group">
+            <div class="offset-md-4 col-md-5">
+                <input type="submit" value="Submit" class="btn btn-default nextbtn" id="btn_project_Submit2" />
+            </div>
+        </div>
+    }
+</div>
 }
 
-@section Scripts {
+
     <script type="text/javascript">
+
         $(document).ready(function () {
+           
+            $.get("/api/Values/GetallProjectManagers", function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    debugger
+                    var opt = new Option(data[i], data[i]);
+                    $('#Mgr_Id').append(opt);
+
+                }
+                if (model != null) {
+                    var Mgr_id = model.Mgr_Id;
+                    $('#Mgr_Id').val(Mgr_id);
+                }
+            });
             debugger
+            var model =  @Html.Raw(Json.Encode(Model));
+            if (model != null) {
+                var status = model.Status;
+                $('#Status').val(status);
+            }
 
 
+            $("#btn_project_Submit").click(function () {
+                debugger
+                $('#form0').validate();
+
+                if ($('#form0').valid()) {
+                    //trigger modal
+                    debugger
+                    var b = "{";
+                    var a = $('#form0').serialize();
+                    /*    $.each(a, function (i, field) {
+                            if (i === 0) { }
+                            else
+                            b=b+""+("\""+field.name+"\"" + ":" + "\""+field.value+"\"" + ",");
+                        });
+                        b = b.replace(/.$/, "}");
+                     //   alert(JSON.stringify($.trim(b)));
+                     */
+                    InitializeAddTeamConfirmDialog(a);
+                    return false;
+                }
+            });
 
         });
+        
 
     </script>
 
-    }

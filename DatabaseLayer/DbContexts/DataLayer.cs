@@ -163,7 +163,7 @@ namespace DatabaseLayer.DbContexts
                 if (username == null)
                 {
                     
-                    return companyDbContext.Projects.ToList();
+                    return companyDbContext.Projects.Where(t=>t.IsActive==true).ToList();
                 }
                 else
                 {
@@ -324,7 +324,58 @@ namespace DatabaseLayer.DbContexts
             }
         }
 
+        public Project ShowParticularProjectDetails(int pid)
+        {
 
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+                return companyDbContext.Projects.Where(p => (p.PID == pid) && (p.IsActive == true)).FirstOrDefault();
+            }
+                
+        }
+
+        public bool UpdateProject(Project project)
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+                
+                Project p = companyDbContext.Projects.Where(t => t.PID == project.PID).FirstOrDefault();
+                p.ProjectName = project.ProjectName;
+                p.Status = project.Status;
+                p.UpdatedBy = project.UpdatedBy;
+                p.UpdatedOn = DateTime.Now;
+                p.Mgr_Id = (project.Mgr_Id == null) ? p.Mgr_Id : project.Mgr_Id;
+                p.Description = project.Description;
+                companyDbContext.SaveChanges();
+
+            }
+              
+            return true;
+        }
+
+        public bool DeleteProject(int pid,string userid)
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+
+                Project p = companyDbContext.Projects.Where(t => t.PID == pid).FirstOrDefault();
+                
+                p.IsActive = false;
+                p.UpdatedOn = DateTime.Now;
+                p.UpdatedBy = userid;
+                List<Project_TechnologyStack> project_TechnologyStacks = companyDbContext.Project_TechnologyStacks.Where(t => t.projectId == pid).ToList();
+
+                foreach(var list in project_TechnologyStacks)
+                {
+                    list.IsActive = false;
+                }
+
+                companyDbContext.SaveChanges();
+
+            }
+
+            return true;
+        }
 
     }
 }

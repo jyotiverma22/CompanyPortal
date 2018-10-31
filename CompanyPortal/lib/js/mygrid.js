@@ -85,46 +85,8 @@ function jqgridInitialize(status) {
 
                     a = 1;
                 }
-
-                $("tr.jqgrow", this).contextmenu('contextMenu1', {
-
-                    bindings: {
-                        'edit': function (trigger) {
-                            // trigger is the DOM element ("tr.jqgrow") which are triggered
-                            grid.editGridRow(trigger.id, editSettings);
-                        },
-                        'view': function (/*trigger*/) {
-                            grid.editGridRow("new", addSettings);
-                        },
-                        'del': function (trigger) {
-                            if ($('#del').hasClass('ui-state-disabled') === false) {
-                                // disabled item can do be choosed
-                                grid.delGridRow(trigger.id, delSettings);
-                            }
-                        }
-                    },
-                    oncontextmenu: function (event/*, menu*/) {
-                        var rowId = $(event.target).closest("tr.jqgrow").attr("id");
-                        //grid.setSelection(rowId);
-                        // disable menu for rows with even rowids
-                        $('#del').attr("disabled", Number(rowId) % 2 === 0);
-                        if (Number(rowId) % 2 === 0) {
-                            $('#del').attr("disabled", "disabled").addClass('ui-state-disabled');
-                        } else {
-                            $('#del').removeAttr("disabled").removeClass('ui-state-disabled');
-                        }
-                        return false;
-                    }
-                });
-
-            
+                
             }
-
-
-
-
-            
-
 
         });
 
@@ -234,16 +196,9 @@ function showChildGrid(gid,rowId) {
 
 //custom formator function to display the Links
 function displayButtons(cellvalue, options, rowObject) {
-   
-    //var value = '<div class="dropdown">' +
-    //    ' <a class="btn btn-default dropdown-toggle" class= "fa fa-ellipsis-v" data - toggle="dropdown" > Tutorials</a >' +
-    //    ' <ul class="dropdown-menu">' +
-    //    ' <li><a tabindex="-1" href="#">HTML</a></li>' +
-    //    ' <li><a tabindex="-1" href="#">CSS</a></li></ul></div>';
-
-    var value = "<a href='#' onclick='showEditingDIV(" + rowObject.PId + ",this)' class='fa fa-ellipsis-v relativeDiv editdiv' id=r" + rowObject.PId + "></a>"; 
+ 
+    var value = "<a href='#' onclick='showEditingDIV(event," + rowObject.PId + ",this)' class='fa fa-ellipsis-v relativeDiv editdiv' id=r" + rowObject.PId + "></a>"; 
     
-  //  return edit + AddTeam + changeStatus;
     return value;
 }
 
@@ -257,33 +212,7 @@ function ToggleColumn(role_) {
     }
 }
 
-function EditProjectDetail(item) {
-    debugger
-    var rowid = $(item).closest("tr").attr("id");
-   //  jQuery('#grid').editRow(rowid);
-   // jQuery("#grid").jqGrid('editGridRow', rowid, { addCaption: "Edit row" });
 
-    //custom dialog box on edit action link 
-    $("#editprojectdetaildialog").dialog({
-        autoOpen: false,
-        title: "Edit Project Details",
-        modal: true,
-        open: function (event, ui) {
-            debugger
-            $(this).load("LoggedIn/EditProjectDetails");
-        },
-        buttons: {
-            "Close": function () {
-                $(this).dialog("close");
-            }
-        }
-
-    });
-
-    $("#editprojectdetaildialog").dialog("open");
-
-
-}
 
 //custom fuction for adding team member
 function AddTeamMembers(item) {
@@ -292,11 +221,6 @@ function AddTeamMembers(item) {
 }
 
 
-//custom function for changing project status
-function ProjectChangeStatus(item) {
-    var rowid = $(item).closest("tr").attr("id");
-
-}
 
 //function to search in projects
 
@@ -313,45 +237,117 @@ function SearchInProject()
 }
 
 function EnterPressedOnSearchBox(e) {
-
-    debugger
+   debugger
     var key = e.charCode || e.keyCode || 0;
     if (key === $.ui.keyCode.ENTER) {
         $("#SearchButton").click();
     }
 }
 
-function showEditingDIV(PId,element) {
+function showEditingDIV(event,PId,element) {
     debugger
-  //  $("#contextMenu").show();
+    $("#contextMenu1").fadeIn(100);
+    $("#contextMenu1").css({ 'top': event.pageY - 50 });
 
-    $(".editdiv").contextMenu('#contextMenu', {
-        bindings: {
-            'edit': function (t) {
-                /// editRow();
-            },
-            'view': function (t) {
-                // addRow();
-            },
-            'del': function (t) {
-                // delRow();
-            }
-        },
-        onContextMenu: function (event, menu) {
-            debugger
-            var rowId = $(event.target).parent("tr").attr("id");
-            var grid = $("#grid");
-            grid.setSelection(rowId);
+    $('#view').off('click');
+    $('#edit').off('click');
+    $('#del').off('click');
 
-            return true;
-        }
-    });
-    var editingDiv = '<div class="editdialog "><ul>' +
-        '<li><a href="#" class="fa fa-pencil-square-o">Update</a></li>' +
-        '<li><a href="#" class="fa fa-trash">Delete</a></li>' +
-        '<li><a href="#" class="fa fa-eye">View</a></li></ul><div>';
-    $(editingDiv).toggleClass(".div-item-show");
-    $(editingDiv).appendTo("#PId");
+    $("#view").on("click", { msg: PId }, ShowProjectDetails);
+    $("#edit").on("click", { msg: PId }, EditProjectDetail);
+    $("#del").on("click", { msg: PId }, deleteProject);
 
 }
 
+function ShowProjectDetails(event) {
+  //    alert(event.data.msg);
+    var dialog = $('<div id="ShowParticularProject" title="Project Details"> </div>');
+    dialog.dialog({
+        modal: true,
+        autoOpen: true,
+        resizable: false,
+        open: function () {
+            $(this).load("LoggedIn/ShowParticularProjectDetails?pid=" + event.data.msg);
+        },
+       
+    });
+    dialog.dialog("open");
+    return false;
+
+}
+
+function EditProjectDetail(event) {
+  
+   // alert(event.data.msg);
+    var pid = event.data.msg
+    //custom dialog box on edit action link 
+    $("#editprojectdetaildialog").dialog({
+        autoOpen: false,
+        title: "Edit Project Details",
+        modal: true,
+        open: function (event, ui) {
+            debugger
+            $(this).load("LoggedIn/AddProject?pid=" +pid);
+        }
+      
+
+    });
+
+    $("#editprojectdetaildialog").dialog("open");
+
+
+}
+
+function deleteProject(event) {
+//    alert(event.data.msg);
+    var pid = event.data.msg;
+    var dialog = $('<div id="delete_Confirm_dialog" title="Add Team Members"> Are You Sure? </div>');
+    dialog.dialog({
+        modal: true,
+        autoOpen: true,
+        resizable: false,
+        
+        buttons: [
+            {
+                text: 'Yes',
+                click: function () {
+                    $('#delete_Confirm_dialog').remove();
+                    $.post("/LoggedIn/DeleteProject?pid=" + pid + "&userid=", function (data) {
+                        debugger
+                        if (data == true) {
+                            $("#grid").trigger("reloadGrid");
+                        }
+                    });
+                }
+            },
+            {
+                text: 'No',
+                click: function () {
+                    $('#delete_Confirm_dialog').remove();
+                  
+                }
+            }
+        ]
+    });
+
+
+    dialog.dialog("open");
+ 
+}
+
+
+
+$(document).ready(function () {
+    $(document).mouseup(function (e) {
+        var container = new Array();
+        container.push($('#contextMenu1'));
+
+        $.each(container, function (key, value) {
+            if (!$(value).is(e.target) // if the target of the click isn't the container...
+                && $(value).has(e.target).length === 0) // ... nor a descendant of the container
+            {
+                $(value).hide();
+            }
+        });
+    });
+})
