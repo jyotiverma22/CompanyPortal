@@ -1,41 +1,49 @@
 ﻿@model CompanyPortal.ViewModels.ProjectViewModel
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Project_Name)
-        </dt>
+<div class="container">
+    <div class="row" style="height:10px">
+        <hr />
+    </div>
+    <div class="empdata projData">
+        <div class="row">
+            <label class="col-4 offset-1 text-left font-weight-bold">
+                Project Name:
+            </label>
+            <label class="col-5 offset-1 text-left font-weight-bold">
+                @Html.DisplayFor(model => model.Project_Name)
+            </label>
+        </div>
+        <div class="row">
+            <label class="col-4 offset-1 text-left font-weight-bold">Manager Id:</label>
 
-        <dd>
-            @Html.DisplayFor(model => model.Project_Name)
-        </dd>
+            <label class="col-5 offset-1 text-left">
+                @Html.DisplayFor(model => model.Mgr_Id)
+            </label>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Mgr_Id)
-        </dt>
+        <div class=" row">
+            <label class="col-4 offset-1 text-left font-weight-bold">Project Status:</label>
 
-        <dd>
-            @Html.DisplayFor(model => model.Mgr_Id)
-        </dd>
+            <label class="col-5 offset-1 text-left">
+                @Html.DisplayFor(model => model.Status)
+            </label>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+        </div>
 
 
-    </dl>
+        <div class=" row">
+            <label class="col-4 offset-1 text-left font-weight-bold"> Project Description:</label>
+
+            <label class="col-5 offset-1 text-left">
+                @Html.DisplayFor(model => model.Description)
+            </label>
+
+        </div>
+
+    </div>
 </div>
+
+
+
+
 

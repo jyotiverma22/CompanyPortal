@@ -31,9 +31,10 @@
     {
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select class="form-control" id="Status" name="Status">
+            <label class="control-label col-md-3 offset-md-1 verticlealign" for="Status">Status</label>
+            
+            <div class="col-md-5" style="display:inline-block">
+                <select class="dropdowndesign" id="Status" name="Status">
                     <option>Select Status</option>
                     <option value="working">working</option>
                     <option value="completed">completed</option>

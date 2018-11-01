@@ -20,6 +20,11 @@ namespace DatabaseLayer.DbContexts
             {
                 registration.DId = 5;
                 registration.RId = 4;
+                registration.CreatedBy = registration.Username;
+                registration.CreatedOn = DateTime.Now;
+                registration.UpdatedOn=DateTime.Now;
+                registration.UpdatedBy = registration.Username;
+
                 registration.R_M_Id = "CMP-1001";
                 registration.IsActive = true;
                 registration.Password = Password.EncodePassword(registration.Password, registration.Username);
@@ -246,53 +251,44 @@ namespace DatabaseLayer.DbContexts
         }
 
         public int AddProject(Project project)
-        { 
-            int id;
-            foreach (var key in project.project_TechnologyStacks)
+        {   if (project.PID == 0)
             {
-                key.IsActive = true;
-            }
-         //   List<Project_Team> projectTeams = new List<Project_Team>(); 
-            using (CompanyDbContext companyDbContext = new CompanyDbContext())
-            {
-                Project proj = companyDbContext.Projects.Where(n => (n.ProjectName == project.ProjectName)&&(n.IsActive==true)).FirstOrDefault();
-                 if (project != null)
-                 {
-
-                    project.UpdatedOn = DateTime.Now;
-                    project.UpdatedBy = project.UpdatedBy;
-                    if (proj == null)
+                int id;
+                foreach (var key in project.project_TechnologyStacks)
+                {
+                    key.IsActive = true;
+                }
+                //   List<Project_Team> projectTeams = new List<Project_Team>(); 
+                using (CompanyDbContext companyDbContext = new CompanyDbContext())
+                {
+                    Project proj = companyDbContext.Projects.Where(n => (n.ProjectName == project.ProjectName) && (n.IsActive == true)).FirstOrDefault();
+                    if (project != null)
                     {
-                        project.CreatedOn = DateTime.Now;
-                        project.CreatedBy = project.UpdatedBy;
-                       
 
-                    }
-
-                    companyDbContext.Projects.Add(project);
-                    companyDbContext.SaveChanges();
-
-                    id=project.PID;
-                    /*if (project.project_TechnologyStacks != null)
-                    {
-                        foreach( var key in project.project_TechnologyStacks)
+                        project.UpdatedOn = DateTime.Now;
+                        project.UpdatedBy = project.UpdatedBy;
+                        if (proj == null)
                         {
-                            key.projectId = id;
-                            key.IsActive = true;
-                            companyDbContext.Project_TechnologyStacks.Add(key);
-                           
+                            project.CreatedOn = DateTime.Now;
+                            project.CreatedBy = project.UpdatedBy;
+
 
                         }
+
+                        companyDbContext.Projects.Add(project);
                         companyDbContext.SaveChanges();
 
-                    }*/
-                    return project.PID;
+                        id = project.PID;
+                       
+                        return project.PID;
+
+                    }
+                    return 0;
+
 
                 }
-                return 0;
-                   
-
-                }
+            }
+            else { return 0; }
             
 
             }
@@ -340,12 +336,26 @@ namespace DatabaseLayer.DbContexts
             {
                 
                 Project p = companyDbContext.Projects.Where(t => t.PID == project.PID).FirstOrDefault();
-                p.ProjectName = project.ProjectName;
-                p.Status = project.Status;
-                p.UpdatedBy = project.UpdatedBy;
-                p.UpdatedOn = DateTime.Now;
-                p.Mgr_Id = (project.Mgr_Id == null) ? p.Mgr_Id : project.Mgr_Id;
-                p.Description = project.Description;
+                if (project.project_TechnologyStacks.Count()==0)
+                {
+                    p.ProjectName = project.ProjectName;
+                    p.Status = project.Status;
+                    p.UpdatedBy = project.UpdatedBy;
+                    p.UpdatedOn = DateTime.Now;
+                    p.Mgr_Id = (project.Mgr_Id == null) ? p.Mgr_Id : project.Mgr_Id;
+                    p.Description = project.Description;
+                }
+                else
+                {
+
+                    foreach(var key in project.project_TechnologyStacks)
+                    {
+                        key.IsActive = true;
+                        key.projectId = project.PID;
+                        companyDbContext.Project_TechnologyStacks.Add(key);
+                    }
+                  
+                }
                 companyDbContext.SaveChanges();
 
             }

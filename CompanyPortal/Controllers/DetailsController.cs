@@ -79,7 +79,7 @@ namespace CompanyPortal.Controllers
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<ProjectViewModel, Project>()
-                .ForMember(t => t.PID, o => o.Ignore())
+                .ForMember(t => t.PID, o => o.MapFrom(opt=>opt.PId))
                 .ForMember(t => t.Status, o => o.MapFrom(opt => "working"))
                 .ForMember(t => t.ProjectName, o => o.MapFrom(opt => opt.Project_Name))
                 .ForMember(t=>t.project_TechnologyStacks,o=>o.MapFrom(opt=>opt.ProjectTechStackList));
@@ -158,7 +158,10 @@ namespace CompanyPortal.Controllers
             {
                 cfg.CreateMap<ProjectViewModel, Project>()
                 .ForMember(t => t.PID, o => o.MapFrom(t=>t.PId))
-                .ForMember(t => t.ProjectName, o => o.MapFrom(opt => opt.Project_Name));
+                .ForMember(t => t.ProjectName, o => o.MapFrom(opt => opt.Project_Name))
+                .ForMember(t => t.project_TechnologyStacks, o => o.MapFrom(opt => opt.ProjectTechStackList));
+
+                cfg.CreateMap<AddProjectTechStackViewModel, Project_TechnologyStack>();
 
                 
             });

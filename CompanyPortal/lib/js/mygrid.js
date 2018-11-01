@@ -6,14 +6,14 @@ function jqgridInitialize(status) {
     $("#grid").setGridParam({ datatype: 'json', url: "/ProjectJQGrid/GetProjects?status=" + status, postData: { Search: false } });
 
     $("#search").val("");
-    //$()
+    
     
     $("#grid").trigger("reloadGrid");
 
   
     $("#grid").jqGrid(
         {
-            url: "/ProjectJQGrid/GetProjects?status=" + status,
+             url: "/ProjectJQGrid/GetProjects?status=" + status,
             datatype: "json",
             mtype: "Get",
             postData:"", 
@@ -85,13 +85,78 @@ function jqgridInitialize(status) {
 
                     a = 1;
                 }
+
                 
             }
 
         });
+   
 
-    
+    // the event handler on expanding parent row receives two parameters
+    // the ID of the grid tow  and the primary key of the row
+    function showChildGrid(gid, rowId) {
+        debugger
+        //   var gridId = gid.id;
+        var parentRowID = gid;
+        // create unique table and pager
+        var childGridID = parentRowID + "_table";
+        var childGridPagerID = parentRowID + "_pager";
 
+        // send the parent row primary key to the server so that we know which grid to show
+        var childGridURL = "/ProjectJQGrid/getTeamDetails?pid=" + rowId;
+        // add a table and pager HTML elements to the parent grid row - we will render the child grid here
+        $('#' + parentRowID).append('<table id=' + childGridID + '></table><div id=' + childGridPagerID + '></div>');
+        //  $("#" + childGridID).setGridParam({ datatype: 'json', url: childGridID }).trigger("reloadGrid");
+
+        $("#" + childGridID).jqGrid({
+            url: childGridURL,
+            mtype: "GET",
+            datatype: "json",
+            page: 1,
+            colNames: ['UserId', 'EmployeeName', 'EmailId'],
+            colModel: [
+                { label: 'userId', name: 'userId', key: true, width: 75 },
+                { label: 'Firstname', name: 'Firstname', width: 100 },
+                { label: 'Email', name: 'Email', width: 100 }
+            ],
+
+            width: 500,
+            height: '100%',
+            rowNum: 5,
+            pager: "#" + childGridPagerID,
+            caption: "Team Details",
+            emptyrecords: "No projects to show",
+            onSelectRow: exapandEmployeeDetail,
+
+            loadComplete: function () {
+                debugger
+                    var gridid = "gview_grid_" + rowId + "_table";
+                var childgridtitle = document.getElementById(gridid).childNodes[0].childNodes[1]
+                $(childgridtitle).after('<div id="jqSubGridButtonDiv" style="display:none"> <a href="#" onclick="openAddTeamDialog(' + rowId + ')" class="fa fa-user-plus"></a> </div>');
+                if (status == "working") {
+                    debugger
+                    $("#jqSubGridButtonDiv").show();
+                    
+                }
+                else {
+                    debugger
+                    $("#jqSubGridButtonDiv").hide();
+                   
+                }
+
+            },
+            jsonReader: {
+                root: "rows",
+                page: "page",
+                total: "total",
+                records: "records",
+                repeatitems: false,
+                Id: "0"
+            },
+        });
+    }
+
+ 
   /*  $("#grid").jqGrid('filterToolbar', {
 
         searchOperators: true,
@@ -139,60 +204,7 @@ function jqgridInitialize(status) {
 
 
 
-// the event handler on expanding parent row receives two parameters
-// the ID of the grid tow  and the primary key of the row
-function showChildGrid(gid,rowId) {
-    debugger
- //   var gridId = gid.id;
-    var parentRowID = gid;
-    // create unique table and pager
-    var childGridID = parentRowID + "_table";
-    var childGridPagerID = parentRowID + "_pager";
 
-    // send the parent row primary key to the server so that we know which grid to show
-    var childGridURL = "/ProjectJQGrid/getTeamDetails?pid=" + rowId;
-    // add a table and pager HTML elements to the parent grid row - we will render the child grid here
-    $('#' + parentRowID).append('<table id=' + childGridID + '></table><div id=' + childGridPagerID + '></div>');
-  //  $("#" + childGridID).setGridParam({ datatype: 'json', url: childGridID }).trigger("reloadGrid");
-
-    $("#" + childGridID).jqGrid({
-        url: childGridURL,
-        mtype: "GET",
-        datatype: "json",
-        page: 1,
-        colNames: ['UserId', 'EmployeeName', 'EmailId'],
-        colModel: [
-            { label: 'userId', name: 'userId', key: true, width: 75 },
-            { label: 'Firstname', name: 'Firstname', width: 100 },
-            { label: 'Email', name: 'Email', width: 100 }
-        ],
-
-        width: 500,
-        height: '100%',
-        rowNum: 5,
-        pager: "#" + childGridPagerID,
-        caption: "Team Details",
-        emptyrecords: "No projects to show",
-        onSelectRow: exapandEmployeeDetail,
-    
-        loadComplete: function () {
-            debugger
-            var gridid = "gview_grid_" + rowId + "_table";
-            var childgridtitle = document.getElementById(gridid).childNodes[0].childNodes[1]
-            $(childgridtitle).after('<div id="jqSubGridButtonDiv"> <a href="#" onclick="" class="fa fa-user-plus"></a> </div>');
-
-
-        },
-        jsonReader: {
-            root: "rows",
-            page: "page",
-            total: "total",
-            records: "records",
-            repeatitems: false,
-            Id: "0"
-        },
-    });
-}
 
 //custom formator function to display the Links
 function displayButtons(cellvalue, options, rowObject) {
@@ -247,7 +259,7 @@ function EnterPressedOnSearchBox(e) {
 function showEditingDIV(event,PId,element) {
     debugger
     $("#contextMenu1").fadeIn(100);
-    $("#contextMenu1").css({ 'top': event.pageY - 50 });
+    $("#contextMenu1").css({ 'top': event.pageY - 50, 'left': '40px' });
 
     $('#view').off('click');
     $('#edit').off('click');
@@ -261,13 +273,20 @@ function showEditingDIV(event,PId,element) {
 
 function ShowProjectDetails(event) {
   //    alert(event.data.msg);
+
+    var pid = event.data.msg
     var dialog = $('<div id="ShowParticularProject" title="Project Details"> </div>');
     dialog.dialog({
         modal: true,
         autoOpen: true,
         resizable: false,
-        open: function () {
-            $(this).load("LoggedIn/ShowParticularProjectDetails?pid=" + event.data.msg);
+        resizable: false,
+        width: "600px",
+        open: function (event, ui) {
+            debugger
+            $(this).load("LoggedIn/ShowParticularProjectDetails?pid=" + pid);
+            $(event.target).parent().css('top', '35px');
+            $(event.target).parent().css('left', '445px');
         },
        
     });
@@ -285,9 +304,13 @@ function EditProjectDetail(event) {
         autoOpen: false,
         title: "Edit Project Details",
         modal: true,
+        resizable: false,
+        width: "600px",
         open: function (event, ui) {
             debugger
-            $(this).load("LoggedIn/AddProject?pid=" +pid);
+            $(this).load("LoggedIn/AddProject?pid=" + pid);
+            $(event.target).parent().css('top', '35px');
+            $(event.target).parent().css('left', '445px');
         }
       
 

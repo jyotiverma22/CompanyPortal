@@ -1,35 +1,39 @@
-﻿<div class="col-md-3 sidenavbar setheight ">
+﻿
+<div class="col-md-3 sidenavbar setheight ">
     <div class="col-12 side-nav">
         <div class="nav-item navitem " id="personaldetails"> Personal Details</div>
         <div class="nav-item navitem" id="projectdetails">
             Project Details
+            <div class="contextMenu margintop" id="contextMenu2" style="display:none; width:273px;">
+                <ul id="projsbar" style=" font-size: 65%">
+                    @if (Session["role"].ToString() == "Admin")
+                    {
+                        <li>
+                            <a id="addProject"> Add Projects</a>
+                        </li>
+                    }
+                    <li>
+                        <a id="wproj"> Working Projects</a>
+                    </li>
+                    <li>
+                        <a id="cproj">Completed Projects</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <ul id="projsbar" style="display:none">
+      
+            <div class="nav-item navitem" id="attendenece"> Attendence</div>
             @if (Session["role"].ToString() == "Admin")
             {
-                <li class="nav-item">
-                    <a id="addProject"> Add Projects</a>
-                </li>
+                <div class="nav-item navitem"> Employee Details</div>
             }
-            <li class="nav-item">
-                <a id="wproj"> Working Projects</a>
-            </li>
-            <li class="nav-item">
-                <a id="cproj">Completed Projects</a>
-            </li>
-        </ul>
-        <div class="nav-item navitem" id="attendenece"> Attendence</div>
-        @if (Session["role"].ToString() == "Admin")
-        {
-        <div class="nav-item navitem"> Employee Details</div>
-        }
-        <!--
+            <!--
         <div class="nav-item navitem"> Team Details</div>
         <div class="nav-item navitem"> Team Details</div>
 
         -->
+        </div>
     </div>
-</div>
 
 
 <div class="col-md-9 mainContent" id="mainContent">
@@ -103,19 +107,20 @@
             $("#addprojectdetail").hide();
         });
 
-        $("#projectdetails").click(function () {
+        $("#projectdetails").mouseover(function () {
             debugger
-            if (a == 0) {
-                $("#projsbar").show();
-                a = 1;
-            }
-            else {
-                $("#projsbar").hide();
-                a = 0;
-            }
-            // $("#proj").show();
-            // $("#emp").hide();
+           
+                $("#contextMenu2").show();
+               
         });
+
+        $("#projectdetails").mouseout(function () {
+            debugger
+
+            $("#contextMenu2").hide();
+
+        });
+
 
         $("#wproj").click(function () {
             debugger
@@ -160,9 +165,10 @@
       
 
 
+    });
        
 
-    });
+    
 
 
 
@@ -209,16 +215,24 @@
 
     function SaveDataProjectIntoDatabase(model,formdata) {
         debugger
+        var data;
         if (formdata == null) {
             data = model;
         }
-        else {
+        else{
             model.ProjectTechStackList = formdata;
-            var data = {
+             data = {
                 projectViewModel: model,
             }
 
-}
+        }
+        //else {
+        //    data = {
+        //        projectTechnologyList: formdata,
+        //        PId:model
+                
+        //    }
+        //}
 
        
       /*  $.post("/LoggedIn/AddProject", data, function (result) {

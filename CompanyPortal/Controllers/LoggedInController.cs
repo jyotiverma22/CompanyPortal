@@ -219,7 +219,7 @@ namespace CompanyPortal.Controllers
 
 
         [HttpPost]
-        public ActionResult AddProject(ProjectViewModel projectViewModel)
+        public ActionResult AddProject(ProjectViewModel projectViewModel, int? PId, ProjectTechnologyList projectTechnologyList)
         {
             if (ModelState.IsValid)
             {
@@ -255,8 +255,12 @@ namespace CompanyPortal.Controllers
 
 
 
-        public ActionResult AddTeam(ProjectViewModel projectViewModel)
+        public ActionResult AddTeam(ProjectViewModel projectViewModel,int? PId)
         {
+            if(PId!=null)
+            {
+                ViewBag.PId = PId;
+            }
             return PartialView("_AddProjectTechnologyStackViewModel", projectViewModel);
         }
 

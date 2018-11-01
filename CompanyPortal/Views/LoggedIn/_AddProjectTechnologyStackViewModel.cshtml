@@ -160,6 +160,10 @@
             $("#submit").click(function () {
                 debugger
                 var model =  @Html.Raw(Json.Encode(Model));
+                @*var PId =@ViewBag.PId;
+                if (PId != null) {
+                    model = PId;
+                }*@
                // model["ProjectTechStackList"] = Json.encode($("#form1").serialize());
                //  var formdata = $("#form1").serialize();
                //var m = model + data;

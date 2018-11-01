@@ -64,6 +64,9 @@
 
 .setheight{
     min-height:530px;
+    padding:0;
+    padding:0;
+    padding-top:5px;
 }
 .bgmiddle {
     background-color: #fff;
@@ -143,8 +146,6 @@
 
 
 .side-nav {
-
-    position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
@@ -153,8 +154,11 @@
     height: 100%;
     width: 250px;
     color: #fff;
-    display: inline;
-    margin-top:70px;
+    display: inline !important;
+    margin-top: 70px;
+    padding: 0;
+    margin: 0;
+    cursor:pointer
 }
 
     .side-nav a {
@@ -162,22 +166,49 @@
         text-decoration: none;
         font-size: 20px;
         color: #818181;
-        display: block;
         margin-bottom:3px;
     }
 
         .side-nav a:hover {
             color: #f1f1f1;
-            background-color: #D4D4CD;
+        
+           
         }
 
-.main {
-    margin-left: 250px; 
-   padding-top:20px;
+.navitem{
+    margin-right:0 !important;
 }
 
-.container{
+#projectdetails{
+    position:relative;
+}
+
+#projsbar li {
+    list-style: none;
+}
+.margintop{
+    margin-top:7px;
+}
+
+.main {
+    margin-left: 250px;
+    padding-top: 20px;
+}
+
+.margintop li {
+    padding: 0!important;
+}
+
+.margintop  a{
+    display: block;
     
+}
+
+.margintop a:hover{
+    background-color:none;
+}
+
+.container {
 }
 
 
@@ -461,15 +492,17 @@ input {
 .dropdowndesign {
     width: inherit;
     height: 35px;
+    max-width:300px;
 }
 .inputdesign{
-    width:94%;
+    width:100%;
     border-radius:0;
     border:solid,0.5px,#000;
 }
 .textareadesign {
     border-radius: 0;
     border: solid,0.5px,#000;
+    max-width:300px;
 }
 
 .fa{
@@ -556,16 +589,31 @@ input {
 }
 
 
-.contextMenu{
-    position:absolute;
-    height:auto;
-    width:auto;
-    background-color:#F8E6AB;
+.contextMenu {
+    position: absolute;
+    height: auto;
+    width: auto;
+    background-color: #E7BA29;
 }
 
-.contextMenu li{
-    list-style:none;
-    cursor:pointer;
+.contextMenu ul {
+    padding: 0px;
+    margin: 0px;
 }
 
+
+    .contextMenu li {
+        list-style: none;
+        cursor: pointer;
+        padding: 5px 10px;
+        border-bottom: solid 1px;
+    }
+        .contextMenu li:hover {
+            background-color: #E9C654;
+        }
 /*Editing div in jqgrid */
+
+.projData {
+    padding-bottom: 10px;
+    margin-bottom: 10px
+}

@@ -68,8 +68,14 @@ function InitializeAddTeamConfirmDialog(formdata) {
 
 function openAddTeamDialog(formdata)
 {
+    var Pid;
     var addteam = $("#addteamDialog");
-
+    if (isNaN(formdata)) {
+        Pid = formdata.PId;
+    }
+    else {
+        Pid=formdata
+    }
     addteam.dialog({
         modal: true,
         autoOpen: true,
@@ -78,7 +84,7 @@ function openAddTeamDialog(formdata)
         top: "150px",
         open: function () {
             debugger
-            $(this).load("/LoggedIn/AddTeam", formdata);
+            $(this).load("/LoggedIn/AddTeam?PId=" + Pid, formdata);
 
         }
     });
