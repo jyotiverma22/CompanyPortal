@@ -387,5 +387,31 @@ namespace DatabaseLayer.DbContexts
             return true;
         }
 
+
+        public bool UpdateAttendence(Attendence attendence)
+        {
+            using (var companyDbContext = new CompanyDbContext())
+            {
+                ////add
+                Attendence att = companyDbContext.Emp_Attendence.Where(t=>(t.Date==attendence.Date)&&(t.Emp_Id==attendence.Emp_Id)).FirstOrDefault();
+                if (att == null)
+                {
+                    companyDbContext.Emp_Attendence.Add(attendence);
+                }
+                else
+                if (attendence.LogOutTime != null)
+                {
+                    att.LogOutTime = att.LogOutTime;
+                    att.TotalTime = att.TotalTime;
+                }
+                companyDbContext.SaveChanges();
+                //companyDbContext.Emp_Attendence.Add(attendence);
+
+            }
+
+                return true;
+        }
+
+
     }
 }

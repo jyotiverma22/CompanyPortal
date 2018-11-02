@@ -42,5 +42,7 @@ namespace RepositoryLayer.Repositories
         bool UpdateProject(Project project);
 
         bool DeleteProject(int pid,string userid);
+
+        bool UpdateAttendence(Attendence attendence);
     }
 }

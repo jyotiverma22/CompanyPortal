@@ -66,7 +66,17 @@ namespace CompanyPortal.Controllers
                                     Session["firstname"] = user.firstname;
                                     Session["dept"] = user.deptname;
                                     Session["id"] = user.userid;
-                                    return RedirectToAction("Index", "LoggedIn", new { loginViewModel.Username });
+                                    //updating the attendence on login
+                                    Attendence attendence = new Attendence { Date = DateTime.Now.ToShortDateString(), Emp_Id = user.userid ,LogInTime=DateTime.Now.ToShortTimeString()};
+
+                                    UriBuilder builder2 = new UriBuilder(ConfigurationManager.AppSettings["baseUrl"]);
+                                    var json2 = JsonConvert.SerializeObject(attendence);
+                                    var content2 = new StringContent(json2, Encoding.UTF8, "application/json");
+                                    var resultpost2 = await client.PostAsync(builder.Uri + "/UpdateAttendence", content2);
+                                    if (resultpost2.IsSuccessStatusCode)
+                                    {
+                                        return RedirectToAction("Index", "LoggedIn", new { loginViewModel.Username });
+                                    }
                                     
                                 }
 

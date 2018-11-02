@@ -94,6 +94,12 @@ namespace RepositoryLayer.Repositories
             return datalayer.ShowParticularProjectDetails(Pid);
         }
 
+        public bool UpdateAttendence(Attendence attendence)
+        {
+            return datalayer.UpdateAttendence(attendence);
+         
+        }
+
         public bool UpdateProject(Project project)
         {
             return datalayer.UpdateProject(project);

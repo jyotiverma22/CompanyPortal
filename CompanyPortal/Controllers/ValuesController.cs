@@ -129,6 +129,13 @@ namespace CompanyPortal.Controllers
        public IEnumerable<string> GetallProjectManagers()
         {
             return companyRepository.getAllProjectManagers();
-        }        
+        }  
+        
+        [HttpPost]
+        public bool UpdateAttendence(Attendence attendence)
+        {
+            return companyRepository.UpdateAttendence(attendence);
+        }
+
     }
 }

@@ -197,6 +197,14 @@
     <Compile Include="Migrations\20181024061016_createdOnMigration.designer.cs">
       <DependentUpon>20181024061016_createdOnMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20181102111808_attendenceMigration.cs" />
+    <Compile Include="Migrations\20181102111808_attendenceMigration.designer.cs">
+      <DependentUpon>20181102111808_attendenceMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20181102122415_attendenceMigration2.cs" />
+    <Compile Include="Migrations\20181102122415_attendenceMigration2.designer.cs">
+      <DependentUpon>20181102122415_attendenceMigration2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\CompanyDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
