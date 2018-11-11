@@ -92,8 +92,7 @@
 }
 
 .btnpadding {
-    padding: 7px 20px;
-    margin-right: 10px;
+    font-size:13px;
     background-color: #000;
 }
 
@@ -276,7 +275,7 @@ img {
 
 /*section contact CSS start*/
 .contact{
-    background-image:url("images/bg.jpg");
+    background-image:url("images/bgc.jpg");
     background-size:100% 100%;
 }
 /* section Contact CSS ends*/

@@ -433,6 +433,7 @@
     <Content Include="lib\images\aboutbg.jpg" />
     <Content Include="lib\images\add.png" />
     <Content Include="lib\images\bg.jpg" />
+    <Content Include="lib\images\bgc.jpg" />
     <Content Include="lib\images\bgimage.JPG" />
     <Content Include="lib\images\contact3.png" />
     <Content Include="lib\images\logo.png" />
