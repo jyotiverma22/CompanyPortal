@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CompanyPortal.JobScheduling;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,6 +20,7 @@ namespace CompanyPortal
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             log4net.Config.XmlConfigurator.Configure();
+            JobScheduler.Start();
         }
 
 
