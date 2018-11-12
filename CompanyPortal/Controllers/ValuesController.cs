@@ -137,5 +137,11 @@ namespace CompanyPortal.Controllers
             return companyRepository.UpdateAttendence(attendence);
         }
 
+        [HttpPost]
+        public void SetAllEmployeesAttendence()
+        {
+            companyRepository.SetAllEmployeesAttendence();
+        }
+
     }
 }

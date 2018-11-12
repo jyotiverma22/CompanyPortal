@@ -401,8 +401,28 @@ namespace DatabaseLayer.DbContexts
                 else
                 if (attendence.LogOutTime != null)
                 {
-                    att.LogOutTime = att.LogOutTime;
-                    att.TotalTime = att.TotalTime;
+                    att.LogOutTime = attendence.LogOutTime;
+                    DateTime LogOut = DateTime.Parse(attendence.LogOutTime);
+                    DateTime LogIn = DateTime.Parse(attendence.LogInTime);
+                    TimeSpan TimeDiff = LogOut - LogIn;
+
+                    if(att.TotalTime==null)
+                    {
+                        att.TotalTime = TimeDiff.ToString();
+                    }
+                    else
+                    {
+                        TimeSpan OldTotalTime = TimeSpan.Parse(att.TotalTime);
+                        OldTotalTime = OldTotalTime + TimeDiff;
+                        att.TotalTime = OldTotalTime.ToString();
+                    }
+                    TimeSpan TotalTime = TimeSpan.Parse(att.TotalTime);
+                    int hrs = TotalTime.Hours;
+                    if(hrs>=3)
+                    {
+                        att.AttendenceStatus = "Present";
+                    }
+
                 }
                 companyDbContext.SaveChanges();
                 //companyDbContext.Emp_Attendence.Add(attendence);
@@ -410,6 +430,29 @@ namespace DatabaseLayer.DbContexts
             }
 
                 return true;
+        }
+
+        public void SetAllEmployeesAttendence()
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+                String todayDate = DateTime.Now.ToShortDateString();
+                List<Attendence> EmployeesNotLogOut = companyDbContext.Emp_Attendence.Where(e => (e.Date == todayDate && e.LogOutTime == null)).ToList();
+                foreach(var obj in EmployeesNotLogOut)
+                {
+                    obj.LogOutTime = obj.LogInTime;
+                    obj.AttendenceStatus = "Absent";
+                }
+
+                List<string> AlreadyLoginEmps = companyDbContext.Emp_Attendence.Where(e => e.Date == todayDate).Select(e => e.Emp_Id).ToList();
+                List<string> EmpIds = companyDbContext.UserRegistration.Select(e => e.UserId).Except(AlreadyLoginEmps).ToList();
+                foreach(var obj in EmpIds)
+                {
+                    Attendence att = new Attendence() { Date=todayDate,AttendenceStatus="Absent",Emp_Id=obj};
+                    companyDbContext.Emp_Attendence.Add(att);
+                }
+                companyDbContext.SaveChanges();
+            }
         }
 
 

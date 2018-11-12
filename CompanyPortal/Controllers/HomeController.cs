@@ -66,10 +66,10 @@ namespace CompanyPortal.Controllers
                                     Session["firstname"] = user.firstname;
                                     Session["dept"] = user.deptname;
                                     Session["id"] = user.userid;
+                                    Session["LoginTime"] = DateTime.Now.ToShortTimeString();
                                     //updating the attendence on login
                                     Attendence attendence = new Attendence { Date = DateTime.Now.ToShortDateString(), Emp_Id = user.userid ,LogInTime=DateTime.Now.ToShortTimeString()};
 
-                                    UriBuilder builder2 = new UriBuilder(ConfigurationManager.AppSettings["baseUrl"]);
                                     var json2 = JsonConvert.SerializeObject(attendence);
                                     var content2 = new StringContent(json2, Encoding.UTF8, "application/json");
                                     var resultpost2 = await client.PostAsync(builder.Uri + "/UpdateAttendence", content2);
@@ -193,15 +193,33 @@ namespace CompanyPortal.Controllers
         }
 
         //Actions performed on log out
-        public ActionResult LogOut()
+        public async Task<ActionResult> LogOut()
         {
-            Session["username"] = null;
-            Session["token"] = null;
-            Session["role"] = null;
-            Session["firstname"] = null;
-            Session["dept"] = null;
-            Session["id"] = null;
-            return RedirectToAction("Index", "Home");
+            using (HttpClient httpclient = new HttpClient())
+            {
+                Attendence attendence = new Attendence { Date = DateTime.Now.ToShortDateString(), Emp_Id = Session["id"].ToString(), LogOutTime = DateTime.Now.ToShortTimeString() ,LogInTime = Session["LoginTime"].ToString()};
+                UriBuilder builder2 = new UriBuilder(ConfigurationManager.AppSettings["baseUrl"]);
+                var json2 = JsonConvert.SerializeObject(attendence);
+                var content2 = new StringContent(json2, Encoding.UTF8, "application/json");
+                var resultpost2 = await httpclient.PostAsync(builder2.Uri + "/UpdateAttendence", content2);
+                if(resultpost2.IsSuccessStatusCode)
+                {
+
+                    Session["username"] = null;
+                    Session["token"] = null;
+                    Session["role"] = null;
+                    Session["firstname"] = null;
+                    Session["dept"] = null;
+                    Session["id"] = null;
+                    Session["LoginTime"] = null;
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "LoggedIn");
+                }
+            }
+
         }
     }
 }

@@ -89,6 +89,11 @@ namespace RepositoryLayer.Repositories
             return datalayer.SaveErrorLoggingDetails(dbLogging);
         }
 
+        public void SetAllEmployeesAttendence()
+        {
+            datalayer.SetAllEmployeesAttendence();
+        }
+
         public Project ShowParticularProjectdetails(int Pid)
         {
             return datalayer.ShowParticularProjectDetails(Pid);

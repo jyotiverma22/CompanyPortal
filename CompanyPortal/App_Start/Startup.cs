@@ -21,7 +21,7 @@ namespace CompanyPortal
             {
                 TokenEndpointPath = new PathString("/token"),
                 Provider = new OAuthProvider(),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(20),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(500),
                 AllowInsecureHttp = true
             };
             app.UseOAuthBearerTokens(OAuthOptions);
