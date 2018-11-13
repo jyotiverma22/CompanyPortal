@@ -46,5 +46,7 @@ namespace RepositoryLayer.Repositories
         bool UpdateAttendence(Attendence attendence);
 
         void SetAllEmployeesAttendence();
+
+        List<Attendence> GetAttendence(string UserId);
     }
 }

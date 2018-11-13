@@ -205,6 +205,10 @@
     <Compile Include="Migrations\20181102122415_attendenceMigration2.designer.cs">
       <DependentUpon>20181102122415_attendenceMigration2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20181113102222_dateTimeInAttendenceMigration.cs" />
+    <Compile Include="Migrations\20181113102222_dateTimeInAttendenceMigration.designer.cs">
+      <DependentUpon>20181113102222_dateTimeInAttendenceMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\CompanyDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

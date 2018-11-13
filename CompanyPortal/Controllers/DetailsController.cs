@@ -136,6 +136,13 @@ namespace CompanyPortal.Controllers
         }
 
 
+        [HttpGet, Route("GetAttendence")]
+        public IHttpActionResult GetAttendence(string UserId)
+        {
+            return Ok(ICompany.GetAttendence(UserId));
+        }
+
+
         public ProjectViewModel MapProjectIntoProjectViewModel(Project project)
         {
             var config = new MapperConfiguration(cfg =>
@@ -169,6 +176,8 @@ namespace CompanyPortal.Controllers
             IMapper mapper = config.CreateMapper();
             return mapper.Map<ProjectViewModel, Project>(projectViewModel);
         }
+
+
 
     }
 }

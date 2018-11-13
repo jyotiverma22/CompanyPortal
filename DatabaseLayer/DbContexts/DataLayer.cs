@@ -436,7 +436,7 @@ namespace DatabaseLayer.DbContexts
         {
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
-                String todayDate = DateTime.Now.ToShortDateString();
+                DateTime todayDate = DateTime.Now.Date;
                 List<Attendence> EmployeesNotLogOut = companyDbContext.Emp_Attendence.Where(e => (e.Date == todayDate && e.LogOutTime == null)).ToList();
                 foreach(var obj in EmployeesNotLogOut)
                 {
@@ -452,6 +452,15 @@ namespace DatabaseLayer.DbContexts
                     companyDbContext.Emp_Attendence.Add(att);
                 }
                 companyDbContext.SaveChanges();
+            }
+        }
+
+        public List<Attendence> GetAttendence(string UserId)
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+                return companyDbContext.Emp_Attendence.Where(e => e.Emp_Id == UserId).ToList();
+
             }
         }
 

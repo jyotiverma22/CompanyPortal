@@ -52,6 +52,11 @@ namespace RepositoryLayer.Repositories
             return datalayer.GetAllTechnologies();
         }
 
+        public List<Attendence> GetAttendence(string UserId)
+        {
+            return datalayer.GetAttendence(UserId);
+        }
+
         public List<BloodGroup> GetBloodGroups()
         {
             return datalayer.GetBloodGroups();

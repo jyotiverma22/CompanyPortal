@@ -310,5 +310,11 @@ namespace CompanyPortal.Controllers
             }
         }
 
+
+        public ActionResult ShowAttendence()
+        {
+            return PartialView("_AttendencePartialView");
+        }
+
     }
 }

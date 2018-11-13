@@ -68,7 +68,7 @@ namespace CompanyPortal.Controllers
                                     Session["id"] = user.userid;
                                     Session["LoginTime"] = DateTime.Now.ToShortTimeString();
                                     //updating the attendence on login
-                                    Attendence attendence = new Attendence { Date = DateTime.Now.ToShortDateString(), Emp_Id = user.userid ,LogInTime=DateTime.Now.ToShortTimeString()};
+                                    Attendence attendence = new Attendence { Date = DateTime.Now.Date, Emp_Id = user.userid ,LogInTime=DateTime.Now.ToShortTimeString()};
 
                                     var json2 = JsonConvert.SerializeObject(attendence);
                                     var content2 = new StringContent(json2, Encoding.UTF8, "application/json");
@@ -197,7 +197,7 @@ namespace CompanyPortal.Controllers
         {
             using (HttpClient httpclient = new HttpClient())
             {
-                Attendence attendence = new Attendence { Date = DateTime.Now.ToShortDateString(), Emp_Id = Session["id"].ToString(), LogOutTime = DateTime.Now.ToShortTimeString() ,LogInTime = Session["LoginTime"].ToString()};
+                Attendence attendence = new Attendence { Date = DateTime.Now.Date, Emp_Id = Session["id"].ToString(), LogOutTime = DateTime.Now.ToShortTimeString() ,LogInTime = Session["LoginTime"].ToString()};
                 UriBuilder builder2 = new UriBuilder(ConfigurationManager.AppSettings["baseUrl"]);
                 var json2 = JsonConvert.SerializeObject(attendence);
                 var content2 = new StringContent(json2, Encoding.UTF8, "application/json");

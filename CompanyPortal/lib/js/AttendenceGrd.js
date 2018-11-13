@@ -1,29 +1,25 @@
 ﻿
 
-function AttendencejqgridInitialize(status) {
+function AttendencejqgridInitialize(userid) {
     debugger
-    $("#grid").setGridParam({ datatype: 'json', url: "/ProjectJQGrid/GetProjects?status=" + status, postData: { Search: false } });
+  /*  $("#grid").setGridParam({ datatype: 'json', url: "/ProjectJQGrid/GetProjects?status=" + status, postData: { Search: false } });
 
     $("#search").val("");
 
 
     $("#grid").trigger("reloadGrid");
+*/
 
-
-    $("#grid").jqGrid(
+    $("#AttendGrid").jqGrid(
         {
-            url: "/ProjectJQGrid/GetProjects?status=" + status,
+            url: "/AttendenceJQGrid/GetAttendence?userid=" + userid,
             datatype: "json",
             mtype: "Get",
             postData: "",
-            colNames: ['', '', 'Project Name', 'Manager Id', 'Status'],
+            colNames: [ '','Date', 'LogIn Time', 'LogOut Time','Duration','Attendence Status'],
             colModel: [
-                { key: false, name: 'Actions', index: 'Actions', width: 15, align: "center", editable: false, formatter: displayButtons, search: false },
-                {
-                    key: true, name: 'PId', index: 'PId', width: 100, editable: false, editrules: {
-                        required: true,
-                        edithidden: true
-                    },
+
+                { key: true, name: 'PId', index: 'PId', width: -1, editable: false,
                     hidden: true,
                     editoptions: {
                         dataInit: function (element) {
@@ -31,20 +27,28 @@ function AttendencejqgridInitialize(status) {
                         }
                     }
                 },
-                {
-                    key: false, name: 'Project_Name', index: 'Project_Name', editable: true, search: true
-                    , searchoptions: { sopt: ['cn'] }, sortable: true, sorttype: 'text'
+
+              //  { key: false, name: 'Actions', index: 'Actions', width: 15, align: "center", editable: false, formatter: displayButtons, search: false },
+              
+                { key: false, name: 'Date', index: 'Date', edtable: false, search: true
+                    , searchoptions: { sopt: ['cn'] }, sortable: true, sorttype: 'date', formatter: 'date', formatoptions: { }
                 },
-                { key: false, name: 'Mgr_Id', index: 'Mgr_Id', editable: true, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc', sorttype: 'text' },
-                { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype: 'string', sortable: true, sorttype: 'text', search: false }
+
+                { key: false, name: 'LogInTime', index: 'LogInTime', editable: false, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc', sorttype: 'text' },
+
+                { key: false, name: 'LogOutTime', index: 'LogOutTime', editable: false, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc', sorttype: 'text' },
+
+                { key: false, name: 'TotalTime', index: 'TotalTime', editable: false, search: false,  formatter: displayTime },
+
+                { key: false, name: 'AttendenceStatus', index: 'AttendenceStatus', editable: true, search: true, searchtype: 'string', sortable: true, sorttype: 'text', search: false }
 
             ],
-            pager: jQuery('#pager'),
+            pager: jQuery('#AttendPager'),
             rowList: [5, 10, 15, 20],
             rowNum: 20,
             height: "100%",
             viewrecords: true,
-            caption: "Project Details",
+            caption: "Attendence",
             emptyrecords: "No projects to show",
             loadOnce: true,
             ignoreCase: true,
@@ -53,14 +57,9 @@ function AttendencejqgridInitialize(status) {
             onSortCol: function (name, index, order) {
                 debugger
                 $("#grid").setGridParam({ postData: { "SortBy": name, "OrderBy": order } });
-                //s = $("#grid").getGridParam('selarrrow');
-                // $("#grid").jqGrid('setSelection', 1,true)
-                //  alert(s);
+               
             },
-            ondblClickRow: function (id) {
-                debugger
-            },
-
+           
 
             jsonReader: {
                 root: "rows",
@@ -71,24 +70,23 @@ function AttendencejqgridInitialize(status) {
                 Id: "0"
             },
             autowidth: true,
-            subGrid: true,
-            subGridRowExpanded: showChildGrid,
-            subGridOptions: {
-                expandOnLoad: false
-            },
-
             loadComplete: function () {
                 debugger
                 $("tr.jqgrow:odd").addClass('myAltRowClass');
-                if (a == 0) {
-                    $('.ui-jqgrid-title').after('<div id="jqGridButtonDiv"><input type="text" name="search" id="ProjectSearchID" onkeypress="EnterPressedOnSearchBox(event) "> <a href="#" onclick="SearchInProject()" class="fa fa-search" id="SearchButton"></a> </div>');
-
-                    a = 1;
-                }
-
-
+               
             }
 
         });
 
+}
+
+function displayTime(cellvalue, options, rowObject) {
+    debugger
+    if (cellvalue != null) {
+        var TotalTime = cellvalue.split(":");
+        return TotalTime[0] + " hrs " + TotalTime[1] + " minutes";
+    }
+    else
+        return "0 hrs";
+    
 }

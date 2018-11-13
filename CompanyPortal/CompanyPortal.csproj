@@ -333,6 +333,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AttendenceJqGridController.cs" />
     <Compile Include="Controllers\DetailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoggedInController.cs" />
@@ -353,6 +354,7 @@
     <Compile Include="Providers\OAuthProvider.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AddProjectTechStackViewModel.cs" />
+    <Compile Include="ViewModels\AttendenceViewModel.cs" />
     <Compile Include="ViewModels\EmployeeDetailsViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
@@ -620,6 +622,7 @@
     <Content Include="Views\LoggedIn\_AddProjectPartialView.cshtml" />
     <Content Include="Views\LoggedIn\_AddProjectTechnologyStackViewModel.cshtml" />
     <Content Include="Views\LoggedIn\_ShowParticularProjectDetails.cshtml" />
+    <Content Include="Views\LoggedIn\_AttendencePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

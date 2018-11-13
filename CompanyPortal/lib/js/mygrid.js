@@ -33,7 +33,7 @@ function jqgridInitialize(status) {
                 },
                 {
                   key: false, name: 'Project_Name', index: 'Project_Name', editable: true, search: true
-                    , searchoptions: { sopt: ['cn'] }, sortable: true,sorttype:'text'
+                    , searchoptions: { sopt: ['cn'] }, sortable: true, sorttype: 'text'
                 },
                 { key: false, name: 'Mgr_Id', index: 'Mgr_Id', editable: true, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc', sorttype: 'text'},
                 { key: false, name: 'Status', index: 'Status', editable: true, search: true, searchtype: 'string', sortable: true, sorttype: 'text',search:false }
@@ -208,7 +208,7 @@ function jqgridInitialize(status) {
 
 //custom formator function to display the Links
 function displayButtons(cellvalue, options, rowObject) {
- 
+    debugger
     var value = "<a href='#' onclick='showEditingDIV(event," + rowObject.PId + ",this)' class='fa fa-ellipsis-v relativeDiv editdiv' id=r" + rowObject.PId + "></a>"; 
     
     return value;

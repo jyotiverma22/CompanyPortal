@@ -13,7 +13,7 @@ namespace Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         public string LogInTime{ get; set; }
         public string LogOutTime { get; set; }
         public string TotalTime { get; set; }
