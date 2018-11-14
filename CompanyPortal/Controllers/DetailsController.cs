@@ -29,7 +29,7 @@ namespace CompanyPortal.Controllers
        public IHttpActionResult getEmployeeDetails(string username)
         {
            
-            EmployeesDetails emp= ICompany.GetEmployeesDetails(username);
+            EmployeesDetails emp= ICompany.GetEmloyeesDetailsOnLogin(username);
 
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<EmployeesDetails,EmployeeDetailsViewModel > ();
@@ -142,6 +142,17 @@ namespace CompanyPortal.Controllers
             return Ok(ICompany.GetAttendence(UserId));
         }
 
+        [HttpGet,Route("GetEmployeeDetails")]
+        public IHttpActionResult GetEmployeeDetails()
+        {
+            return Ok(ICompany.GetEmployeeDetails());
+        }
+
+        [HttpGet, Route("GetElementsInDropDown")]
+        public IHttpActionResult GetElementsInDropDown(string col)
+        {
+            return Ok(ICompany.GetListInDropDown(col));
+        }
 
         public ProjectViewModel MapProjectIntoProjectViewModel(Project project)
         {

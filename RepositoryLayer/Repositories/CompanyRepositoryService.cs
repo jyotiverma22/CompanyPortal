@@ -62,9 +62,14 @@ namespace RepositoryLayer.Repositories
             return datalayer.GetBloodGroups();
         }
 
-        public EmployeesDetails GetEmployeesDetails(string username)
+        public List<Employee> GetEmployeeDetails()
         {
-            return datalayer.GetEmloyeesDetails(username);
+            return datalayer.GetEmployeeDetails();
+        }
+
+        public EmployeesDetails GetEmloyeesDetailsOnLogin(string username)
+        {
+            return datalayer.GetEmloyeesDetailsOnLogin(username);
         }
 
 
@@ -113,6 +118,11 @@ namespace RepositoryLayer.Repositories
         public bool UpdateProject(Project project)
         {
             return datalayer.UpdateProject(project);
+        }
+
+        public List<string> GetListInDropDown(string col)
+        {
+            return datalayer.GetListInDropDown(col);
         }
     }
 }

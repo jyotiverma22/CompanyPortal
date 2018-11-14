@@ -2,9 +2,11 @@
 
 function AttendencejqgridInitialize(userid) {
     debugger
-  /*  $("#grid").setGridParam({ datatype: 'json', url: "/ProjectJQGrid/GetProjects?status=" + status, postData: { Search: false } });
+    $("#AttendGrid").setGridParam({
+        datatype: 'json', url: "/AttendenceJQGrid/GetAttendence?userid=" + userid
+    }).trigger("reloadGrid");
 
-    $("#search").val("");
+   /* $("#search").val("");
 
 
     $("#grid").trigger("reloadGrid");
@@ -31,16 +33,16 @@ function AttendencejqgridInitialize(userid) {
               //  { key: false, name: 'Actions', index: 'Actions', width: 15, align: "center", editable: false, formatter: displayButtons, search: false },
               
                 { key: false, name: 'Date', index: 'Date', edtable: false, search: true
-                    , searchoptions: { sopt: ['cn'] }, sortable: true, sorttype: 'date', formatter: 'date', formatoptions: { }
+                    , searchoptions: { sopt: ['cn'] }, sortable: true, sorttype: 'date', formatter: 'date'
                 },
 
-                { key: false, name: 'LogInTime', index: 'LogInTime', editable: false, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc', sorttype: 'text' },
+                { key: false, name: 'LogInTime', index: 'LogInTime', editable: false, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc', sorttype: 'text', formatter: hideDisplayNone },
 
-                { key: false, name: 'LogOutTime', index: 'LogOutTime', editable: false, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc', sorttype: 'text' },
+                { key: false, name: 'LogOutTime', index: 'LogOutTime', editable: false, search: true, searchtype: 'string', sortable: true, firstsortorder: 'desc', sorttype: 'text', formatter: hideDisplayNone },
 
                 { key: false, name: 'TotalTime', index: 'TotalTime', editable: false, search: false,  formatter: displayTime },
 
-                { key: false, name: 'AttendenceStatus', index: 'AttendenceStatus', editable: true, search: true, searchtype: 'string', sortable: true, sorttype: 'text', search: false }
+                { key: false, name: 'AttendenceStatus', index: 'AttendenceStatus', editable: true, search: true, searchtype: 'string', sortable: true, sorttype: 'text', search: false, formatter: hideDisplayNone}
 
             ],
             pager: jQuery('#AttendPager'),
@@ -56,7 +58,7 @@ function AttendencejqgridInitialize(userid) {
 
             onSortCol: function (name, index, order) {
                 debugger
-                $("#grid").setGridParam({ postData: { "SortBy": name, "OrderBy": order } });
+                $("#AttendGrid").setGridParam({ postData: { "SortBy": name, "OrderBy": order } }).trigger("reloadGrid");
                
             },
            
@@ -81,7 +83,7 @@ function AttendencejqgridInitialize(userid) {
 }
 
 function displayTime(cellvalue, options, rowObject) {
-    debugger
+
     if (cellvalue != null) {
         var TotalTime = cellvalue.split(":");
         return TotalTime[0] + " hrs " + TotalTime[1] + " minutes";
@@ -89,4 +91,17 @@ function displayTime(cellvalue, options, rowObject) {
     else
         return "0 hrs";
     
+}
+
+
+
+function hideDisplayNone(cellvalue, options, rowObject) {
+
+    debugger
+    if (cellvalue == null) {
+        return "-";
+    }
+    else {
+        return cellvalue;
+    }
 }

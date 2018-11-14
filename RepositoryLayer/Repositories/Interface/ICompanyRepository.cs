@@ -21,7 +21,7 @@ namespace RepositoryLayer.Repositories
 
         SessionModel CheckUser(Login login);
 
-        EmployeesDetails GetEmployeesDetails(string username);
+        EmployeesDetails GetEmloyeesDetailsOnLogin(string username);
 
         IEnumerable<Project> GetProjectDetail(string username,string status);
 
@@ -48,5 +48,9 @@ namespace RepositoryLayer.Repositories
         void SetAllEmployeesAttendence();
 
         List<Attendence> GetAttendence(string UserId);
+
+        List<Employee> GetEmployeeDetails();
+
+        List<string> GetListInDropDown(string col);
     }
 }

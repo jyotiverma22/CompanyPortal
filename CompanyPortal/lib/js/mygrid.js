@@ -81,8 +81,8 @@ function jqgridInitialize(status) {
                 debugger
                 $("tr.jqgrow:odd").addClass('myAltRowClass');
                 if (a == 0) {
-                    $('.ui-jqgrid-title').after('<div id="jqGridButtonDiv"><input type="text" name="search" id="ProjectSearchID" onkeypress="EnterPressedOnSearchBox(event) "> <a href="#" onclick="SearchInProject()" class="fa fa-search" id="SearchButton"></a> </div>');
-
+                    var titlebar = document.getElementById("gbox_grid").getElementsByClassName("ui-jqgrid-title")[0];
+                    $(titlebar).after('<div id="jqGridButtonDiv"><input type="text" name="search" id="ProjectSearchID" onkeypress="EnterPressedOnSearchBox(event) "> <a href="#" onclick="SearchInProject()" class="fa fa-search" id="SearchButton"></a> </div>');
                     a = 1;
                 }
 
@@ -254,6 +254,7 @@ function EnterPressedOnSearchBox(e) {
     if (key === $.ui.keyCode.ENTER) {
         $("#SearchButton").click();
     }
+
 }
 
 function showEditingDIV(event,PId,element) {

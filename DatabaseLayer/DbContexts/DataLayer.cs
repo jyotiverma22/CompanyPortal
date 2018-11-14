@@ -146,7 +146,7 @@ namespace DatabaseLayer.DbContexts
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        public EmployeesDetails GetEmloyeesDetails(string username)
+        public EmployeesDetails GetEmloyeesDetailsOnLogin(string username)
         {
             using (CompanyDbContext companyDbContext=new CompanyDbContext())
             {
@@ -156,6 +156,7 @@ namespace DatabaseLayer.DbContexts
                 //   employees.userId = reg.UserId;
                 return employees;
             }
+
         }
 
         // Get project details to set in jq grid
@@ -406,7 +407,7 @@ namespace DatabaseLayer.DbContexts
                     DateTime LogIn = DateTime.Parse(attendence.LogInTime);
                     TimeSpan TimeDiff = LogOut - LogIn;
 
-                    if(att.TotalTime==null)
+                    if (att.TotalTime == null)
                     {
                         att.TotalTime = TimeDiff.ToString();
                     }
@@ -418,12 +419,18 @@ namespace DatabaseLayer.DbContexts
                     }
                     TimeSpan TotalTime = TimeSpan.Parse(att.TotalTime);
                     int hrs = TotalTime.Hours;
-                    if(hrs>=3)
+                    if (hrs >= 3)
                     {
                         att.AttendenceStatus = "Present";
                     }
 
                 }
+                else if(att.LogInTime==null)
+                {
+                    att.LogInTime = attendence.LogInTime;
+                    att.AttendenceStatus = null;
+                }
+
                 companyDbContext.SaveChanges();
                 //companyDbContext.Emp_Attendence.Add(attendence);
 
@@ -437,11 +444,29 @@ namespace DatabaseLayer.DbContexts
             using (CompanyDbContext companyDbContext = new CompanyDbContext())
             {
                 DateTime todayDate = DateTime.Now.Date;
-                List<Attendence> EmployeesNotLogOut = companyDbContext.Emp_Attendence.Where(e => (e.Date == todayDate && e.LogOutTime == null)).ToList();
-                foreach(var obj in EmployeesNotLogOut)
+                List<Attendence> EmployeesLogIn = companyDbContext.Emp_Attendence.Where(e => (e.Date == todayDate )).ToList();
+                foreach(var obj in EmployeesLogIn)
                 {
-                    obj.LogOutTime = obj.LogInTime;
-                    obj.AttendenceStatus = "Absent";
+                    if(obj.LogOutTime==null)
+                    {
+                        obj.LogOutTime = obj.LogInTime;
+                        obj.TotalTime = "0";
+                        obj.AttendenceStatus = "Absent";
+                    }
+                    else
+                    {
+                        TimeSpan TotalTime = TimeSpan.Parse(obj.TotalTime);
+                        int hrs = TotalTime.Hours;
+                        if (hrs >= 3)
+                        {
+                            obj.AttendenceStatus = "Present";
+                        }
+                        else
+                        {
+                            obj.AttendenceStatus = "Present";
+                        }
+                    }
+
                 }
 
                 List<string> AlreadyLoginEmps = companyDbContext.Emp_Attendence.Where(e => e.Date == todayDate).Select(e => e.Emp_Id).ToList();
@@ -462,6 +487,31 @@ namespace DatabaseLayer.DbContexts
                 return companyDbContext.Emp_Attendence.Where(e => e.Emp_Id == UserId).ToList();
 
             }
+        }
+
+        public List<Employee> GetEmployeeDetails()
+        {
+            using (CompanyDbContext companyDbContext = new CompanyDbContext())
+            {
+                List<Employee> emps = companyDbContext.UserRegistration.Where(e => e.IsActive == true).Select(e => new Employee { FullName = e.Firstname + " " + e.Lastname, UserId = e.UserId, Email = e.Email, JoiningDate = e.CreatedOn }).ToList();
+                return emps;
+            }
+        }
+
+        public List<string> GetListInDropDown(string col)
+        {
+            using (CompanyDbContext companydbContext = new CompanyDbContext())
+            {
+                if (col == "name")
+                {
+                    return companydbContext.UserRegistration.Where(e => e.IsActive == true).Select(e => e.Firstname + " " + e.Lastname).ToList();
+                }
+                else 
+                {
+                    return companydbContext.UserRegistration.Where(e => e.IsActive == true).Select(e => e.Email).ToList();
+                }
+            }
+             
         }
 
 

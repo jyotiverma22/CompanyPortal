@@ -21,19 +21,19 @@
                 </ul>
             </div>
         </div>
-      
-            <div class="nav-item navitem" id="attendenece"> Attendence</div>
-            @if (Session["role"].ToString() == "Admin")
-            {
-                <div class="nav-item navitem"> Employee Details</div>
-            }
-            <!--
+
+        <div class="nav-item navitem" id="attendenece"> Attendence</div>
+        @if (Session["role"].ToString() == "Admin")
+        {
+            <div class="nav-item navitem" id="btnShowEmpDetails"> Employee Details</div>
+        }
+        <!--
         <div class="nav-item navitem"> Team Details</div>
         <div class="nav-item navitem"> Team Details</div>
 
         -->
-        </div>
     </div>
+</div>
 
 
 <div class="col-md-9 mainContent" id="mainContent">
@@ -55,10 +55,12 @@
 
     <div id="attend" style="display:none">
         @{
-            Html.RenderAction("ShowAttendence");
+            Html.RenderAction("ShowAttendence",new {page="attendencepage"});
         }
     </div>
 
+    <div id="ShowEmpToAdmin">
+    </div>
 
     <!--Modal for showing the employee details-->
     <div id='myModalemp' class='modal'>
@@ -67,12 +69,12 @@
                 <div id='regModalContent'>
                     <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel">Employee Detail</h4>
-               
+
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
                     </div>
                     <div id="EmpModal">
-                       
+
                     </div>
                 </div>
             </div>
@@ -96,7 +98,7 @@
 
         var bootstrapButton = $.fn.button.noConflict(); // return $.fn.button to previously assigned value
         $.fn.bootstrapBtn = bootstrapButton            // give $().bootstrapBtn the Bootstrap functionality
-    
+
         var role_;
         role_ = "@Session["role"].ToString()";
 
@@ -108,18 +110,19 @@
             $("#emp").show();
             $("#projdetail").hide();
             $("#attend").hide();
+            $("#ShowEmpToAdmin").hide();
             $("#addprojectdetail").hide();
         });
 
         $("#projectdetails").mouseover(function () {
-           
-           
+
+
                 $("#contextMenu2").show();
-               
+
         });
 
         $("#projectdetails").mouseout(function () {
-           
+
 
             $("#contextMenu2").hide();
 
@@ -128,9 +131,10 @@
 
         $("#wproj").click(function () {
             debugger
-            $("#projdetail").show();           
+            $("#projdetail").show();
             $("#emp").hide();
             $("#attend").hide();
+            $("#ShowEmpToAdmin").hide();
             $("#addprojectdetail").hide();
             jqgridInitialize("working");
             ToggleColumn(role_);
@@ -142,14 +146,16 @@
             jqgridInitialize("completed");
             $("#emp").hide();
             $("#attend").hide();
+            $("#ShowEmpToAdmin").hide();
             $("#addprojectdetail").hide();
         });
 
         $("#addProject").click(function () {
-           
+
             $("#emp").hide();
             $("#projdetail").hide();
             $("#attend").hide();
+            $("#ShowEmpToAdmin").hide();
             var url = '@Url.Action("AddProject", "LoggedIn")';
             $("#addprojectdetail").load(url);
             $("#addprojectdetail").show();
@@ -158,18 +164,30 @@
 
         $("#closbtn").click(function () {
             $('#myModalemp').modal('hide');
-            
+
         });
 
         $("#attendenece").click(function () {
-
+            $("#btnBack").hide();
             $("#addprojectdetail").hide();
             $("#emp").hide();
             $("#projdetail").hide();
+            $("#ShowEmpToAdmin").hide();
         //    var url = '@Url.Action("ShowAttendence", "LoggedIn")';
         //    $("#attend").load(url);
             $("#attend").show();
             AttendencejqgridInitialize(userId);
+
+        });
+
+        $("#btnShowEmpDetails").click(function () {
+            $("#addprojectdetail").hide();
+            $("#emp").hide();
+            $("#projdetail").hide();
+            $("#attend").hide();
+            var url = '@Url.Action("ShowEmployeesToAdmin", "LoggedIn")';
+            $("#ShowEmpToAdmin").load(url);
+            $("#ShowEmpToAdmin").show();
 
         });
 
@@ -181,13 +199,13 @@
         });
 
 
-      
+
 
 
     });
-       
 
-    
+
+
 
 
 
@@ -208,7 +226,7 @@
         function AddProjectSuccess($data) {
             debugger
             var result = $data.serialize();
-   
+
             return res;
         /*    $.confirm({
                 title: 'Confirm!',
@@ -249,11 +267,11 @@
         //    data = {
         //        projectTechnologyList: formdata,
         //        PId:model
-                
+
         //    }
         //}
 
-       
+
       /*  $.post("/LoggedIn/AddProject", data, function (result) {
             if (result !== 0)
                 alert("Data Saved" + result);
@@ -289,7 +307,7 @@
         modal: true,
         autoOpen: true,
         resizable: false,
-      
+
         buttons: [
             {
                 text: 'Yes',
@@ -319,6 +337,14 @@
 
         $("#grid").trigger("reloadGrid");
     }
-    
+
+    function BackToEmpDetails() {
+        $("#btnBack").hide();
+
+        $("#attend").hide();
+      
+
+        $("#ShowEmpToAdmin").show();
+    }
 
 </script>

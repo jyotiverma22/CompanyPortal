@@ -1,0 +1,166 @@
+﻿<div class="container">
+    <div class="row" style="height:20px">
+        <hr />
+    </div>
+
+    
+
+        <div class="row">
+            <div class="offset-md-1 ">
+              
+            </div>
+
+            <div class="col-md-9">
+                <span>Search By :</span>
+                <select id="listcol">
+                    <option value="name" selected="selected">By Name</option>
+                    <option value="email">By Email</option>
+                </select>
+                <div class="autocomplete">
+                    <input type="text" name="search" id="SearchEmpDetails" onkeypress="KeyDownEvent(event) ">
+                </div>
+                <Button href="#" onclick="SearchInEmployees()" id="SearchButtonInEmp"><span>Search </span><i class="fa fa-search"></i></Button>
+            </div>
+
+          
+
+        </div>
+
+        <div class="empgridcss">
+
+            <div>
+                <table id="EmpGrid"></table>
+                <div id="EmpPager"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var currentFocus;
+        document.addEventListener("click", function (e) {
+         
+            closeAllLists();
+        });
+
+        $("#SearchEmpDetails").focusin(function () {
+            closeAllLists();
+        })
+
+
+    });
+
+
+    InitializeEmployeeGrid();
+
+    function KeyDownEvent(event) {
+        var x = document.getElementById("autocomplete-list");
+        if (x) x = x.getElementsByTagName("div");
+       
+        
+        if (event.keyCode == 13) {
+           
+            $("#SearchButtonInEmp").click();
+        }
+        else if (event.keyCode == 40) {  /*If the arrow DOWN key is pressed,
+        increase the currentFocus variable:*/
+            currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+        } else if (event.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+    }
+
+
+
+        else {
+            debugger
+            closeAllLists();
+            var value = $("#SearchEmpDetails").val();
+            if (value.length > 2) {
+                var col = $("#listcol").val();
+                $.get("/api/Details/GetElementsInDropDown/?col=" + col, function (data) {
+                    debugger
+                    autoComplete(data,value);
+                });
+            }
+        }
+    }
+
+    function SearchInEmployees() {
+
+        var value = $("#SearchEmpDetails").val();
+
+        var postdata = $("#EmpGrid").jqGrid('getGridParam', 'postData');
+        $("#EmpGrid").setGridParam({ mtype: "POST", postData: { Search: true, SearchValue: value } }).trigger("reloadGrid");
+
+    }
+
+    function autoComplete(data, value) {
+        debugger
+        var listdiv,optionsInList;
+        listdiv = document.createElement("DIV");
+        listdiv.setAttribute("id", this.id + "autocomplete-list");
+        listdiv.setAttribute("class", "autocomplete-items");
+
+        $("#SearchEmpDetails").parent().append(listdiv);
+
+        for (i = 0; i < data.length; i++) {
+
+            if (data[i].toUpperCase().includes((value.toUpperCase()))) {
+                optionsInList = document.createElement("DIV");
+                optionsInList.innerHTML = data[i];
+                optionsInList.innerHTML += "<input type='hidden' value='" + data[i] + "'>";
+                optionsInList.addEventListener("click", function (e) {
+                    /*insert the value for the autocomplete text field:*/
+                    $("#SearchEmpDetails").val(this.getElementsByTagName("input")[0].value);
+                    $("#SearchButtonInEmp").click();
+                    /*close the list of autocompleted values,
+                    (or any other open lists of autocompleted values:*/
+                    closeAllLists();
+                });
+                listdiv.appendChild(optionsInList);
+            }
+        }
+
+    }
+
+    function addActive(x) {
+        debugger
+        /*a function to classify an item as "active":*/
+        if (!x) return false;
+        /*start by removing the "active" class on all items:*/
+        removeActive(x);
+        if (currentFocus >= x.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = (x.length - 1);
+        /*add class "autocomplete-active":*/
+        x[currentFocus].classList.add("autocomplete-active");
+    }
+    function removeActive(x) {
+        debugger
+        /*a function to remove the "active" class from all autocomplete items:*/
+        for (var i = 0; i < x.length; i++) {
+            x[i].classList.remove("autocomplete-active");
+        }
+    }
+    function closeAllLists(elmnt) {
+        
+        /*close all autocomplete lists in the document,
+        except the one passed as an argument:*/
+        var x = document.getElementsByClassName("autocomplete-items");
+        for (var i = 0; i < x.length; i++) {
+            if (elmnt != x[i] && elmnt != $("#SearchEmpDetails")) {
+                x[i].parentNode.removeChild(x[i]);
+            }
+        }
+    }
+  
+
+</script>

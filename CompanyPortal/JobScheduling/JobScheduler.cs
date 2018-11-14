@@ -18,7 +18,7 @@ namespace CompanyPortal.JobScheduling
 
             ITrigger trigger = TriggerBuilder.Create()
                                 .WithIdentity("trigger1", "group1")
-                                .WithCronSchedule("0 30 16 ? * 2-6",x=>x.WithMisfireHandlingInstructionIgnoreMisfires())
+                                .WithCronSchedule("0 00 10 ? * 2-6",x=>x.WithMisfireHandlingInstructionIgnoreMisfires())
                                 .Build();
 
             scheduler.ScheduleJob(job, trigger);

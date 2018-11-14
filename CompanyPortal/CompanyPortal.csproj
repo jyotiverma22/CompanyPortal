@@ -335,6 +335,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AttendenceJqGridController.cs" />
     <Compile Include="Controllers\DetailsController.cs" />
+    <Compile Include="Controllers\EmployeeJqGridController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoggedInController.cs" />
     <Compile Include="Controllers\ProjectJQGridController.cs" />
@@ -354,7 +355,6 @@
     <Compile Include="Providers\OAuthProvider.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AddProjectTechStackViewModel.cs" />
-    <Compile Include="ViewModels\AttendenceViewModel.cs" />
     <Compile Include="ViewModels\EmployeeDetailsViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
@@ -446,6 +446,7 @@
     <Content Include="lib\images\contact3.png" />
     <Content Include="lib\images\logo.png" />
     <Content Include="lib\js\AttendenceGrd.js" />
+    <Content Include="lib\js\EmployeeGrid.js" />
     <Content Include="lib\js\mygrid.js" />
     <Content Include="lib\js\responsive.js" />
     <Content Include="lib\js\site.js" />
@@ -623,11 +624,13 @@
     <Content Include="Views\LoggedIn\_AddProjectTechnologyStackViewModel.cshtml" />
     <Content Include="Views\LoggedIn\_ShowParticularProjectDetails.cshtml" />
     <Content Include="Views\LoggedIn\_AttendencePartialView.cshtml" />
+    <Content Include="Views\LoggedIn\_ShowEmployeeDetailsPartialVIew.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Admin\" />
+    <Folder Include="Views\EmployeeJqGrid\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -316,5 +316,10 @@ namespace CompanyPortal.Controllers
             return PartialView("_AttendencePartialView");
         }
 
+        public ActionResult ShowEmployeesToAdmin()
+        {
+            return PartialView("_ShowEmployeeDetailsPartialView");
+        }
+
     }
 }
