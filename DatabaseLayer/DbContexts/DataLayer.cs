@@ -268,6 +268,7 @@ namespace DatabaseLayer.DbContexts
 
                         project.UpdatedOn = DateTime.Now;
                         project.UpdatedBy = project.UpdatedBy;
+                        project.IsActive = true;
                         if (proj == null)
                         {
                             project.CreatedOn = DateTime.Now;
@@ -337,27 +338,30 @@ namespace DatabaseLayer.DbContexts
             {
                 
                 Project p = companyDbContext.Projects.Where(t => t.PID == project.PID).FirstOrDefault();
-                if (project.project_TechnologyStacks.Count()==0)
+                if (p != null)
                 {
-                    p.ProjectName = project.ProjectName;
-                    p.Status = project.Status;
-                    p.UpdatedBy = project.UpdatedBy;
-                    p.UpdatedOn = DateTime.Now;
-                    p.Mgr_Id = (project.Mgr_Id == null) ? p.Mgr_Id : project.Mgr_Id;
-                    p.Description = project.Description;
-                }
-                else
-                {
-
-                    foreach(var key in project.project_TechnologyStacks)
+                    if (project.project_TechnologyStacks.Count() == 0)
                     {
-                        key.IsActive = true;
-                        key.projectId = project.PID;
-                        companyDbContext.Project_TechnologyStacks.Add(key);
+                        p.ProjectName = project.ProjectName;
+                        p.Status = project.Status;
+                        p.UpdatedBy = project.UpdatedBy;
+                        p.UpdatedOn = DateTime.Now;
+                        p.Mgr_Id = (project.Mgr_Id == null) ? p.Mgr_Id : project.Mgr_Id;
+                        p.Description = project.Description;
                     }
-                  
+                    else
+                    {
+
+                        foreach (var key in project.project_TechnologyStacks)
+                        {
+                            key.IsActive = true;
+                            key.projectId = project.PID;
+                            companyDbContext.Project_TechnologyStacks.Add(key);
+                        }
+
+                    }
+                    companyDbContext.SaveChanges();
                 }
-                companyDbContext.SaveChanges();
 
             }
               
@@ -423,6 +427,11 @@ namespace DatabaseLayer.DbContexts
                     {
                         att.AttendenceStatus = "Present";
                     }
+                    else
+                    {
+                        att.AttendenceStatus = null;
+                    }
+
 
                 }
                 else if(att.LogInTime==null)
