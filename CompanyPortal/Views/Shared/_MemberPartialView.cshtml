@@ -27,12 +27,15 @@
         {
             <div class="nav-item navitem" id="btnShowEmpDetails"> Employee Details</div>
         }
-        <!--
-        <div class="nav-item navitem"> Team Details</div>
+        @if (Session["role"].ToString() == "P_Manager")
+        {
+            <div class="nav-item navitem"> Team Details</div>
+        }
+            <!--
         <div class="nav-item navitem"> Team Details</div>
 
         -->
-    </div>
+        </div>
 </div>
 
 

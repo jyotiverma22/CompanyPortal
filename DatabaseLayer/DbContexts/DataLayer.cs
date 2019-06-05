@@ -179,7 +179,7 @@ namespace DatabaseLayer.DbContexts
                         query = companyDbContext.Projects.Where(t=>t.IsActive==true).Select(p => p.PID);
 
                     }
-                    else if(role=="Proj_Manager")
+                    else if(role=="P_Manager")
                     {
                         query = companyDbContext.Projects.Where(t => t.IsActive == true).Where(t => t.Mgr_Id== (companyDbContext.UserRegistration.Where(r => (r.Username == username || r.Email == username)).Select(r => r.UserId).FirstOrDefault())).Select(p => p.PID);
 

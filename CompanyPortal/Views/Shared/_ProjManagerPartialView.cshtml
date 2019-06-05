@@ -1,27 +1,40 @@
 ﻿
-<div class="col-md-3 sidenavbar ">
+<div class="col-md-3 sidenavbar setheight ">
     <div class="col-12 side-nav">
         <div class="nav-item navitem " id="personaldetails"> Personal Details</div>
         <div class="nav-item navitem" id="projectdetails">
             Project Details
-            <ul class="projsbar">
-                <li class="nav-item">
-                    Working Projects
-                </li>
-                <li class="nav-item">
-                    Completed Projects
-                </li>
-            </ul>
-
+            <div class="contextMenu margintop" id="contextMenu2" style="display:none; width:273px;">
+                <ul id="projsbar" style=" font-size: 65%">
+                    @if (Session["role"].ToString() == "Admin")
+                    {
+                        <li>
+                            <a id="addProject"> Add Projects</a>
+                        </li>
+                    }
+                    <li>
+                        <a id="wproj"> Working Projects</a>
+                    </li>
+                    <li>
+                        <a id="cproj">Completed Projects</a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div class="nav-item navitem" id="attendenece"> Attendence</div>
+        @if (Session["role"].ToString() == "Admin")
+        {
+            <div class="nav-item navitem" id="btnShowEmpDetails"> Employee Details</div>
+        }
+        @if (Session["role"].ToString() == "P_Manager")
+        {
+            <div class="nav-item navitem"> Team Details</div>
+        }
         <!--
-        <div class="nav-item navitem"> Team Details</div>
-        <div class="nav-item navitem"> Team Details</div>
-        <div class="nav-item navitem"> Team Details</div>
+    <div class="nav-item navitem"> Team Details</div>
 
-        -->
+    -->
     </div>
 </div>
 
@@ -33,42 +46,308 @@
         }
     </div>
 
-    <div id="proj" style="display:none">
+    <div id="projdetail" style="display:none">
         @{
             Html.RenderAction("ProjectDetails");
         }
     </div>
 
-    <div id="attend">
+    <div id="addprojectdetail" style="display:none">
 
     </div>
+
+    <div id="attend" style="display:none">
+        @{
+            Html.RenderAction("ShowAttendence", new { page = "attendencepage" });
+        }
+    </div>
+
+    <div id="ShowEmpToAdmin">
+    </div>
+
+    <!--Modal for showing the employee details-->
+    <div id='myModalemp' class='modal'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='regModalContent'>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Employee Detail</h4>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+                    </div>
+                    <div id="EmpModal">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="addteamDialog" style="display:none">
+
+    </div>
+
 </div>
 
+<script src="~/Scripts/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="~/lib/js/mygrid.js" type="text/javascript"></script>
+<script src="~/lib/js/AttendenceGrd.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         debugger
+
+
+        var bootstrapButton = $.fn.button.noConflict(); // return $.fn.button to previously assigned value
+        $.fn.bootstrapBtn = bootstrapButton            // give $().bootstrapBtn the Bootstrap functionality
+
+        var role_;
+        role_ = "@Session["role"].ToString()";
+
+        var userId = "@Session["id"].ToString()";
+
         var a = 0;
         $("#personaldetails").click(function () {
             debugger
-            $("#proj").hide();
             $("#emp").show();
-        })
+            $("#projdetail").hide();
+            $("#attend").hide();
+            $("#ShowEmpToAdmin").hide();
+            $("#addprojectdetail").hide();
+        });
 
-        $("#projectdetails").click(function () {
+        $("#projectdetails").mouseover(function () {
+
+
+                $("#contextMenu2").show();
+
+        });
+
+        $("#projectdetails").mouseout(function () {
+
+
+            $("#contextMenu2").hide();
+
+        });
+
+
+        $("#wproj").click(function () {
             debugger
-            if (a==0) {
-                $("#projsbar").show();
-                a = 1;
+            $("#projdetail").show();
+            $("#emp").hide();
+            $("#attend").hide();
+            $("#ShowEmpToAdmin").hide();
+            $("#addprojectdetail").hide();
+            jqgridInitialize("working");
+            ToggleColumn(role_);
+
+        });
+
+        $("#cproj").click(function () {
+            $("#projdetail").show();
+            jqgridInitialize("completed");
+            $("#emp").hide();
+            $("#attend").hide();
+            $("#ShowEmpToAdmin").hide();
+            $("#addprojectdetail").hide();
+        });
+
+        $("#addProject").click(function () {
+
+            $("#emp").hide();
+            $("#projdetail").hide();
+            $("#attend").hide();
+            $("#ShowEmpToAdmin").hide();
+            var url = '@Url.Action("AddProject", "LoggedIn")';
+            $("#addprojectdetail").load(url);
+            $("#addprojectdetail").show();
+
+        });
+
+        $("#closbtn").click(function () {
+            $('#myModalemp').modal('hide');
+
+        });
+
+        $("#attendenece").click(function () {
+            $("#btnBack").hide();
+            $("#addprojectdetail").hide();
+            $("#emp").hide();
+            $("#projdetail").hide();
+            $("#ShowEmpToAdmin").hide();
+        //    var url = '@Url.Action("ShowAttendence", "LoggedIn")';
+        //    $("#attend").load(url);
+            $("#attend").show();
+            AttendencejqgridInitialize(userId);
+
+        });
+
+        $("#btnShowEmpDetails").click(function () {
+            $("#addprojectdetail").hide();
+            $("#emp").hide();
+            $("#projdetail").hide();
+            $("#attend").hide();
+            var url = '@Url.Action("ShowEmployeesToAdmin", "LoggedIn")';
+            $("#ShowEmpToAdmin").load(url);
+            $("#ShowEmpToAdmin").show();
+
+        });
+
+        $.get("/api/Values/GetallProjectManagers", function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var opt = new Option(data[i], data[i]);
+                $('#Mgr_Id').append(opt);
             }
-            else {
-                $("#projsbar").hide();
-                a = 0;
-            }
-           // $("#proj").show();
-           // $("#emp").hide();
-        })
+        });
 
 
+
+
+
+    });
+
+
+
+
+
+
+    function exapandEmployeeDetail(rowid) {
         debugger
-        }   );
-</script>s
+        $.get("LoggedIn/EmployeeDetails?userid=" + rowid, function (data) {
+            debugger
+            $("#EmpModal").html(data);
+            var options = { "backdrop": "static", keyboard: true };
+            $('#myModalemp').modal(options);
+            $('#myModalemp').modal('show');
+
+
+        });
+    }
+
+        //scripts for add project partial view
+        function AddProjectSuccess($data) {
+            debugger
+            var result = $data.serialize();
+
+            return res;
+        /*    $.confirm({
+                title: 'Confirm!',
+                content: 'Simple confirm!',
+                buttons: {
+                    confirm: function () {
+                        $.alert('Confirmed!');
+                    },
+                    cancel: function () {
+                        $.alert('Canceled!');
+                    },
+                    somethingElse: {
+                        text: 'Something else',
+                        btnClass: 'btn-blue',
+                        keys: ['enter', 'shift'],
+                        action: function () {
+                            $.alert('Something else?');
+                        }
+                    }
+                }
+            });*/
+        }
+
+    function SaveDataProjectIntoDatabase(model,formdata) {
+        debugger
+        var data;
+        if (formdata == null) {
+            data = model;
+        }
+        else{
+            model.ProjectTechStackList = formdata;
+             data = {
+                projectViewModel: model,
+            }
+
+        }
+        //else {
+        //    data = {
+        //        projectTechnologyList: formdata,
+        //        PId:model
+
+        //    }
+        //}
+
+
+      /*  $.post("/LoggedIn/AddProject", data, function (result) {
+            if (result !== 0)
+                alert("Data Saved" + result);
+            else
+                alert("Error in saving Project Details!.. Try Again After some time");
+        });*/
+
+        $.ajax({
+            url: "/LoggedIn/AddProject",
+            method: "POST",
+            data: data,
+            datatype: 'json',
+            ContentType: 'application/json;utf-8',
+            success: function (result) {
+                if (result !== 0)
+                    //alert("Data Saved" + result);
+                    showProjectSaveResultDialogBox(result);
+                else
+                    alert("Error in saving Project Details!.. Try Again After some time");
+            }
+        });
+    }
+
+    function showProjectSaveResultDialogBox(result) {
+        if (result) {
+            var resultDialog = $('<div id="result_dialog" title="Project Added">Project Succesfully Created. Do you want to add more project? </div>');
+        }
+        else {
+            var resultDialog = $('<div id="result_dialog" title="Add Team Members"> An error occurred while creating the project. Try Again </div>');
+        }
+
+        resultDialog.dialog({
+        modal: true,
+        autoOpen: true,
+        resizable: false,
+
+        buttons: [
+            {
+                text: 'Yes',
+                click: function () {
+                    debugger
+                    $('#result_dialog').remove();
+                    $("#Project_Name").val("");
+                    $("#Mgr_Id").val("");
+                    $("#Description").val("");
+                }
+            },
+            {
+                text: 'No',
+                click: function () {
+                    debugger
+                    $('#result_dialog').dialog('close');
+                    window.location.href = "/LoggedIn";
+                }
+            }
+        ]
+    });
+    }
+
+    function SuccessfullyProjectUpdated(data) {
+        debugger
+        $("#editprojectdetaildialog").dialog('close');
+
+        $("#grid").trigger("reloadGrid");
+    }
+
+    function BackToEmpDetails() {
+        $("#btnBack").hide();
+
+        $("#attend").hide();
+
+
+        $("#ShowEmpToAdmin").show();
+    }
+
+</script>
